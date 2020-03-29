@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:biomonitoreoparticipativoapp/widgets/rounded_button.dart';
 import 'registration_screen.dart';
+import 'login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String id = 'home_screen';
@@ -44,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   title: 'Ingreso',
                   colour: Colors.blue,
                   onPressed: () {
-                    // Navigator.pushNamed(context, ObservationsScreen.id);
+                    Navigator.pushNamed(context, LoginScreen.id);
                   },
                 ),
               ),

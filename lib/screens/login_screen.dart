@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:biomonitoreoparticipativoapp/widgets/rounded_button.dart';
-import 'package:biomonitoreoparticipativoapp/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:biomonitoreoparticipativoapp/constants.dart';
+import 'package:biomonitoreoparticipativoapp/widgets/rounded_button.dart';
 import 'observations_screen.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-class RegistrationScreen extends StatefulWidget {
-  static const String id = 'registration_screen';
+class LoginScreen extends StatefulWidget {
+  static const String id = 'login_screen';
 
   @override
-  _RegistrationScreenState createState() => _RegistrationScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
   String email;
   String password;
@@ -24,7 +24,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Registro'),
+        title: Text('Ingreso'),
       ),
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
@@ -36,7 +36,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             children: <Widget>[
 //            Container(
 //              height: 200.0,
-//              child: Image.asset('images/logo-paisajes-productivos.jpg'),
+//              child: Image.asset('images/logo.png'),
 //            ),
 //            SizedBox(
 //              height: 48.0,
@@ -54,8 +54,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 height: 8.0,
               ),
               TextField(
-                textAlign: TextAlign.center,
                 obscureText: true,
+                textAlign: TextAlign.center,
                 onChanged: (value) {
                   password = value;
                 },
@@ -66,16 +66,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 height: 24.0,
               ),
               RoundedButton(
-                title: 'Registrar usuario',
+                title: 'Ingresar',
                 colour: Colors.blue,
                 onPressed: () async {
                   setState(() {
                     showSpinner = true;
                   });
                   try {
-                    final newUser = await _auth.createUserWithEmailAndPassword(
+                    final user = await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
-                    if (newUser != null) {
+                    if (user != null) {
                       Navigator.pushNamed(context, ObservationsScreen.id);
                     }
                     setState(() {

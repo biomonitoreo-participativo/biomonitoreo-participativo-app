@@ -33,6 +33,24 @@ class _ObservationsScreenState extends State<ObservationsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        leading: null,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.close),
+            onPressed: () {
+              _auth.signOut();
+              Navigator.pop(context);
+            },
+          ),
+        ],
+        title: Text('Observaciones'),
+      ),
+      body: Center(
+        child: Text('Algo'),
+      ),
+    );
   }
 }
