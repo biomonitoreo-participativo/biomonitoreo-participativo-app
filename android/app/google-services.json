@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "788893424260",
+    "firebase_url": "https://biomonitoreo-participati-7fdc7.firebaseio.com",
+    "project_id": "biomonitoreo-participati-7fdc7",
+    "storage_bucket": "biomonitoreo-participati-7fdc7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:788893424260:android:d4dbc254220632bbdb00d1",
+        "android_client_info": {
+          "package_name": "org.biomonitoreoparticipativo.biomonitoreoparticipativoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "788893424260-gb5puqr93beesknvc9tg8645tlrhjeda.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIDan1pcKPixVVqw4SWCiUyOGJgL3d2wA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "788893424260-gb5puqr93beesknvc9tg8645tlrhjeda.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
