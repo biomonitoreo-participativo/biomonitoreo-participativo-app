@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
 import 'screens/registration_screen.dart';
 import 'screens/login_screen.dart';
+import 'package:biomonitoreoparticipativoapp/screens/select_datetime_screen.dart';
 import 'screens/observations_screen.dart';
 import 'package:provider/provider.dart';
 import 'models/observation_data.dart';
@@ -23,6 +24,7 @@ class ParticipatoryBioMonitoring extends StatelessWidget {
           HomeScreen.id: (context) => HomeScreen(),
           RegistrationScreen.id: (context) => RegistrationScreen(),
           LoginScreen.id: (context) => LoginScreen(),
+          SelectDateTimeScreen.id: (context) => SelectDateTimeScreen(),
           ObservationsScreen.id: (context) => ObservationsScreen(),
         },
       ),
