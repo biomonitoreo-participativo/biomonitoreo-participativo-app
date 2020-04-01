@@ -7,6 +7,7 @@ import 'screens/login_screen.dart';
 import 'screens/select_datetime_screen.dart';
 import 'screens/select_location_screen.dart';
 import 'screens/observations_screen.dart';
+import 'screens/summary_screen.dart';
 
 void main() => runApp(ParticipatoryBioMonitoring());
 
@@ -28,6 +29,7 @@ class ParticipatoryBioMonitoring extends StatelessWidget {
           SelectDateTimeScreen.id: (context) => SelectDateTimeScreen(),
           SelectLocationScreen.id: (context) => SelectLocationScreen(),
           ObservationsScreen.id: (context) => ObservationsScreen(),
+          SummaryScreen.id: (context) => SummaryScreen(),
         },
       ),
     );

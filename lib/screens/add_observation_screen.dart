@@ -9,9 +9,40 @@ String selectedTaxon;
 
 List getSpecies(pattern) {
   List<String> taxa = [
-    'Puma concolor',
     'Panthera onca',
+    'Puma concolor',
+    'Leopardus pardalis',
+    'Puma yagouaroundi',
+    'Leopardus tigrinus',
+    'Leopardus wiedii',
+    'Pecari tajacu',
+    'Mazama temama',
+    'Odoicoleus virginianus',
+    'Tapirus bairdii',
+    'Alouatta palliata',
+    'Ateles geoffrogyi',
+    'Cebus imitator',
+    'Saimiri oerstedii',
+    'Dasyprocta punctata',
+    'Cuniculus paca',
+    'Pharomachrus mocinno',
+    'Trogon rufus',
+    'Trogon bairdii',
+    'Trogon caligatus',
+    'Trogon massena',
+    'Trogon collaris',
+    'Procnias tricarunculata',
+    'Myadestes melanops',
+    'Tinamus major',
+    'Nothocercus bonapartei',
+    'Cryturellus soui',
+    'Crax rubra',
+    'Penelope purpurascens',
+    'Ortalis cinereiceps',
+    'Chamaepetes unicolor',
+    'Atelopus varius',
   ];
+
   List<String> filteredTaxa = [];
 
   for (var i = 0; i < taxa.length; i++) {

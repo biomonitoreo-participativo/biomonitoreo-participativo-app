@@ -24,7 +24,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Registro'),
+        title: Text('Registro de usuario'),
       ),
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
@@ -48,7 +48,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   email = value;
                 },
                 decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Ingrese su correo electrónico'),
+                    hintText: 'Correo electrónico del nuevo usuario'),
               ),
               SizedBox(
                 height: 8.0,
@@ -59,8 +59,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 onChanged: (value) {
                   password = value;
                 },
-                decoration:
-                    kTextFieldDecoration.copyWith(hintText: 'Ingrese su clave'),
+                decoration: kTextFieldDecoration.copyWith(hintText: 'Clave'),
               ),
               SizedBox(
                 height: 24.0,

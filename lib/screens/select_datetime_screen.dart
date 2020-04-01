@@ -11,14 +11,14 @@ class SelectDateTimeScreen extends StatefulWidget {
 }
 
 class _SelectDateTimeScreenState extends State<SelectDateTimeScreen> {
-  String _date = "Fecha no asignada";
-  String _time = "Hora no asignada";
+  String _date = "Fecha no seleccionada";
+  String _time = "Hora no seleccionada";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fecha y hora'),
+        title: Text('Selección de fecha y hora'),
       ),
       body: Center(
         child: Column(
@@ -71,7 +71,7 @@ class _SelectDateTimeScreenState extends State<SelectDateTimeScreen> {
                       ],
                     ),
                     Text(
-                      "  Modificar",
+                      "  Seleccionar",
                       style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,
@@ -130,7 +130,7 @@ class _SelectDateTimeScreenState extends State<SelectDateTimeScreen> {
                       ],
                     ),
                     Text(
-                      "  Modificar",
+                      "  Seleccionar",
                       style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,
@@ -148,7 +148,7 @@ class _SelectDateTimeScreenState extends State<SelectDateTimeScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: RoundedButton(
-                  title: 'Ingresar observaciones',
+                  title: 'Ingreso de observaciones',
                   colour: Colors.blue,
                   onPressed: () {
                     Navigator.pushNamed(context, ObservationsScreen.id);

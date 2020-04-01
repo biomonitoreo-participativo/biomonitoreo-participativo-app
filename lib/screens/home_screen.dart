@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: RoundedButton(
-                  title: 'Ingreso',
+                  title: 'Ingreso a la aplicación',
                   colour: Colors.blue,
                   onPressed: () {
                     Navigator.pushNamed(context, LoginScreen.id);
@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: RoundedButton(
-                  title: 'Registro',
+                  title: 'Registro de usuario',
                   colour: Colors.blue,
                   onPressed: () {
                     Navigator.pushNamed(context, RegistrationScreen.id);

@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Ingreso'),
+        title: Text('Ingreso a la aplicación'),
       ),
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   email = value;
                 },
                 decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Ingrese su correo electrónico'),
+                    hintText: 'Correo electrónico del usuario'),
               ),
               SizedBox(
                 height: 8.0,
@@ -59,8 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onChanged: (value) {
                   password = value;
                 },
-                decoration:
-                    kTextFieldDecoration.copyWith(hintText: 'Ingrese su clave'),
+                decoration: kTextFieldDecoration.copyWith(hintText: 'Clave'),
               ),
               SizedBox(
                 height: 24.0,

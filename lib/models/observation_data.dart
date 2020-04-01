@@ -4,8 +4,8 @@ import 'observation.dart';
 
 class ObservationData extends ChangeNotifier {
   List<Observation> _observations = [
-    Observation(scientificName: 'Pharomachrus mocinno', quantity: 1),
-    Observation(scientificName: 'Pharomachrus mocinno', quantity: 1),
+//    Observation(scientificName: 'Pharomachrus mocinno', quantity: 1),
+//    Observation(scientificName: 'Pharomachrus mocinno', quantity: 1),
   ];
 
   UnmodifiableListView<Observation> get observations {

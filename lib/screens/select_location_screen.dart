@@ -82,7 +82,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Localidad'),
+        title: Text('Selección de localidad'),
       ),
       body: Center(
         child: Column(
@@ -101,13 +101,13 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
           ],
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           print('Presionado');
           Navigator.pushNamed(context, SelectDateTimeScreen.id);
         },
-        label: Text('Seleccionar localidad'),
-        icon: Icon(Icons.directions_boat),
+        label: Text('Seleccionar'),
       ),
     );
   }

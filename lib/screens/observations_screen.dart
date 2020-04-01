@@ -2,8 +2,10 @@ import 'package:biomonitoreoparticipativoapp/screens/add_observation_screen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:biomonitoreoparticipativoapp/widgets/rounded_button.dart';
 import 'package:biomonitoreoparticipativoapp/widgets/observations_list.dart';
 import 'package:biomonitoreoparticipativoapp/models/observation_data.dart';
+import 'package:biomonitoreoparticipativoapp/screens/summary_screen.dart';
 
 class ObservationsScreen extends StatefulWidget {
   static const String id = 'observations_screen';
@@ -50,7 +52,7 @@ class _ObservationsScreenState extends State<ObservationsScreen> {
             },
           ),
         ],
-        title: Text('Observaciones'),
+        title: Text('Ingreso de observaciones'),
       ),
       floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.lightBlueAccent,
@@ -95,6 +97,19 @@ class _ObservationsScreenState extends State<ObservationsScreen> {
                 ),
               ),
               child: ObservationsList(),
+            ),
+          ),
+          Container(
+            // alignment: Alignment(0.0, 0.0),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 100.0),
+              child: RoundedButton(
+                title: 'Resumen',
+                colour: Colors.blue,
+                onPressed: () {
+                  Navigator.pushNamed(context, SummaryScreen.id);
+                },
+              ),
             ),
           ),
         ],
