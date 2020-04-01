@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text(
                   'Biomonitoreo participativo\nEspecies indicadoras',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
+                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700),
                 ),
               ),
             ),

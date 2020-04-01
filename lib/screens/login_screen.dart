@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:biomonitoreoparticipativoapp/constants.dart';
 import 'package:biomonitoreoparticipativoapp/widgets/rounded_button.dart';
-import 'select_datetime_screen.dart';
+import 'select_location_screen.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -14,8 +14,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
-  String email = 'mfvargas@gmail.com';
-  String password = 'mfvargas';
+  String email;
+  String password;
 
   bool showSpinner = false;
 
@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     final user = await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
                     if (user != null) {
-                      Navigator.pushNamed(context, SelectDateTimeScreen.id);
+                      Navigator.pushNamed(context, SelectLocationScreen.id);
                     }
                     setState(() {
                       showSpinner = false;

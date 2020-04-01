@@ -3,7 +3,7 @@ import 'package:biomonitoreoparticipativoapp/widgets/rounded_button.dart';
 import 'package:biomonitoreoparticipativoapp/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'observations_screen.dart';
+import 'select_location_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'registration_screen';
@@ -76,7 +76,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     final newUser = await _auth.createUserWithEmailAndPassword(
                         email: email, password: password);
                     if (newUser != null) {
-                      Navigator.pushNamed(context, ObservationsScreen.id);
+                      Navigator.pushNamed(context, SelectLocationScreen.id);
                     }
                     setState(() {
                       showSpinner = false;
