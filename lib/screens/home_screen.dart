@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
               margin: EdgeInsets.symmetric(vertical: 40.0),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Image.asset('images/logo-paisajes-productivos.jpg'),
+                child: Image.asset('images/logo-app.png'),
               ),
             ),
             Expanded(
