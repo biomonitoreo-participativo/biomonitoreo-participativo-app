@@ -1,6 +1,28 @@
-class Observation {
-  final String scientificName;
+import 'package:flutter/foundation.dart';
+import 'taxon.dart';
+
+class Observation with ChangeNotifier {
+  final String id;
+  final Taxon taxon;
   int quantity;
 
-  Observation({this.scientificName, this.quantity = 1});
+  Observation({
+    @required this.id,
+    @required this.taxon,
+    this.quantity = 0,
+  });
+
+  int getQuantity() {
+    return this.quantity;
+  }
+
+  void setQuantity(int newQuantity) {
+    this.quantity = newQuantity;
+    notifyListeners();
+  }
+
+  void incrementQty() {
+    this.quantity++;
+    notifyListeners();
+  }
 }

@@ -30,17 +30,22 @@ class _SelectDateTimeScreenState extends State<SelectDateTimeScreen> {
                   borderRadius: BorderRadius.circular(5.0)),
               elevation: 4.0,
               onPressed: () {
-                DatePicker.showDatePicker(context,
-                    theme: DatePickerTheme(
-                      containerHeight: 210.0,
-                    ),
-                    showTitleActions: true,
-                    minTime: DateTime(2000, 1, 1),
-                    maxTime: DateTime(2022, 12, 31), onConfirm: (date) {
-                  print('confirm $date');
-                  _date = '${date.year} - ${date.month} - ${date.day}';
-                  setState(() {});
-                }, currentTime: DateTime.now(), locale: LocaleType.en);
+                DatePicker.showDatePicker(
+                  context,
+                  locale: LocaleType.es,
+                  theme: DatePickerTheme(
+                    containerHeight: 210.0,
+                  ),
+                  showTitleActions: true,
+                  currentTime: DateTime.now(),
+                  minTime: DateTime(2000, 1, 1),
+                  maxTime: DateTime(2022, 12, 31),
+                  onConfirm: (date) {
+                    print('confirm $date');
+                    _date = '${date.year} - ${date.month} - ${date.day}';
+                    setState(() {});
+                  },
+                );
               },
               child: Container(
                 alignment: Alignment.center,
@@ -90,15 +95,20 @@ class _SelectDateTimeScreenState extends State<SelectDateTimeScreen> {
                   borderRadius: BorderRadius.circular(5.0)),
               elevation: 4.0,
               onPressed: () {
-                DatePicker.showTimePicker(context,
-                    theme: DatePickerTheme(
-                      containerHeight: 210.0,
-                    ),
-                    showTitleActions: true, onConfirm: (time) {
-                  print('confirm $time');
-                  _time = '${time.hour} : ${time.minute} : ${time.second}';
-                  setState(() {});
-                }, currentTime: DateTime.now(), locale: LocaleType.en);
+                DatePicker.showTimePicker(
+                  context,
+                  locale: LocaleType.es,
+                  theme: DatePickerTheme(
+                    containerHeight: 210.0,
+                  ),
+                  showTitleActions: true,
+                  onConfirm: (time) {
+                    print('confirm $time');
+                    _time = '${time.hour} : ${time.minute} : ${time.second}';
+                    setState(() {});
+                  },
+                  currentTime: DateTime.now(),
+                );
                 setState(() {});
               },
               child: Container(

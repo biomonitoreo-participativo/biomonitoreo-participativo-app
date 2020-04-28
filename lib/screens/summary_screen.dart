@@ -78,7 +78,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: ObservationsList(),
+              // child: ObservationsList(),
             ),
           ),
         ],

@@ -8,14 +8,22 @@ import 'screens/select_datetime_screen.dart';
 import 'screens/select_location_screen.dart';
 import 'screens/observations_screen.dart';
 import 'screens/summary_screen.dart';
+import 'models/input_observation_quantity.dart';
 
 void main() => runApp(ParticipatoryBioMonitoring());
 
 class ParticipatoryBioMonitoring extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ObservationData(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: ObservationData(),
+        ),
+        ChangeNotifierProvider.value(
+          value: InputObservationQuantity(),
+        ),
+      ],
       child: MaterialApp(
         title: 'Biomonitoreo participativo',
         theme: ThemeData(

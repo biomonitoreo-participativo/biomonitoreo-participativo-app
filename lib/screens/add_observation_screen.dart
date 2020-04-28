@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:biomonitoreoparticipativoapp/models/observation_data.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
-String newObservationSciName;
+/*String newObservationSciName;
 int newObservationQty = 1;
 String selectedTaxon;
 
@@ -86,13 +86,6 @@ class _AddObservationScreenState extends State<AddObservationScreen> {
                 color: Colors.lightBlueAccent,
               ),
             ),
-//            TextField(
-//              autofocus: true,
-//              textAlign: TextAlign.center,
-//              onChanged: (newText) {
-//                newObservationSciName = newText;
-//              },
-//            ),
             TypeAheadField(
               textFieldConfiguration: TextFieldConfiguration(
                 controller: _typeAheadController,
@@ -139,4 +132,4 @@ class _AddObservationScreenState extends State<AddObservationScreen> {
       ),
     );
   }
-}
+}*/
