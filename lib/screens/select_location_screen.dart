@@ -1,5 +1,7 @@
 import 'package:biomonitoreoparticipativoapp/models/location.dart';
+import 'package:biomonitoreoparticipativoapp/models/location_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
 import 'dart:collection';
@@ -507,62 +509,50 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
   }
 
   Widget _buildContainer() {
-    return Align(
-      alignment: Alignment.topRight,
+    return Positioned(
+      top: 5.0,
+      right: 15.0,
+      left: 15.0,
       child: Container(
-        color: Colors.blue,
-        margin: EdgeInsets.symmetric(vertical: 20.0),
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        // height: 25.0,
-        child: DropdownButton<String>(
-          value: dropdownValue,
-          icon: Icon(
-            Icons.arrow_downward,
-            color: Colors.black,
-          ),
-          iconSize: 24,
-          elevation: 16,
-          style: TextStyle(color: Colors.black),
-          underline: Container(
-            height: 2,
-            color: Colors.blue,
-          ),
-          onChanged: (String newValue) {
-            setState(() {
-              dropdownValue = newValue;
-              if (dropdownValue == 'Finca Esteban Cordero') {
-                _gotoLocation(9.43039, -83.84320);
-              } else if (dropdownValue == 'Sendero 3') {
-                _gotoLocation(9.48670, -83.80604);
-              } else if (dropdownValue == 'Reserva Cloud Bridge') {
-                _gotoLocation(9.47210, -83.57746);
-              } else if (dropdownValue == 'Sendero Mirador') {
-                _gotoLocation(9.25712, -83.39225);
-              } else if (dropdownValue == 'Sendero Huacas') {
-                _gotoLocation(9.11940, -83.06877);
-              } else if (dropdownValue == 'Sendero Asoprola') {
-                _gotoLocation(9.00549, -83.00901);
-              } else if (dropdownValue == 'Sendero Tablas') {
-                _gotoLocation(8.88802, -82.81732);
-              }
-            });
-          },
-          items: <String>[
-            'Finca Esteban Cordero',
-            'Reserva Cloud Bridge',
-            'Sendero 3',
-            'Sendero Asoprola',
-            'Sendero Huacas',
-            'Sendero Mirador',
-            'Sendero Tablas',
-          ].map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-        ),
-      ),
+          height: 50.0,
+          width: double.infinity,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0), color: Colors.white),
+          child: TypeAheadField(
+            textFieldConfiguration: TextFieldConfiguration(
+              autofocus: true,
+              decoration: InputDecoration(
+                hintText: 'Ingrese el nombre de la localidad',
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15.0, top: 15.0),
+                suffixIcon: IconButton(
+                    icon: IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: null,
+                  iconSize: 30.0,
+                )),
+              ),
+            ),
+            suggestionsCallback: (pattern) {
+              return LocationData.findByFilter(pattern);
+            },
+            itemBuilder: (context, suggestion) {
+              return ListTile(
+                leading: Icon(Icons.place),
+                title: Text(suggestion.name),
+                subtitle: Text(
+                    '${suggestion.decimalLongitude}, ${suggestion.decimalLatitude}'),
+              );
+            },
+            onSuggestionSelected: (suggestion) {
+              // This when someone click the items
+              print(suggestion);
+              _gotoLocation(
+                suggestion.decimalLatitude,
+                suggestion.decimalLongitude,
+              );
+            },
+          )),
     );
   }
 }
