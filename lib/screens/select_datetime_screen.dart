@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:biomonitoreoparticipativoapp/widgets/rounded_button.dart';
+import 'package:intl/intl.dart';
 import 'observations_screen.dart';
 
 class SelectDateTimeScreen extends StatefulWidget {
@@ -11,8 +12,26 @@ class SelectDateTimeScreen extends StatefulWidget {
 }
 
 class _SelectDateTimeScreenState extends State<SelectDateTimeScreen> {
+  // String _date = "Fecha no seleccionada";
+  // String _time = "Hora no seleccionada";
+
+  DateTime now;
+
   String _date = "Fecha no seleccionada";
   String _time = "Hora no seleccionada";
+
+  @override
+  void initState() {
+    super.initState();
+
+    now = new DateTime.now();
+
+    var dateFormatter = new DateFormat('yyyy-MM-dd');
+    _date = dateFormatter.format(now);
+
+    var timeFormatter = new DateFormat('HH:mm:ss');
+    _time = timeFormatter.format(now);
+  }
 
   @override
   Widget build(BuildContext context) {

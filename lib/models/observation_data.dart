@@ -328,7 +328,6 @@ class ObservationData with ChangeNotifier {
   ];
 
   UnmodifiableListView<Observation> get observations {
-    // sortObservations();
     _observations = _getSortedObservations(_observations);
     return UnmodifiableListView(
       _observations,
@@ -336,7 +335,6 @@ class ObservationData with ChangeNotifier {
   }
 
   UnmodifiableListView<Observation> get observedSpecies {
-    // sortObservations();
     _observations = _getSortedObservations(_observations);
     return UnmodifiableListView(
       _observations.where((obs) => obs.quantity > 0).toList(),
