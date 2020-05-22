@@ -99,7 +99,7 @@ class _ObservationsScreenState extends State<ObservationsScreen> {
                 TextField(
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(5.0),
-                    hintText: '#     nombre científico/nombre común',
+                    hintText: 'nombre científico/nombre común',
                   ),
                   onChanged: (string) {
                     String pattern;

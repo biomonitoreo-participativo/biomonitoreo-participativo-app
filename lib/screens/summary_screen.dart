@@ -2,11 +2,14 @@ import 'dart:collection';
 
 import 'package:biomonitoreoparticipativoapp/models/input_observation_quantity.dart';
 import 'package:biomonitoreoparticipativoapp/models/observation.dart';
-import 'package:biomonitoreoparticipativoapp/models/taxon.dart';
-import 'package:biomonitoreoparticipativoapp/screens/pdf_viewer.dart';
+import 'package:biomonitoreoparticipativoapp/models/provider_datetime.dart';
+import 'package:biomonitoreoparticipativoapp/models/provider_location.dart';
+import 'package:biomonitoreoparticipativoapp/models/provider_observer.dart';
+import 'package:biomonitoreoparticipativoapp/screens/pdf_viewer_screen.dart';
 import 'package:biomonitoreoparticipativoapp/widgets/observations_list_view.dart';
 import 'package:biomonitoreoparticipativoapp/widgets/rounded_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:biomonitoreoparticipativoapp/models/observation_data.dart';
@@ -36,7 +39,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
             padding: const EdgeInsets.only(
                 top: 20.0, left: 30.0, right: 30.0, bottom: 10.0),
             child: Text(
-              'Observador: Manuel Vargas',
+              'Observador: ${Provider.of<ProviderObserver>(context).getName()}',
               style: TextStyle(fontSize: 16.0),
             ),
           ),
@@ -44,7 +47,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
             padding: const EdgeInsets.only(
                 top: 10.0, left: 30.0, right: 30.0, bottom: 10.0),
             child: Text(
-              'Localidad: Savegre Ecolodge',
+              'Localidad: ${Provider.of<ProviderLocation>(context).getName()}',
               style: TextStyle(fontSize: 16.0),
             ),
           ),
@@ -52,38 +55,16 @@ class _SummaryScreenState extends State<SummaryScreen> {
             padding: const EdgeInsets.only(
                 top: 10.0, left: 30.0, right: 30.0, bottom: 10.0),
             child: Text(
-              'Fecha y hora: 2020-04-01 14:00 (30 min)',
+              'Fecha: ${Provider.of<ProviderDateTime>(context).getLabel()}',
               style: TextStyle(fontSize: 16.0),
             ),
           ),
-          Container(
-            padding: EdgeInsets.only(
-                top: 30.0, left: 30.0, right: 30.0, bottom: 30.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  '${Provider.of<ObservationData>(context).observationsCount} observaciones',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(
-                top: 30.0, left: 30.0, right: 30.0, bottom: 30.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  '${Provider.of<InputObservationQuantity>(context).getQuantity()} especies observadas',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-              ],
+          Padding(
+            padding: const EdgeInsets.only(
+                top: 10.0, left: 30.0, right: 30.0, bottom: 10.0),
+            child: Text(
+              'Cantidad de especies observadas: ${Provider.of<ObservationData>(context).getCountObservationsQtyGt0()}',
+              style: TextStyle(fontSize: 16.0),
             ),
           ),
           Expanded(
@@ -115,56 +96,59 @@ class _SummaryScreenState extends State<SummaryScreen> {
   }
 
   _generatePdfAndView(context) async {
-    List<Observation> data = [
-      Observation(
-        id: '000000001',
-        taxon: Taxon(
-          id: '000001',
-          scientificName: 'Panthera onca',
-          scientificNameAuthorship: '(Linnaeus, 1758)',
-          vernacularName: 'Jaguar',
-          taxonRank: 'species',
-        ),
-        quantity: 2,
-      ),
-      Observation(
-        id: '000000002',
-        taxon: Taxon(
-          id: '000002',
-          scientificName: 'Puma concolor',
-          scientificNameAuthorship: '(Linnaeus, 1771)',
-          vernacularName: 'Puma',
-          taxonRank: 'species',
-        ),
-        quantity: 4,
-      ),
-    ];
+    String observerName = Provider.of<ProviderObserver>(context).getName();
+    String dateTimeLabel = Provider.of<ProviderDateTime>(context).getLabel();
+    String locationName = Provider.of<ProviderLocation>(context).getName();
+    int observedSpecies =
+        Provider.of<ObservationData>(context).getCountObservationsQtyGt0();
+    List<Observation> data =
+        Provider.of<ObservationData>(context).getObservationsQtyGt0();
 
-    // final UnmodifiableListView<Observation> data = Provider.of<ObservationData>(context).observations;
+    String fileName = '$observerName-$dateTimeLabel-$locationName.pdf';
 
     final pdfLib.Document pdf = pdfLib.Document(deflate: zlib.encode);
-
-/*
-    pdf.addPage(
-      pdfLib.Page(
-        build: (pdfLib.Context context) => pdfLib.Center(
-          child: pdfLib.Text('Hello World!'),
-        ),
-      ),
-    );
-*/
 
     pdf.addPage(
       pdfLib.MultiPage(
         build: (context) => [
-          pdfLib.Table.fromTextArray(context: context, data: <List<String>>[
-            <String>['Cantidad', 'Nombre científico', 'Nombre común'],
-            ...data.map((item) => [
-                  item.quantity.toString(),
-                  item.taxon.scientificName,
-                  item.taxon.vernacularName,
-                ])
-          ]),
+          pdfLib.Center(
+            child: pdfLib.Text(
+              'Biomonitoreo participativo',
+              style: pdfLib.TextStyle(
+                  fontSize: 26, fontWeight: pdfLib.FontWeight.bold),
+            ),
+          ),
+          pdfLib.Center(
+            child: pdfLib.Text(
+              'Especies indicadoras',
+              style: pdfLib.TextStyle(
+                  fontSize: 24, fontWeight: pdfLib.FontWeight.bold),
+            ),
+          ),
+          pdfLib.Text('\n\n\n'),
+          pdfLib.Text('Observador: ${observerName}\n'),
+          pdfLib.Text('Localidad: ${locationName}\n'),
+          pdfLib.Text('Fecha y hora: ${dateTimeLabel}\n'),
+          pdfLib.Text('\n'),
+          pdfLib.Text('Cantidad de especies observadas: ${observedSpecies}\n'),
+          pdfLib.Text('\n\n'),
+          pdfLib.Center(
+            child: pdfLib.Text('Observaciones'),
+          ),
+          pdfLib.Text('\n'),
+          pdfLib.Table.fromTextArray(
+            context: context,
+            data: <List<String>>[
+              <String>['Cantidad', 'Nombre científico', 'Nombre común'],
+              ...data.map(
+                (obs) => [
+                  obs.quantity.toString(),
+                  obs.taxon.scientificName,
+                  obs.taxon.vernacularName,
+                ],
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -172,16 +156,15 @@ class _SummaryScreenState extends State<SummaryScreen> {
     final String dir = (await getApplicationDocumentsDirectory()).path;
     print(dir);
 
-    final String path = '$dir/monitoreo.pdf';
+    //final String path = '$dir/monitoreo.pdf';
+    final String path = '$dir/$fileName';
     final File file = File(path);
     await file.writeAsBytes(pdf.save());
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => PdfViewerPage(path: path),
+        builder: (_) => PDFViewerScreen(path: path),
       ),
     );
-
-    //final file = File('example.pdf');
-    //file.writeAsBytesSync(pdf.save());
+    // Navigator.pushNamed(context, PDFViewerScreen.id);
   }
 }

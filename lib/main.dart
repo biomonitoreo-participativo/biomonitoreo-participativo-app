@@ -1,6 +1,11 @@
+import 'package:biomonitoreoparticipativoapp/screens/pdf_viewer_screen.dart';
+import 'package:biomonitoreoparticipativoapp/widgets/observations_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'models/observation_data.dart';
+import 'models/provider_datetime.dart';
+import 'models/provider_location.dart';
+import 'models/provider_observer.dart';
 import 'screens/home_screen.dart';
 import 'screens/registration_screen.dart';
 import 'screens/login_screen.dart';
@@ -23,6 +28,15 @@ class ParticipatoryBioMonitoring extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: InputObservationQuantity(),
         ),
+        ChangeNotifierProvider.value(
+          value: ProviderLocation(),
+        ),
+        ChangeNotifierProvider.value(
+          value: ProviderDateTime(),
+        ),
+        ChangeNotifierProvider.value(
+          value: ProviderObserver(),
+        ),
       ],
       child: MaterialApp(
         title: 'Biomonitoreo participativo',
@@ -38,6 +52,7 @@ class ParticipatoryBioMonitoring extends StatelessWidget {
           SelectLocationScreen.id: (context) => SelectLocationScreen(),
           ObservationsScreen.id: (context) => ObservationsScreen(),
           SummaryScreen.id: (context) => SummaryScreen(),
+          PDFViewerScreen.id: (context) => PDFViewerScreen(),
         },
       ),
     );

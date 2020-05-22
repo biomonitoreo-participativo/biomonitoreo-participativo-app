@@ -14,7 +14,7 @@ class ObservationsListView extends StatelessWidget {
     InputObservationQuantity qtyModel =
         Provider.of<InputObservationQuantity>(context);
 
-    final observations = observationData.observedSpecies;
+    final observations = observationData.getObservationsQtyGt0();
 
     return ListView.builder(
       itemCount: observations.length,

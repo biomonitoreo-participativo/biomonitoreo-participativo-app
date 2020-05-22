@@ -1,8 +1,10 @@
+import 'package:biomonitoreoparticipativoapp/models/provider_observer.dart';
 import 'package:flutter/material.dart';
 import 'package:biomonitoreoparticipativoapp/widgets/rounded_button.dart';
 import 'package:biomonitoreoparticipativoapp/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
 import 'select_location_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -21,6 +23,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ProviderObserver providerObserver = Provider.of<ProviderObserver>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -72,6 +76,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     showSpinner = true;
                   });
                   try {
+                    providerObserver.setName(email);
+
                     final newUser = await _auth.createUserWithEmailAndPassword(
                         email: email, password: password);
                     if (newUser != null) {

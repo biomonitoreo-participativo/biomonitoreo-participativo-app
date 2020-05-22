@@ -334,6 +334,16 @@ class ObservationData with ChangeNotifier {
     );
   }
 
+  UnmodifiableListView<Observation> getObservationsQtyGt0() {
+    return UnmodifiableListView(
+      _observations.where((obs) => obs.quantity > 0).toList(),
+    );
+  }
+
+  int getCountObservationsQtyGt0() {
+    return (_observations.where((obs) => obs.quantity > 0).toList()).length;
+  }
+
   UnmodifiableListView<Observation> get observedSpecies {
     _observations = _getSortedObservations(_observations);
     return UnmodifiableListView(

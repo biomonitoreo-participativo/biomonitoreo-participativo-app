@@ -1,7 +1,9 @@
+import 'package:biomonitoreoparticipativoapp/models/provider_observer.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:biomonitoreoparticipativoapp/constants.dart';
 import 'package:biomonitoreoparticipativoapp/widgets/rounded_button.dart';
+import 'package:provider/provider.dart';
 import 'select_location_screen.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -21,6 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ProviderObserver providerObserver = Provider.of<ProviderObserver>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -72,6 +76,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     showSpinner = true;
                   });
                   try {
+                    providerObserver.setName(email);
+
                     final user = await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
                     if (user != null) {

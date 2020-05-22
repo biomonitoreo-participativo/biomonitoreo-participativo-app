@@ -1,11 +1,13 @@
 import 'package:biomonitoreoparticipativoapp/models/location.dart';
 import 'package:biomonitoreoparticipativoapp/models/location_data.dart';
+import 'package:biomonitoreoparticipativoapp/models/provider_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
 import 'dart:collection';
 import 'package:biomonitoreoparticipativoapp/screens/select_datetime_screen.dart';
+import 'package:provider/provider.dart';
 
 class SelectLocationScreen extends StatefulWidget {
   static const String id = 'select_location_screen';
@@ -187,268 +189,328 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ProviderLocation providerLocation = Provider.of<ProviderLocation>(context);
+
     markers.addAll(
       [
         Marker(
           markerId: MarkerId('01'),
           position: LatLng(9.43039, -83.84320),
           infoWindow: InfoWindow(
-              title: "Finca Esteban Cordero (9.43039, -83.84320)",
-              onTap: () {
-                print('Finca Esteban Cordero');
-              }),
+            title: "Finca Esteban Cordero (9.43039, -83.84320)",
+          ),
+          onTap: () {
+            print('Finca Esteban Cordero');
+            providerLocation.setName('Finca Esteban Cordero');
+          },
         ),
         Marker(
           markerId: MarkerId('02'),
           position: LatLng(9.43362, -83.85632),
           infoWindow: InfoWindow(
-              title: "Finca de Victor (9.43362, -83.85632)",
-              onTap: () {
-                print('Hamacas');
-              }),
+            title: "Finca de Victor (9.43362, -83.85632)",
+          ),
+          onTap: () {
+            print('Finca de Victor');
+            providerLocation.setName('Finca de Victor');
+          },
         ),
         Marker(
           markerId: MarkerId('03'),
           position: LatLng(9.48405, -83.80704),
           infoWindow: InfoWindow(
-              title: "Finca de Andrey y Sonia (9.48405, -83.80704)",
-              onTap: () {
-                print('Río Blanco');
-              }),
+            title: "Finca de Andrey y Sonia (9.48405, -83.80704)",
+          ),
+          onTap: () {
+            print('Finca de Andrey y Sonia');
+            providerLocation.setName('Finca de Andrey y Sonia');
+          },
         ),
         Marker(
           markerId: MarkerId('04'),
           position: LatLng(9.50930, -83.79451),
           infoWindow: InfoWindow(
-              title: "Finca de Rafael (9.50930, -83.79451)",
-              onTap: () {
-                print('Savegre Ecolodge');
-              }),
+            title: "Finca de Rafael (9.50930, -83.79451)",
+          ),
+          onTap: () {
+            print('Finca de Rafael');
+            providerLocation.setName('Finca de Rafael');
+          },
         ),
         Marker(
           markerId: MarkerId('05'),
           position: LatLng(9.48670, -83.80604),
           infoWindow: InfoWindow(
-              title: "Sendero 3 (9.48670, -83.80604)",
-              onTap: () {
-                print('Cabagra');
-              }),
+            title: "Sendero 3 (9.48670, -83.80604)",
+          ),
+          onTap: () {
+            print('Sendero 3');
+            providerLocation.setName('Sendero 3');
+          },
         ),
         Marker(
           markerId: MarkerId('06'),
           position: LatLng(9.50198, -83.69381),
           infoWindow: InfoWindow(
-              title: "Finca Cosme Gamboa (9.50198, -83.69381)",
-              onTap: () {
-                print('Tres Colinas');
-              }),
+            title: "Finca Cosme Gamboa (9.50198, -83.69381)",
+          ),
+          onTap: () {
+            print('Finca Cosme Gamboa');
+            providerLocation.setName('Finca Cosme Gamboa');
+          },
         ),
         Marker(
           markerId: MarkerId('07'),
           position: LatLng(9.53331, -83.70460),
           infoWindow: InfoWindow(
-              title: "Finca de Errol Salazar (9.53331, -83.70460)",
-              onTap: () {
-                print('Finca de Errol Salazar');
-              }),
+            title: "Finca de Errol Salazar (9.53331, -83.70460)",
+          ),
+          onTap: () {
+            print('Finca de Errol Salazar');
+            providerLocation.setName('Finca de Errol Salazar');
+          },
         ),
         Marker(
           markerId: MarkerId('08'),
           position: LatLng(9.54667, -83.71342),
           infoWindow: InfoWindow(
-              title: "Finca Martín Salazar (9.54667, -83.71342)",
-              onTap: () {
-                print('Finca Martín Salazar');
-              }),
+            title: "Finca Martín Salazar (9.54667, -83.71342)",
+          ),
+          onTap: () {
+            print('Finca Martín Salazar');
+            providerLocation.setName('Finca Martín Salazar');
+          },
         ),
         Marker(
           markerId: MarkerId('09'),
           position: LatLng(9.46367, -83.59874),
           infoWindow: InfoWindow(
-              title: "Camino San Gerardo Los Ángeles (9.46367, -83.59874)",
-              onTap: () {
-                print('Camino San Gerardo Los Ángeles');
-              }),
+            title: "Camino San Gerardo Los Ángeles (9.46367, -83.59874)",
+          ),
+          onTap: () {
+            print('Camino San Gerardo Los Ángeles');
+            providerLocation.setName('Camino San Gerardo Los Ángeles');
+          },
         ),
         Marker(
           markerId: MarkerId('10'),
           position: LatLng(9.47210, -83.57746),
           infoWindow: InfoWindow(
-              title: "Reserva Cloud Bridge (9.47210, -83.57746)",
-              onTap: () {
-                print('Reserva Cloud Bridge');
-              }),
+            title: "Reserva Cloud Bridge (9.47210, -83.57746)",
+          ),
+          onTap: () {
+            print('Reserva Cloud Bridge');
+            providerLocation.setName('Reserva Cloud Bridge');
+          },
         ),
         Marker(
           markerId: MarkerId('11'),
           position: LatLng(9.34146, -83.50421),
           infoWindow: InfoWindow(
-              title: "Sendero Zaddy (9.34146, -83.50421)",
-              onTap: () {
-                print('Sendero Zaddy');
-              }),
+            title: "Sendero Zaddy (9.34146, -83.50421)",
+          ),
+          onTap: () {
+            print('Sendero Zaddy');
+            providerLocation.setName('Sendero Zaddy');
+          },
         ),
         Marker(
           markerId: MarkerId('12'),
           position: LatLng(9.36354, -83.49639),
           infoWindow: InfoWindow(
-              title: "Sendero Ena (9.36354, -83.49639)",
-              onTap: () {
-                print('Sendero Ena');
-              }),
+            title: "Sendero Ena (9.36354, -83.49639)",
+          ),
+          onTap: () {
+            print('Sendero Ena');
+            providerLocation.setName('Sendero Ena');
+          },
         ),
         Marker(
           markerId: MarkerId('13'),
           position: LatLng(9.28686, -83.45692),
           infoWindow: InfoWindow(
-              title: "Sendero Perica (9.28686, -83.45692)",
-              onTap: () {
-                print('Sendero Perica');
-              }),
+            title: "Sendero Perica (9.28686, -83.45692)",
+          ),
+          onTap: () {
+            print('Sendero Perica');
+            providerLocation.setName('Sendero Perica');
+          },
         ),
         Marker(
           markerId: MarkerId('14'),
           position: LatLng(9.23980, -83.37892),
           infoWindow: InfoWindow(
-              title: "Guadalajara (9.23980, -83.37892)",
-              onTap: () {
-                print('Guadalajara');
-              }),
+            title: "Guadalajara (9.23980, -83.37892)",
+          ),
+          onTap: () {
+            print('Guadalajara');
+            providerLocation.setName('Guadalajara');
+          },
         ),
         Marker(
           markerId: MarkerId('15'),
           position: LatLng(9.25712, -83.39225),
           infoWindow: InfoWindow(
-              title: "Sendero Mirador (9.25712, -83.39225)",
-              onTap: () {
-                print('Sendero Mirador');
-              }),
+            title: "Sendero Mirador (9.25712, -83.39225)",
+          ),
+          onTap: () {
+            print('Sendero Mirador');
+            providerLocation.setName('Sendero Mirador');
+          },
         ),
         Marker(
           markerId: MarkerId('16'),
           position: LatLng(9.27587, -83.37080),
           infoWindow: InfoWindow(
-              title: "Ruta las aves (9.27587, -83.37080)",
-              onTap: () {
-                print('Ruta las aves');
-              }),
+            title: "Ruta las aves (9.27587, -83.37080)",
+          ),
+          onTap: () {
+            print('Ruta las aves');
+            providerLocation.setName('Ruta las aves');
+          },
         ),
         Marker(
           markerId: MarkerId('17'),
           position: LatLng(9.23270, -83.30128),
           infoWindow: InfoWindow(
-              title: "Ujarrás (9.23270, -83.30128)",
-              onTap: () {
-                print('Ujarrás');
-              }),
+            title: "Ujarrás (9.23270, -83.30128)",
+          ),
+          onTap: () {
+            print('Ujarrás');
+            providerLocation.setName('Ujarrás');
+          },
         ),
         Marker(
           markerId: MarkerId('18'),
           position: LatLng(9.26302, -83.33883),
           infoWindow: InfoWindow(
-              title: "Sendero Zapotal (9.26302, -83.33883)",
-              onTap: () {
-                print('Sendero Zapotal');
-              }),
+            title: "Sendero Zapotal (9.26302, -83.33883)",
+          ),
+          onTap: () {
+            print('Sendero Zapotal');
+            providerLocation.setName('Sendero Zapotal');
+          },
         ),
         Marker(
           markerId: MarkerId('19'),
           position: LatLng(9.08958, -83.11559),
           infoWindow: InfoWindow(
-              title: "Sendero Parcelas (9.08958, -83.11559)",
-              onTap: () {
-                print('Sendero Parcelas');
-              }),
+            title: "Sendero Parcelas (9.08958, -83.11559)",
+          ),
+          onTap: () {
+            print('Sendero Parcelas');
+            providerLocation.setName('Sendero Parcelas');
+          },
         ),
         Marker(
           markerId: MarkerId('20'),
           position: LatLng(9.11940, -83.06877),
           infoWindow: InfoWindow(
-              title: "Sendero Huacas (9.11940, -83.06877)",
-              onTap: () {
-                print('Sendero Huacas');
-              }),
+            title: "Sendero Huacas (9.11940, -83.06877)",
+          ),
+          onTap: () {
+            print('Sendero Huacas');
+            providerLocation.setName('Sendero Huacas');
+          },
         ),
         Marker(
           markerId: MarkerId('21'),
           position: LatLng(9.02319, -83.05455),
           infoWindow: InfoWindow(
-              title: "Sendero 1 (9.02319, -83.05455)",
-              onTap: () {
-                print('Sendero 1');
-              }),
+            title: "Sendero 1 (9.02319, -83.05455)",
+          ),
+          onTap: () {
+            print('Sendero 1');
+            providerLocation.setName('Sendero 1');
+          },
         ),
         Marker(
           markerId: MarkerId('22'),
           position: LatLng(9.03876, -83.03779),
           infoWindow: InfoWindow(
-              title: "Finca María Isabel (9.03876, -83.03779)",
-              onTap: () {
-                print('Finca María Isabel');
-              }),
+            title: "Finca María Isabel (9.03876, -83.03779)",
+          ),
+          onTap: () {
+            print('Finca María Isabel');
+            providerLocation.setName('Finca María Isabel');
+          },
         ),
         Marker(
           markerId: MarkerId('23'),
           position: LatLng(9.03426, -83.04131),
           infoWindow: InfoWindow(
-              title: "Sendero Biolley (9.03426, -83.04131)",
-              onTap: () {
-                print('Sendero Biolley');
-              }),
+            title: "Sendero Biolley (9.03426, -83.04131)",
+          ),
+          onTap: () {
+            print('Sendero Biolley');
+            providerLocation.setName('Sendero Biolley');
+          },
         ),
         Marker(
           markerId: MarkerId('24'),
           position: LatLng(9.01146, -83.02309),
           infoWindow: InfoWindow(
-              title: "Sendero Colorado (9.01146, -83.02309)",
-              onTap: () {
-                print('Sendero Colorado');
-              }),
+            title: "Sendero Colorado (9.01146, -83.02309)",
+          ),
+          onTap: () {
+            print('Sendero Colorado');
+            providerLocation.setName('Sendero Colorado');
+          },
         ),
         Marker(
           markerId: MarkerId('25'),
           position: LatLng(9.00549, -83.00901),
           infoWindow: InfoWindow(
-              title: "Sendero Asoprola (9.00549, -83.00901)",
-              onTap: () {
-                print('Sendero Asoprola');
-              }),
+            title: "Sendero Asoprola (9.00549, -83.00901)",
+          ),
+          onTap: () {
+            print('Sendero Asoprola');
+            providerLocation.setName('Sendero Asoprola');
+          },
         ),
         Marker(
           markerId: MarkerId('26'),
           position: LatLng(9.13701, -83.19557),
           infoWindow: InfoWindow(
-              title: "Sendero Cabagra (9.13701, -83.19557)",
-              onTap: () {
-                print('Sendero Cabagra');
-              }),
+            title: "Sendero Cabagra (9.13701, -83.19557)",
+          ),
+          onTap: () {
+            print('Sendero Cabagra');
+            providerLocation.setName('Sendero Cabagra');
+          },
         ),
         Marker(
           markerId: MarkerId('27'),
           position: LatLng(8.93879, -83.20337),
           infoWindow: InfoWindow(
-              title: "Sendero Chánguena (8.93879, -83.20337)",
-              onTap: () {
-                print('Sendero Chánguena');
-              }),
+            title: "Sendero Chánguena (8.93879, -83.20337)",
+          ),
+          onTap: () {
+            print('Sendero Chánguena');
+            providerLocation.setName('Sendero Chánguena');
+          },
         ),
         Marker(
           markerId: MarkerId('28'),
           position: LatLng(8.95203, -82.93996),
           infoWindow: InfoWindow(
-              title: "Sendero Pittier (8.95203, -82.93996)",
-              onTap: () {
-                print('Sendero Pittier');
-              }),
+            title: "Sendero Pittier (8.95203, -82.93996)",
+          ),
+          onTap: () {
+            print('Sendero Pittier');
+            providerLocation.setName('Sendero Pittier');
+          },
         ),
         Marker(
           markerId: MarkerId('29'),
           position: LatLng(8.88802, -82.81732),
           infoWindow: InfoWindow(
-              title: "Sendero Tablas (8.88802, -82.81732)",
-              onTap: () {
-                print('Sendero Tablas');
-              }),
+            title: "Sendero Tablas prueba (8.88802, -82.81732)",
+          ),
+          onTap: () {
+            print('Sendero Tablas');
+            providerLocation.setName('Sendero Tablas');
+          },
         ),
       ],
     );
@@ -471,8 +533,6 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
         ),
       ],
     );
-
-    String dropdownValue = 'One';
 
     return Scaffold(
       appBar: AppBar(

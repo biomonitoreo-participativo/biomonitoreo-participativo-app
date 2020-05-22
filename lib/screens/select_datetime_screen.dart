@@ -1,7 +1,9 @@
+import 'package:biomonitoreoparticipativoapp/models/provider_datetime.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:biomonitoreoparticipativoapp/widgets/rounded_button.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'observations_screen.dart';
 
 class SelectDateTimeScreen extends StatefulWidget {
@@ -35,6 +37,8 @@ class _SelectDateTimeScreenState extends State<SelectDateTimeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ProviderDateTime providerDateTime = Provider.of<ProviderDateTime>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Selección de fecha y hora'),
@@ -180,6 +184,7 @@ class _SelectDateTimeScreenState extends State<SelectDateTimeScreen> {
                   title: 'Ingreso de observaciones',
                   colour: Colors.blue,
                   onPressed: () {
+                    providerDateTime.setLabel('$_date-$_time');
                     Navigator.pushNamed(context, ObservationsScreen.id);
                   },
                 ),
