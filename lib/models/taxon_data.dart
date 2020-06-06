@@ -10,6 +10,8 @@ class TaxonData extends ChangeNotifier {
       scientificNameAuthorship: '(Linnaeus, 1758)',
       vernacularName: 'jaguar',
       taxonRank: 'species',
+      urlSpeciesPage: '',
+      urlImage01: '',
     ),
     Taxon(
       id: '000002',
@@ -17,6 +19,8 @@ class TaxonData extends ChangeNotifier {
       scientificNameAuthorship: '(Linnaeus, 1771)',
       vernacularName: 'puma',
       taxonRank: 'species',
+      urlSpeciesPage: '',
+      urlImage01: '',
     ),
     Taxon(
       id: '000003',
@@ -24,6 +28,8 @@ class TaxonData extends ChangeNotifier {
       scientificNameAuthorship: '(Linnaeus, 1758)',
       vernacularName: 'ocelote, manigordo',
       taxonRank: 'species',
+      urlSpeciesPage: '',
+      urlImage01: '',
     ),
     Taxon(
       id: '000004',
@@ -31,6 +37,8 @@ class TaxonData extends ChangeNotifier {
       scientificNameAuthorship: '(É.Geoffroy Saint-Hilaire, 1803)',
       vernacularName: 'yaguarundi, león breñero',
       taxonRank: 'species',
+      urlSpeciesPage: '',
+      urlImage01: '',
     ),
     Taxon(
       id: '000005',
@@ -38,6 +46,8 @@ class TaxonData extends ChangeNotifier {
       scientificNameAuthorship: '(É.Geoffroy Saint-Hilaire, 1803)',
       vernacularName: 'oncilla, caucel',
       taxonRank: 'species',
+      urlSpeciesPage: '',
+      urlImage01: '',
     ),
     Taxon(
       id: '000006',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'observation.dart';
 import 'observation_data.dart';
 import 'input_observation_quantity.dart';
@@ -12,6 +13,15 @@ class ObservationTile extends StatelessWidget {
     final inputObservationQuantity =
         Provider.of<InputObservationQuantity>(context);
 
+    _launchURL(url) async {
+      // const url = 'https://flutter.dev';
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    }
+
     return ListTile(
       contentPadding: EdgeInsets.only(left: 10.0, right: 5.0),
       onTap: () {
@@ -20,13 +30,24 @@ class ObservationTile extends StatelessWidget {
         inputObservationQuantity.setQuantity(1);
         observationData.sortObservations();*/
       },
-      leading: Text(
-        observation.quantity > 0 ? '${observation.quantity}' : '',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: observation.quantity > 0 ? 20 : 16,
-          color: observation.quantity > 0 ? Colors.green : Colors.black,
-        ),
+      onLongPress: () {
+        _launchURL(observation.taxon.urlSpeciesPage);
+      },
+      leading: Wrap(
+        spacing: 8,
+        children: <Widget>[
+          CircleAvatar(
+            backgroundImage: NetworkImage(observation.taxon.urlImage01),
+          ),
+          Text(
+            observation.quantity > 0 ? '${observation.quantity}' : '',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: observation.quantity > 0 ? 20 : 16,
+              color: observation.quantity > 0 ? Colors.green : Colors.black,
+            ),
+          ),
+        ],
       ),
       title: RichText(
         text: TextSpan(

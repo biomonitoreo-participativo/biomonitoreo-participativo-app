@@ -13,6 +13,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '(Linnaeus, 1758)',
         vernacularName: 'Jaguar',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Panthera_onca',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F64711000%2Foriginal.jpg%3F1585324584',
       ),
     ),
     Observation(
@@ -23,6 +26,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '(Linnaeus, 1771)',
         vernacularName: 'Puma',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Puma_concolor',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F63212145%2Foriginal.jpg%3F1583882817',
       ),
     ),
     Observation(
@@ -33,6 +39,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '(Linnaeus, 1758)',
         vernacularName: 'Ocelote, manigordo',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Leopardus_pardalis',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F34789556%2Foriginal.jpg%3F1555244136',
       ),
     ),
     Observation(
@@ -43,6 +52,10 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Yaguarundi, león breñero',
         taxonRank: 'species',
+        urlSpeciesPage:
+            'https://es.wikipedia.org/wiki/Herpailurus_yagouaroundi',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F68117291%2Foriginal.jpg%3F1587593109',
       ),
     ),
     Observation(
@@ -53,6 +66,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Oncilla, caucel',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Leopardus_tigrinus',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F47937315%2Foriginal.jpeg%3F1565606591',
       ),
     ),
     Observation(
@@ -63,6 +79,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Tigrillo',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Leopardus_wiedii',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F31429483%2Foriginal.jpeg%3F1550191898',
       ),
     ),
     Observation(
@@ -73,6 +92,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Saíno, pecarí de collar',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Pecari_tajacu',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F58955913%2Foriginal.jpg%3F1578016416',
       ),
     ),
     Observation(
@@ -83,16 +105,22 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Cabro de monte',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Mazama_temama',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F61813810%2Foriginal.jpeg%3F1582166980',
       ),
     ),
     Observation(
       id: '000000009',
       taxon: Taxon(
         id: '000009',
-        scientificName: 'Odoicoleus virginianus',
+        scientificName: 'Odocoileus virginianus',
         scientificNameAuthorship: '',
         vernacularName: 'Venado cola blanca',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Odocoileus_virginianus',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F58894262%2Foriginal.jpg%3F1577928114',
       ),
     ),
     Observation(
@@ -103,6 +131,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Danta',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Tapirus_bairdii',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F44830400%2Foriginal.jpeg%3F1563043028',
       ),
     ),
     Observation(
@@ -113,16 +144,22 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Mono congo',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Alouatta_palliata',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F60523695%2Foriginal.jpeg%3F1580359578',
       ),
     ),
     Observation(
       id: '000000012',
       taxon: Taxon(
         id: '000012',
-        scientificName: 'Ateles geoffrogyi',
+        scientificName: 'Ateles geoffroyi',
         scientificNameAuthorship: '',
         vernacularName: 'Mono araña',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Ateles_geoffroyi',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F60166181%2Foriginal.jpg%3F1579843415',
       ),
     ),
     Observation(
@@ -133,6 +170,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Mono cara blanca',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Cebus_capucinus',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F59897225%2Foriginal.jpg%3F1579441981',
       ),
     ),
     Observation(
@@ -143,6 +183,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Mono tití',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Saimiri_oerstedii',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F68525666%2Foriginal.jpeg%3F1587761459',
       ),
     ),
     Observation(
@@ -153,6 +196,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Cherenga, guatusa',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Dasyprocta_punctata',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F59785668%2Foriginal.jpg%3F1579273133',
       ),
     ),
     Observation(
@@ -163,6 +209,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Tepezcuintle',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Cuniculus_paca',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F13451022%2Foriginal.jpg%3F1518377789',
       ),
     ),
     Observation(
@@ -173,6 +222,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Quetzal',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Pharomachrus_mocinno',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F63369148%2Foriginal.jpeg%3F1584069503',
       ),
     ),
     Observation(
@@ -183,6 +235,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Trogón cabeciverde',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Trogon_rufus',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F59930517%2Foriginal.jpg%3F1579479742',
       ),
     ),
     Observation(
@@ -193,6 +248,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Trogón vientribermejo',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Trogon_bairdii',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F32168215%2Foriginal.jpg%3F1551451811',
       ),
     ),
     Observation(
@@ -203,6 +261,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Trogón cabecimorado',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Trogon_caligatus',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F60401052%2Foriginal.jpg%3F1580165340',
       ),
     ),
     Observation(
@@ -213,6 +274,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Trogón coliplomizo',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Trogon_massena',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F30868699%2Foriginal.jpg%3F1548983795',
       ),
     ),
     Observation(
@@ -223,6 +287,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Trogón collarejo',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Trogon_collaris',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F59834192%2Foriginal.jpg%3F1579355667',
       ),
     ),
     Observation(
@@ -233,6 +300,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Pájaro campana',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Panthera_onca',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F64711000%2Foriginal.jpg%3F1585324584',
       ),
     ),
     Observation(
@@ -243,6 +313,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Jilguero',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Myadestes_melanops',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F7746636%2Foriginal.jpg%3F1494538489',
       ),
     ),
     Observation(
@@ -253,6 +326,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Gallina de monte, tinamú grande',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Tinamus_major',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F60447455%2Foriginal.jpg%3F1580242920',
       ),
     ),
     Observation(
@@ -263,16 +339,22 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Gallina de monte, tinamú serrano',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Nothocercus_bonapartei',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F65542442%2Foriginal.jpeg%3F1585950161',
       ),
     ),
     Observation(
       id: '000000027',
       taxon: Taxon(
         id: '000027',
-        scientificName: 'Cryturellus soui',
+        scientificName: 'Crypturellus soui',
         scientificNameAuthorship: '',
         vernacularName: 'Gallina de monte, tinamú chico',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Crypturellus_soui',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F67850151%2Foriginal.jpeg%3F1587433888',
       ),
     ),
     Observation(
@@ -283,6 +365,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Pavón grande',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Crax_rubra',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F69042485%2Foriginal.jpg%3F1587866282',
       ),
     ),
     Observation(
@@ -293,6 +378,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Pava granadera',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Penelope_purpurascens',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F46470599%2Foriginal.jpeg%3F1564372526',
       ),
     ),
     Observation(
@@ -303,6 +391,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Pajuila, chachalaca cabecigrís',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Ortalis_cinereiceps',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F59991177%2Foriginal.jpeg%3F1579561479',
       ),
     ),
     Observation(
@@ -313,6 +404,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Pava negra',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Chamaepetes_unicolor',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F32180207%2Foriginal.jpeg%3F1551471923',
       ),
     ),
     Observation(
@@ -323,6 +417,9 @@ class ObservationData with ChangeNotifier {
         scientificNameAuthorship: '',
         vernacularName: 'Rana arlequín',
         taxonRank: 'species',
+        urlSpeciesPage: 'https://es.wikipedia.org/wiki/Atelopus_varius',
+        urlImage01:
+            'https://api.gbif.org/v1/image/unsafe/https%3A%2F%2Fstatic.inaturalist.org%2Fphotos%2F47826514%2Foriginal.jpeg%3F1565529455',
       ),
     ),
   ];

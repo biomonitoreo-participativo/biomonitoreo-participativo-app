@@ -11,6 +11,8 @@ class Taxon {
   final String vernacularName;
   @required
   final String taxonRank;
+  final String urlSpeciesPage;
+  final String urlImage01;
 
   Taxon({
     this.id,
@@ -18,5 +20,7 @@ class Taxon {
     this.scientificNameAuthorship,
     this.vernacularName,
     this.taxonRank,
+    this.urlSpeciesPage,
+    this.urlImage01,
   });
 }

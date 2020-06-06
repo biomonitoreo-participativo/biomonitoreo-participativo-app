@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 24.0,
               ),
               RoundedButton(
-                title: 'Ingresar',
+                title: 'Ingresar con correo eletrónico y clave',
                 colour: Colors.blue,
                 onPressed: () async {
                   setState(() {
@@ -80,6 +80,28 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     final user = await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
+                    if (user != null) {
+                      Navigator.pushNamed(context, SelectLocationScreen.id);
+                    }
+                    setState(() {
+                      showSpinner = false;
+                    });
+                  } catch (e) {
+                    print(e);
+                  }
+                },
+              ),
+              RoundedButton(
+                title: 'Ingresar de manera anónima',
+                colour: Colors.blue,
+                onPressed: () async {
+                  setState(() {
+                    showSpinner = true;
+                  });
+                  try {
+                    providerObserver.setName(email);
+
+                    final user = await _auth.signInAnonymously();
                     if (user != null) {
                       Navigator.pushNamed(context, SelectLocationScreen.id);
                     }
