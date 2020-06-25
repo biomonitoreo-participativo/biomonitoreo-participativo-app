@@ -22,8 +22,10 @@ class CupertinoHomeScaffold extends StatelessWidget {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
         items: [
-          _buildItem(TabItem.jobs),
-          _buildItem(TabItem.entries),
+          _buildItem(TabItem.events),
+          _buildItem(TabItem.occurrences),
+          _buildItem(TabItem.localities),
+          _buildItem(TabItem.occurrences2),
           _buildItem(TabItem.account),
         ],
         onTap: (index) => onSelectTab(TabItem.values[index]),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/jobs/jobs_page.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/events/events_page.dart';
 import 'package:biomonitoreoparticipativoapp/app/sign_in/sign_in_page.dart';
 import 'package:biomonitoreoparticipativoapp/services/auth.dart';
 import 'package:biomonitoreoparticipativoapp/services/database.dart';

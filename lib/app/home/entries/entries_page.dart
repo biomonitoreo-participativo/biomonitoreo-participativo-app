@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/entries/entries_bloc.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/entries/entries_list_tile.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/jobs/list_items_builder.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/events/list_items_builder.dart';
 import 'package:biomonitoreoparticipativoapp/services/database.dart';
 
 class EntriesPage extends StatelessWidget {
@@ -18,7 +18,7 @@ class EntriesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Entries'),
+        title: Text('Resumen'),
         elevation: 2.0,
       ),
       body: _buildContents(context),

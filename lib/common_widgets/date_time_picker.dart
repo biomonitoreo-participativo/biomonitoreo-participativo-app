@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/job_entries/format.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/event_occurrences/format.dart';
 import 'package:biomonitoreoparticipativoapp/common_widgets/input_dropdown.dart';
 
 class DateTimePicker extends StatelessWidget {

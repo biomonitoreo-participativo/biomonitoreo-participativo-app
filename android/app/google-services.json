@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "788893424260-v0p50shnr4tn1bl96je0sapdkqh8smk1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.biomonitoreoparticipativo.biomonitoreoparticipativoapp",
+            "certificate_hash": "4662565bcf3f136e01533a689a83bd34f99913ab"
+          }
+        },
+        {
           "client_id": "788893424260-gb5puqr93beesknvc9tg8645tlrhjeda.apps.googleusercontent.com",
           "client_type": 3
         }

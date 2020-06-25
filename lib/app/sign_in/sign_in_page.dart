@@ -86,7 +86,7 @@ class SignInPage extends StatelessWidget {
 
   Widget _buildContent(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -95,7 +95,18 @@ class SignInPage extends StatelessWidget {
             child: _buildHeader(),
             height: 50.0,
           ),
-          SizedBox(height: 48.0),
+          SizedBox(height: 8.0),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 40.0),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: Image.asset(
+                'images/logo-pronamec.png',
+                scale: 0.5,
+              ),
+            ),
+          ),
+          SizedBox(height: 8.0),
           SocialSignInButton(
             assetName: 'images/logo-google-30x30.png',
             text: 'Ingresar con cuenta de Google',
@@ -118,7 +129,7 @@ class SignInPage extends StatelessWidget {
             color: Colors.teal[700],
             onPressed: isLoading ? null : () => _signInWithEmail(context),
           ),
-          SizedBox(height: 8.0),
+/*          SizedBox(height: 8.0),
           Text(
             'o',
             style: TextStyle(
@@ -132,7 +143,7 @@ class SignInPage extends StatelessWidget {
             textColor: Colors.black,
             color: Colors.lime[300],
             onPressed: isLoading ? null : () => _signInAnonymously(context),
-          ),
+          ),*/
         ],
       ),
     );
@@ -145,10 +156,10 @@ class SignInPage extends StatelessWidget {
       );
     }
     return Text(
-      'Inicio de sesión',
+      'Especies indicadoras',
       textAlign: TextAlign.center,
       style: TextStyle(
-        fontSize: 32.0,
+        fontSize: 28.0,
         fontWeight: FontWeight.w600,
       ),
     );

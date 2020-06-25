@@ -1,20 +1,20 @@
 import 'dart:async';
 
 import 'package:meta/meta.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/models/entry.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/models/job.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/models/occurrence.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/models/event.dart';
 import 'package:biomonitoreoparticipativoapp/services/api_path.dart';
 import 'package:biomonitoreoparticipativoapp/services/firestore_service.dart';
 
 abstract class Database {
-  Future<void> setJob(Job job);
-  Future<void> deleteJob(Job job);
-  Stream<Job> jobStream({@required String jobId});
-  Stream<List<Job>> jobsStream();
+  Future<void> setEvent(Event event);
+  Future<void> deleteEvent(Event event);
+  Stream<Event> eventStream({@required String eventId});
+  Stream<List<Event>> eventsStream();
 
-  Future<void> setEntry(Entry entry);
-  Future<void> deleteEntry(Entry entry);
-  Stream<List<Entry>> entriesStream({Job job});
+  Future<void> setOccurrence(Occurrence occurrence);
+  Future<void> deleteOccurrence(Occurrence occurrence);
+  Stream<List<Occurrence>> occurrencesStream({Event event});
 }
 
 String documentIdFromCurrentDate() => DateTime.now().toIso8601String();
@@ -26,54 +26,56 @@ class FirestoreDatabase implements Database {
   final _service = FirestoreService.instance;
 
   @override
-  Future<void> setJob(Job job) async => await _service.setData(
-        path: APIPath.job(uid, job.id),
-        data: job.toMap(),
+  Future<void> setEvent(Event event) async => await _service.setData(
+        path: APIPath.event(uid, event.id),
+        data: event.toMap(),
       );
 
   @override
-  Future<void> deleteJob(Job job) async {
-    // delete where entry.jobId == job.jobId
-    final allEntries = await entriesStream(job: job).first;
-    for (Entry entry in allEntries) {
-      if (entry.jobId == job.id) {
-        await deleteEntry(entry);
+  Future<void> deleteEvent(Event event) async {
+    // delete where occurrence.eventId == event.eventId
+    final allOccurrences = await occurrencesStream(event: event).first;
+    for (Occurrence occurrence in allOccurrences) {
+      if (occurrence.eventId == event.id) {
+        await deleteOccurrence(occurrence);
       }
     }
-    // delete job
-    await _service.deleteData(path: APIPath.job(uid, job.id));
+    // delete event
+    await _service.deleteData(path: APIPath.event(uid, event.id));
   }
 
   @override
-  Stream<Job> jobStream({@required String jobId}) => _service.documentStream(
-        path: APIPath.job(uid, jobId),
-        builder: (data, documentId) => Job.fromMap(data, documentId),
+  Stream<Event> eventStream({@required String eventId}) =>
+      _service.documentStream(
+        path: APIPath.event(uid, eventId),
+        builder: (data, documentId) => Event.fromMap(data, documentId),
       );
 
   @override
-  Stream<List<Job>> jobsStream() => _service.collectionStream(
-        path: APIPath.jobs(uid),
-        builder: (data, documentId) => Job.fromMap(data, documentId),
+  Stream<List<Event>> eventsStream() => _service.collectionStream(
+        path: APIPath.events(uid),
+        builder: (data, documentId) => Event.fromMap(data, documentId),
       );
 
   @override
-  Future<void> setEntry(Entry entry) async => await _service.setData(
-        path: APIPath.entry(uid, entry.id),
-        data: entry.toMap(),
+  Future<void> setOccurrence(Occurrence occurrence) async =>
+      await _service.setData(
+        path: APIPath.occurrence(uid, occurrence.id),
+        data: occurrence.toMap(),
       );
 
   @override
-  Future<void> deleteEntry(Entry entry) async =>
-      await _service.deleteData(path: APIPath.entry(uid, entry.id));
+  Future<void> deleteOccurrence(Occurrence occurrence) async =>
+      await _service.deleteData(path: APIPath.occurrence(uid, occurrence.id));
 
   @override
-  Stream<List<Entry>> entriesStream({Job job}) =>
-      _service.collectionStream<Entry>(
-        path: APIPath.entries(uid),
-        queryBuilder: job != null
-            ? (query) => query.where('jobId', isEqualTo: job.id)
+  Stream<List<Occurrence>> occurrencesStream({Event event}) =>
+      _service.collectionStream<Occurrence>(
+        path: APIPath.occurrences(uid),
+        queryBuilder: event != null
+            ? (query) => query.where('eventId', isEqualTo: event.id)
             : null,
-        builder: (data, documentID) => Entry.fromMap(data, documentID),
+        builder: (data, documentID) => Occurrence.fromMap(data, documentID),
         sort: (lhs, rhs) => rhs.start.compareTo(lhs.start),
       );
 }

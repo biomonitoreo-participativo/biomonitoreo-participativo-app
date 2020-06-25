@@ -3,9 +3,9 @@ import 'package:rxdart/rxdart.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/entries/daily_jobs_details.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/entries/entries_list_tile.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/entries/entry_job.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/job_entries/format.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/models/entry.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/models/job.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/event_occurrences/format.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/models/occurrence.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/models/event.dart';
 import 'package:biomonitoreoparticipativoapp/services/database.dart';
 
 class EntriesBloc {
@@ -14,15 +14,15 @@ class EntriesBloc {
 
   /// combine List<Job>, List<Entry> into List<EntryJob>
   Stream<List<EntryJob>> get _allEntriesStream => Observable.combineLatest2(
-        database.entriesStream(),
-        database.jobsStream(),
+        database.occurrencesStream(),
+        database.eventsStream(),
         _entriesJobsCombiner,
       );
 
   static List<EntryJob> _entriesJobsCombiner(
-      List<Entry> entries, List<Job> jobs) {
+      List<Occurrence> entries, List<Event> jobs) {
     return entries.map((entry) {
-      final job = jobs.firstWhere((job) => job.id == entry.jobId);
+      final job = jobs.firstWhere((job) => job.id == entry.eventId);
       return EntryJob(entry, job);
     }).toList();
   }
@@ -50,22 +50,25 @@ class EntriesBloc {
 
     return <EntriesListTileModel>[
       EntriesListTileModel(
-        leadingText: 'All Entries',
+        leadingText: 'Todos los eventos',
         middleText: Format.currency(totalPay),
-        trailingText: Format.hours(totalDuration),
+        //trailingText: Format.hours(totalDuration),
+        trailingText: '',
       ),
       for (DailyJobsDetails dailyJobsDetails in allDailyJobsDetails) ...[
         EntriesListTileModel(
           isHeader: true,
           leadingText: Format.date(dailyJobsDetails.date),
           middleText: Format.currency(dailyJobsDetails.pay),
-          trailingText: Format.hours(dailyJobsDetails.duration),
+          //trailingText: Format.hours(dailyJobsDetails.duration),
+          trailingText: '',
         ),
         for (JobDetails jobDuration in dailyJobsDetails.jobsDetails)
           EntriesListTileModel(
             leadingText: jobDuration.name,
             middleText: Format.currency(jobDuration.pay),
-            trailingText: Format.hours(jobDuration.durationInHours),
+            //trailingText: Format.hours(jobDuration.durationInHours),
+            trailingText: '',
           ),
       ]
     ];
