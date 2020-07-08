@@ -1,6 +1,14 @@
 import 'package:flutter/foundation.dart';
 
 class Occurrence {
+  String id;
+  String eventId;
+  String scientificName;
+  int quantity;
+  String occurrenceRemarks;
+  DateTime start;
+  DateTime end;
+
   Occurrence({
     @required this.id,
     @required this.eventId,
@@ -10,14 +18,6 @@ class Occurrence {
     @required this.start,
     @required this.end,
   });
-
-  String id;
-  String eventId;
-  String scientificName;
-  int quantity;
-  String occurrenceRemarks;
-  DateTime start;
-  DateTime end;
 
   double get durationInHours =>
       end.difference(start).inMinutes.toDouble() / 60.0;

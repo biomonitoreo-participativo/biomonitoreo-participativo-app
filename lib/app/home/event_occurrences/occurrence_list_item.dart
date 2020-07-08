@@ -49,7 +49,7 @@ class OccurrenceListItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Row(children: <Widget>[
-          Text(scientificName,
+          Text('$scientificName ($quantity)',
               style: TextStyle(fontSize: 18.0, color: Colors.black)),
           //Text(dayOfWeek, style: TextStyle(fontSize: 18.0, color: Colors.grey)),
           //SizedBox(width: 15.0),
@@ -61,12 +61,6 @@ class OccurrenceListItem extends StatelessWidget {
               style: TextStyle(fontSize: 16.0, color: Colors.green[700]),
             ),
           ],
-        ]),
-        Row(children: <Widget>[
-          Text('$quantity', style: TextStyle(fontSize: 16.0)),
-          //Text('$startTime - $endTime', style: TextStyle(fontSize: 16.0)),
-          //Expanded(child: Container()),
-          //Text(durationFormatted, style: TextStyle(fontSize: 16.0)),
         ]),
         if (occurrence.occurrenceRemarks.isNotEmpty)
           Text(

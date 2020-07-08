@@ -1,3 +1,4 @@
+import 'package:biomonitoreoparticipativoapp/app/home/observations/observations_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,12 @@ import 'package:biomonitoreoparticipativoapp/app/home/models/occurrence.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/models/event.dart';
 import 'package:biomonitoreoparticipativoapp/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:biomonitoreoparticipativoapp/services/database.dart';
+
+var _scientificNameController;
+
+void _updateControllers(String result) {
+  _scientificNameController.text = result;
+}
 
 class OccurrencePage extends StatefulWidget {
   final Event event;
@@ -54,9 +61,12 @@ class _OccurrencePageState extends State<OccurrencePage> {
     _endDate = DateTime(end.year, end.month, end.day);
     _endTime = TimeOfDay.fromDateTime(end);
 
-    _scientificName = widget.occurrence?.scientificName ?? '';
+    // _scientificName = widget.occurrence?.scientificName ?? '';
+    _scientificName = widget.occurrence?.scientificName ?? 'Alouatta palliata';
     _quantity = widget.occurrence?.quantity ?? 1;
     _occurrenceRemarks = widget.occurrence?.occurrenceRemarks ?? '';
+
+    _scientificNameController = TextEditingController(text: _scientificName);
   }
 
   Occurrence _entryFromState() {
@@ -94,11 +104,17 @@ class _OccurrencePageState extends State<OccurrencePage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 2.0,
-        title: Text(widget.event.locality),
+        //title: Text(widget.event.locality),
+        title: Text(widget.occurrence == null
+            ? 'Creación de observación'
+            : 'Edición de observación'),
         actions: <Widget>[
           FlatButton(
             child: Text(
-              widget.occurrence != null ? 'Editar' : 'Crear',
+/*              widget.occurrence != null
+                  ? 'Edición de observación'
+                  : 'Creación de observación',*/
+              'Guardar',
               style: TextStyle(fontSize: 18.0, color: Colors.white),
             ),
             onPressed: () => _setEntryAndDismiss(context),
@@ -116,8 +132,13 @@ class _OccurrencePageState extends State<OccurrencePage> {
               _buildEndDate(),
               SizedBox(height: 8.0),
               _buildDuration(),*/
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: SelectionButton(),
+              ),
               SizedBox(height: 8.0),
-              _buildScientificName(),
+              //_buildScientificName(),
+              _buildScientificNameDropDown(),
               SizedBox(height: 8.0),
               _buildQuantity(),
               SizedBox(height: 8.0),
@@ -133,14 +154,67 @@ class _OccurrencePageState extends State<OccurrencePage> {
     return TextField(
       keyboardType: TextInputType.text,
       maxLength: 50,
-      controller: TextEditingController(text: _scientificName),
+      //controller: TextEditingController(text: _scientificName),
+      controller: _scientificNameController,
       decoration: InputDecoration(
         labelText: 'Nombre científico',
-        labelStyle: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
+        //labelStyle: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
       ),
-      style: TextStyle(fontSize: 20.0, color: Colors.black),
+      //style: TextStyle(fontSize: 20.0, color: Colors.black),
       maxLines: null,
       onChanged: (scientificName) => _scientificName = scientificName,
+    );
+  }
+
+  var _items = <String>[
+    "Alouatta palliata",
+    "Ateles geoffroyi",
+    "Atelopus varius",
+    "Chamaepetes unicolor",
+    "Cebus capucinus",
+    "Crax rubra",
+    "Crypturellus soui",
+    "Cuniculus paca",
+    "Dasyprocta punctata",
+    "Leopardus pardalis",
+    "Leopardus tigrinus",
+    "Leopardus wiedii",
+    "Mazama temama",
+    "Myadestes melanops",
+    "Nothocercus bonapartei",
+    "Odocoileus virginianus",
+    "Ortalis cinereiceps",
+    "Panthera onca",
+    "Pecari tajacu",
+    "Penelope purpurascens",
+    "Pharomachrus mocinno",
+    "Procnias tricarunculatus",
+    "Puma concolor",
+    "Puma yagouaroundi",
+    "Saimiri oerstedii",
+    "Tapirus bairdii",
+    "Tinamus major",
+    "Trogon bairdii",
+    "Trogon caligatus",
+    "Trogon collaris",
+    "Trogon massena",
+    "Trogon rufus",
+  ];
+
+  Widget _buildScientificNameDropDown() {
+    return DropdownButton(
+      value: _scientificName,
+      items: _items.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+      onChanged: (result) {
+        setState(() {
+          _scientificName = result;
+        });
+      },
     );
   }
 
@@ -151,12 +225,12 @@ class _OccurrencePageState extends State<OccurrencePage> {
         decimal: false,
       ),
       //maxLength: 50,
-      //controller: TextEditingController(text: _scientificName),
+      controller: TextEditingController(text: '$_quantity'),
       decoration: InputDecoration(
         labelText: 'Cantidad',
-        labelStyle: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
+        //labelStyle: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
       ),
-      style: TextStyle(fontSize: 20.0, color: Colors.black),
+      //style: TextStyle(fontSize: 20.0, color: Colors.black),
       onChanged: (value) => _quantity = int.tryParse(value) ?? 0,
     );
   }
@@ -168,9 +242,9 @@ class _OccurrencePageState extends State<OccurrencePage> {
       controller: TextEditingController(text: _occurrenceRemarks),
       decoration: InputDecoration(
         labelText: 'Comentarios',
-        labelStyle: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
+        //labelStyle: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
       ),
-      style: TextStyle(fontSize: 20.0, color: Colors.black),
+      //style: TextStyle(fontSize: 20.0, color: Colors.black),
       maxLines: null,
       onChanged: (occurrenceRemarks) => _occurrenceRemarks = occurrenceRemarks,
     );
@@ -226,4 +300,38 @@ class _OccurrencePageState extends State<OccurrencePage> {
       onChanged: (comment) => _occurrenceRemarks = comment,
     );
   }*/
+}
+
+class SelectionButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButton(
+      onPressed: () {
+        _navigateAndDisplaySelection(context);
+      },
+      child: Text('Selección de especies (en construcción)'),
+    );
+  }
+
+  // A method that launches the SelectionScreen and awaits the result from
+  // Navigator.pop.
+  _navigateAndDisplaySelection(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    final result = await Navigator.push(
+      context,
+      //MaterialPageRoute(builder: (context) => SelectionScreen()),
+      MaterialPageRoute(builder: (context) => ObservationsScreen()),
+    );
+
+    print('Resultado: $result');
+    _updateControllers(result);
+
+    // After the Selection Screen returns a result, hide any previous snackbars
+    // and show the new result.
+
+    Scaffold.of(context)
+      ..removeCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text("$result")));
+  }
 }

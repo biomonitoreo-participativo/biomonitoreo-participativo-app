@@ -448,6 +448,15 @@ class ObservationData with ChangeNotifier {
     );
   }
 
+  Observation get firstObservation {
+    _observations = _getSortedObservations(_observations);
+    var l = UnmodifiableListView(
+      _observations.where((obs) => obs.quantity > 0).toList(),
+    );
+
+    return l[0];
+  }
+
   int get observationsCount {
     return _observations.length;
   }

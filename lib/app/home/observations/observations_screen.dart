@@ -147,19 +147,19 @@ class _ObservationsScreenState extends State<ObservationsScreen> {
               child: ObservationsList(_showOnlyObserved, _filter),
             ),
           ),
-          Container(
+/*          Container(
             // alignment: Alignment(0.0, 0.0),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 100.0),
               child: RoundedButton(
-                title: 'Resumen',
+                title: 'Seleccionar especie',
                 colour: Colors.blue,
                 onPressed: () {
                   Navigator.pushNamed(context, SummaryScreen.id);
                 },
               ),
             ),
-          ),
+          ),*/
         ],
       ),
     );

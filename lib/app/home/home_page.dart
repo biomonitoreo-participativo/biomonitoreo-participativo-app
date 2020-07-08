@@ -18,8 +18,8 @@ class _HomePageState extends State<HomePage> {
 
   final Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
     TabItem.events: GlobalKey<NavigatorState>(),
-    TabItem.occurrences: GlobalKey<NavigatorState>(),
-    TabItem.localities: GlobalKey<NavigatorState>(),
+    //TabItem.occurrences: GlobalKey<NavigatorState>(),
+    //TabItem.localities: GlobalKey<NavigatorState>(),
     TabItem.occurrences2: GlobalKey<NavigatorState>(),
     TabItem.account: GlobalKey<NavigatorState>(),
   };
@@ -27,8 +27,8 @@ class _HomePageState extends State<HomePage> {
   Map<TabItem, WidgetBuilder> get widgetBuilders {
     return {
       TabItem.events: (_) => EventsPage(),
-      TabItem.occurrences: (context) => EntriesPage.create(context),
-      TabItem.localities: (_) => LocalitiesPage(),
+      //TabItem.occurrences: (context) => EntriesPage.create(context),
+      //TabItem.localities: (_) => LocalitiesPage(),
       TabItem.occurrences2: (_) => ObservationsScreen(),
       TabItem.account: (_) => AccountPage(),
     };

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/models/event.dart';
+import 'package:intl/intl.dart';
 
 class EventListTile extends StatelessWidget {
   final Event event;
@@ -11,7 +12,8 @@ class EventListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(event.locality),
+      title: Text(
+          '${DateFormat("yyyy/MM/dd").format(event.eventDateTime)} - ${event.locality}'),
       trailing: Icon(Icons.chevron_right),
       onTap: onTap,
     );

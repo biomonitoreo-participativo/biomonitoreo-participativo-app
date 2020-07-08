@@ -41,6 +41,7 @@ class EventsPage extends StatelessWidget {
               context,
               database: Provider.of<Database>(context),
             ),
+            tooltip: "Crear un evento",
           ),
         ],
       ),

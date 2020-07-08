@@ -52,7 +52,8 @@ class EventOccurrencesPage extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               elevation: 2.0,
-              title: Text(eventLocality),
+              // title: Text(eventLocality),
+              title: Text("Observaciones"),
               actions: <Widget>[
                 IconButton(
                   icon: Icon(Icons.edit, color: Colors.white),
@@ -61,6 +62,7 @@ class EventOccurrencesPage extends StatelessWidget {
                     database: database,
                     event: event,
                   ),
+                  tooltip: "Editar el evento",
                 ),
                 IconButton(
                   icon: Icon(Icons.add, color: Colors.white),
@@ -69,6 +71,7 @@ class EventOccurrencesPage extends StatelessWidget {
                     database: database,
                     event: event,
                   ),
+                  tooltip: "Crear una observación",
                 ),
               ],
             ),
