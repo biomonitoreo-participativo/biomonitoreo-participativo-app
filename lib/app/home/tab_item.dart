@@ -18,8 +18,8 @@ class TabItemData {
     TabItem.events: TabItemData(title: 'Eventos', icon: Icons.directions_walk),
     //TabItem.occurrences: TabItemData(title: 'Resumen', icon: Icons.menu),
     //TabItem.localities: TabItemData(title: 'Localidades', icon: Icons.place),
-    TabItem.occurrences2: TabItemData(
-        title: 'Observaciones (en desarrollo)', icon: Icons.remove_red_eye),
+    TabItem.occurrences2:
+        TabItemData(title: 'Observaciones', icon: Icons.remove_red_eye),
     TabItem.account: TabItemData(title: 'Usuario', icon: Icons.person),
   };
 }

@@ -132,10 +132,10 @@ class _OccurrencePageState extends State<OccurrencePage> {
               _buildEndDate(),
               SizedBox(height: 8.0),
               _buildDuration(),*/
-              Padding(
+/*              Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: SelectionButton(),
-              ),
+              ),*/
               SizedBox(height: 8.0),
               //_buildScientificName(),
               _buildScientificNameDropDown(),
@@ -204,6 +204,7 @@ class _OccurrencePageState extends State<OccurrencePage> {
   Widget _buildScientificNameDropDown() {
     return DropdownButton(
       value: _scientificName,
+      hint: Text("Nombre científico"),
       items: _items.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
