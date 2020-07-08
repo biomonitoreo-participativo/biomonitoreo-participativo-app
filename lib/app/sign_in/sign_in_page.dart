@@ -106,14 +106,14 @@ class SignInPage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 8.0),
+          /*        SizedBox(height: 8.0),
           SocialSignInButton(
             assetName: 'images/logo-google-30x30.png',
             text: 'Ingresar con cuenta de Google',
             textColor: Colors.black87,
             color: Colors.white,
             onPressed: isLoading ? null : () => _signInWithGoogle(context),
-          ),
+          ),*/
           SizedBox(height: 8.0),
 /*          SocialSignInButton(
             assetName: 'images/facebook-logo.png',
@@ -124,7 +124,7 @@ class SignInPage extends StatelessWidget {
           ),
           SizedBox(height: 8.0),*/
           SignInButton(
-            text: 'Ingresar con cuenta de correo electrónico',
+            text: 'Ingresar con correo electrónico',
             textColor: Colors.white,
             color: Colors.teal[700],
             onPressed: isLoading ? null : () => _signInWithEmail(context),
