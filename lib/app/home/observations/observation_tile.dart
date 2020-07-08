@@ -43,7 +43,7 @@ class ObservationTile extends StatelessWidget {
             observation.quantity > 0 ? '${observation.quantity}' : '',
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: observation.quantity > 0 ? 20 : 16,
+              fontSize: observation.quantity > 0 ? 16 : 16,
               color: observation.quantity > 0 ? Colors.green : Colors.black,
             ),
           ),
@@ -58,7 +58,7 @@ class ObservationTile extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontStyle: FontStyle.italic,
-                fontSize: observation.quantity > 0 ? 20 : 16,
+                fontSize: observation.quantity > 0 ? 16 : 16,
                 color: observation.quantity > 0 ? Colors.green : Colors.black,
               ),
             ),
