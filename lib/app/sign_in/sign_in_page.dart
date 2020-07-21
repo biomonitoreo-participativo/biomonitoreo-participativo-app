@@ -75,7 +75,7 @@ class SignInPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-          child: Text('Monitoreo Biológico Participativo'),
+          child: Text('Monitoreo biológico participativo'),
         ),
         elevation: 2.0,
       ),
@@ -91,13 +91,9 @@ class SignInPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          SizedBox(
-            child: _buildHeader(),
-            height: 50.0,
-          ),
-          SizedBox(height: 8.0),
+          _buildHeader(),
           Container(
-            margin: EdgeInsets.symmetric(vertical: 40.0),
+            margin: EdgeInsets.symmetric(vertical: 20.0),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Image.asset(
@@ -106,8 +102,8 @@ class SignInPage extends StatelessWidget {
               ),
             ),
           ),
-          /*        SizedBox(height: 8.0),
-          SocialSignInButton(
+          SizedBox(height: 8.0),
+/*          SocialSignInButton(
             assetName: 'images/logo-google-30x30.png',
             text: 'Ingresar con cuenta de Google',
             textColor: Colors.black87,
@@ -115,35 +111,12 @@ class SignInPage extends StatelessWidget {
             onPressed: isLoading ? null : () => _signInWithGoogle(context),
           ),*/
           SizedBox(height: 8.0),
-/*          SocialSignInButton(
-            assetName: 'images/facebook-logo.png',
-            text: 'Sign in with Facebook',
-            textColor: Colors.white,
-            color: Color(0xFF334D92),
-            onPressed: () {},
-          ),
-          SizedBox(height: 8.0),*/
           SignInButton(
             text: 'Ingresar con correo electrónico',
             textColor: Colors.white,
             color: Colors.teal[700],
             onPressed: isLoading ? null : () => _signInWithEmail(context),
           ),
-/*          SizedBox(height: 8.0),
-          Text(
-            'o',
-            style: TextStyle(
-              fontSize: 14.0,
-              color: Colors.black87,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          SignInButton(
-            text: 'Ingresar de manera anónima',
-            textColor: Colors.black,
-            color: Colors.lime[300],
-            onPressed: isLoading ? null : () => _signInAnonymously(context),
-          ),*/
         ],
       ),
     );
@@ -156,11 +129,14 @@ class SignInPage extends StatelessWidget {
       );
     }
     return Text(
-      'Especies indicadoras',
+      '''
+      Monitoreo de
+      especies indicadoras
+      ''',
       textAlign: TextAlign.center,
       style: TextStyle(
-        fontSize: 28.0,
-        fontWeight: FontWeight.w600,
+        fontSize: 24.0,
+        fontWeight: FontWeight.w900,
       ),
     );
   }

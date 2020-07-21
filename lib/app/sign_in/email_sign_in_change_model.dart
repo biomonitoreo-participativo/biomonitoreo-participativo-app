@@ -36,13 +36,13 @@ class EmailSignInChangeModel with EmailAndPasswordsValidators, ChangeNotifier {
   }
 
   String get primaryButtonText {
-    return formType == EmailSignInFormType.signIn ? 'Ingreso' : 'Registro';
+    return formType == EmailSignInFormType.signIn ? 'Ingresar' : 'Registrarse';
   }
 
   String get secondaryButtonText {
     return formType == EmailSignInFormType.signIn
-        ? '¿Desea crear una cuenta? Regístrese'
-        : '¿Ya tiene una cuenta? Ingrese';
+        ? 'Si no tiene un usuario, regístrese aquí'
+        : 'Si ya tiene un usuario, ingrese aquí';
   }
 
   bool get canSubmit {

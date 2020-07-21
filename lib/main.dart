@@ -28,7 +28,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Time Tracker',
         theme: ThemeData(
-          primarySwatch: Colors.indigo,
+          // primarySwatch: Colors.indigo,
+          primaryColor: Color.fromRGBO(117, 164, 103, 1),
         ),
         home: LandingPage(),
         localizationsDelegates: [

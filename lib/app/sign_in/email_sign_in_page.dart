@@ -9,7 +9,7 @@ class EmailSigInPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-          child: Text('Ingreso con cuenta de correo'),
+          child: Text('Ingreso con correo electrónico'),
         ),
         elevation: 2.0,
       ),

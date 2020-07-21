@@ -51,7 +51,7 @@ class _EmailSignInFormChangeNotifierState
       Navigator.of(context).pop();
     } on PlatformException catch (e) {
       PlatformExceptionAlertDialog(
-        title: 'Falló el ingreso',
+        title: 'Error en el ingreso',
         exception: e,
       ).show(context);
     }
@@ -61,6 +61,13 @@ class _EmailSignInFormChangeNotifierState
     final newFocus = model.emailValidator.isValid(model.email)
         ? _passwordFocusNode
         : _emailFocusNode;
+    FocusScope.of(context).requestFocus(newFocus);
+  }
+
+  void _passwordEditingComplete() {
+    final newFocus = model.passwordValidator.isValid(model.password)
+        ? _emailFocusNode
+        : _passwordFocusNode;
     FocusScope.of(context).requestFocus(newFocus);
   }
 
@@ -92,7 +99,7 @@ class _EmailSignInFormChangeNotifierState
       controller: _emailController,
       focusNode: _emailFocusNode,
       decoration: InputDecoration(
-        labelText: 'Cuenta de correo electrónico',
+        labelText: 'Dirección de correo',
         hintText: 'usuario@gmail.com',
         errorText: model.emailErrorText,
         enabled: model.isLoading == false,
@@ -110,14 +117,14 @@ class _EmailSignInFormChangeNotifierState
       controller: _passwordController,
       focusNode: _passwordFocusNode,
       decoration: InputDecoration(
-        labelText: 'Clave',
+        labelText: 'Clave (6 caracteres como mínimo)',
         errorText: model.passwordErrorText,
         enabled: model.isLoading == false,
       ),
       obscureText: true,
-      textInputAction: TextInputAction.done,
+      textInputAction: TextInputAction.next,
       onChanged: model.updatePassword,
-      onEditingComplete: _submit,
+      onEditingComplete: () => _passwordEditingComplete(),
     );
   }
 
