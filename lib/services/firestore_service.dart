@@ -10,7 +10,7 @@ class FirestoreService {
     @required Map<String, dynamic> data,
   }) async {
     final reference = Firestore.instance.document(path);
-    print('$path: $data');
+    print('setData: $path: $data');
     await reference.setData(data);
   }
 
@@ -49,6 +49,7 @@ class FirestoreService {
   }) {
     final DocumentReference reference = Firestore.instance.document(path);
     final Stream<DocumentSnapshot> snapshots = reference.snapshots();
-    return snapshots.map((snapshot) => builder(snapshot.data, snapshot.documentID));
+    return snapshots
+        .map((snapshot) => builder(snapshot.data, snapshot.documentID));
   }
 }

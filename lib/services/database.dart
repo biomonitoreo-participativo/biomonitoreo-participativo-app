@@ -36,7 +36,7 @@ class FirestoreDatabase implements Database {
     // delete where occurrence.eventId == event.eventId
     final allOccurrences = await occurrencesStream(event: event).first;
     for (Occurrence occurrence in allOccurrences) {
-      if (occurrence.eventId == event.id) {
+      if (occurrence.eventID == event.id) {
         await deleteOccurrence(occurrence);
       }
     }

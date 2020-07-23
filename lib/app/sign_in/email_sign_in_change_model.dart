@@ -7,6 +7,7 @@ class EmailSignInChangeModel with EmailAndPasswordsValidators, ChangeNotifier {
   final AuthBase auth;
   String email;
   String password;
+  String passwordConfirmation;
   EmailSignInFormType formType;
   bool isLoading;
   bool submitted;
@@ -15,6 +16,7 @@ class EmailSignInChangeModel with EmailAndPasswordsValidators, ChangeNotifier {
     @required this.auth,
     this.email = '',
     this.password = '',
+    this.passwordConfirmation = '',
     this.formType = EmailSignInFormType.signIn,
     this.isLoading = false,
     this.submitted = false,
@@ -46,9 +48,17 @@ class EmailSignInChangeModel with EmailAndPasswordsValidators, ChangeNotifier {
   }
 
   bool get canSubmit {
-    return emailValidator.isValid(email) &&
-        passwordValidator.isValid(password) &&
-        !isLoading;
+    if (formType == EmailSignInFormType.signIn) {
+      return emailValidator.isValid(email) &&
+          passwordValidator.isValid(password) &&
+          !isLoading;
+    } else {
+      return emailValidator.isValid(email) &&
+          passwordValidator.isValid(password) &&
+          passwordConfirmationValidator.areEqual(
+              password, passwordConfirmation) &&
+          !isLoading;
+    }
   }
 
   String get emailErrorText {
@@ -61,6 +71,12 @@ class EmailSignInChangeModel with EmailAndPasswordsValidators, ChangeNotifier {
     return showErrorText ? invalidPasswordErrorText : null;
   }
 
+  String get passwordConfirmationErrorText {
+    bool showErrorText = submitted &&
+        !passwordConfirmationValidator.areEqual(password, passwordConfirmation);
+    return showErrorText ? invalidPasswordConfirmationErrorText : null;
+  }
+
   void toggleFormType() {
     final formType = this.formType == EmailSignInFormType.signIn
         ? EmailSignInFormType.register
@@ -69,6 +85,7 @@ class EmailSignInChangeModel with EmailAndPasswordsValidators, ChangeNotifier {
     updateWith(
       email: '',
       password: '',
+      passwordConfirmation: '',
       formType: formType,
       isLoading: false,
       submitted: false,
@@ -76,18 +93,22 @@ class EmailSignInChangeModel with EmailAndPasswordsValidators, ChangeNotifier {
   }
 
   void updateEmail(String email) => updateWith(email: email);
-
   void updatePassword(String password) => updateWith(password: password);
+  void updatePasswordConfirmation(String passwordConfirmation) =>
+      updateWith(passwordConfirmation: passwordConfirmation);
 
   void updateWith({
     String email,
     String password,
+    String passwordConfirmation,
     EmailSignInFormType formType,
     bool isLoading,
     bool submitted,
   }) {
     this.email = email ?? this.email;
     this.password = password ?? this.password;
+    this.passwordConfirmation =
+        passwordConfirmation ?? this.passwordConfirmation;
     this.formType = formType ?? this.formType;
     this.isLoading = isLoading ?? this.isLoading;
     this.submitted = submitted ?? this.submitted;

@@ -22,7 +22,7 @@ class EntriesBloc {
   static List<EntryJob> _entriesJobsCombiner(
       List<Occurrence> entries, List<Event> jobs) {
     return entries.map((entry) {
-      final job = jobs.firstWhere((job) => job.id == entry.eventId);
+      final job = jobs.firstWhere((job) => job.id == entry.eventID);
       return EntryJob(entry, job);
     }).toList();
   }

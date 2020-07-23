@@ -1,4 +1,5 @@
 import 'package:biomonitoreoparticipativoapp/app/home/observations/localities_page.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/opportunistic_observations/opportunistic_observations_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/account/account_page.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/cupertino_home_scaffold.dart';
@@ -29,7 +30,8 @@ class _HomePageState extends State<HomePage> {
       TabItem.events: (_) => EventsPage(),
       //TabItem.occurrences: (context) => EntriesPage.create(context),
       //TabItem.localities: (_) => LocalitiesPage(),
-      TabItem.occurrences2: (_) => ObservationsScreen(),
+      //TabItem.occurrences2: (_) => ObservationsScreen(),
+      TabItem.occurrences2: (_) => OpportunisticObservationsListScreen(),
       TabItem.account: (_) => AccountPage(),
     };
   }

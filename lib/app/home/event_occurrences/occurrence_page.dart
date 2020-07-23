@@ -43,8 +43,11 @@ class OccurrencePage extends StatefulWidget {
 
 class _OccurrencePageState extends State<OccurrencePage> {
   String _scientificName;
-  int _quantity;
+  int _individualCount;
   String _occurrenceRemarks;
+  String _locality;
+  double _decimalLongitude;
+  double _decimalLatitude;
   DateTime _startDate;
   TimeOfDay _startTime;
   DateTime _endDate;
@@ -63,7 +66,7 @@ class _OccurrencePageState extends State<OccurrencePage> {
 
     // _scientificName = widget.occurrence?.scientificName ?? '';
     _scientificName = widget.occurrence?.scientificName ?? 'Alouatta palliata';
-    _quantity = widget.occurrence?.quantity ?? 1;
+    _individualCount = widget.occurrence?.individualCount ?? 1;
     _occurrenceRemarks = widget.occurrence?.occurrenceRemarks ?? '';
 
     _scientificNameController = TextEditingController(text: _scientificName);
@@ -77,10 +80,13 @@ class _OccurrencePageState extends State<OccurrencePage> {
     final id = widget.occurrence?.id ?? documentIdFromCurrentDate();
     return Occurrence(
       id: id,
-      eventId: widget.event.id,
+      eventID: widget.event.id,
       scientificName: _scientificName,
-      quantity: _quantity,
+      individualCount: _individualCount,
       occurrenceRemarks: _occurrenceRemarks,
+      locality: widget.event.locality,
+      decimalLongitude: widget.event.decimalLongitude,
+      decimalLatitude: widget.event.decimalLatitude,
       start: start,
       end: end,
     );
@@ -226,13 +232,13 @@ class _OccurrencePageState extends State<OccurrencePage> {
         decimal: false,
       ),
       //maxLength: 50,
-      controller: TextEditingController(text: '$_quantity'),
+      controller: TextEditingController(text: '$_individualCount'),
       decoration: InputDecoration(
         labelText: 'Cantidad',
         //labelStyle: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
       ),
       //style: TextStyle(fontSize: 20.0, color: Colors.black),
-      onChanged: (value) => _quantity = int.tryParse(value) ?? 0,
+      onChanged: (value) => _individualCount = int.tryParse(value) ?? 0,
     );
   }
 

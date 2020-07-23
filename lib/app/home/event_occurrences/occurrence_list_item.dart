@@ -34,7 +34,7 @@ class OccurrenceListItem extends StatelessWidget {
 
   Widget _buildContents(BuildContext context) {
     final scientificName = occurrence.scientificName;
-    final quantity = occurrence.quantity;
+    final quantity = occurrence.individualCount;
 
     final dayOfWeek = Format.dayOfWeek(occurrence.start);
     final startDate = Format.date(occurrence.start);

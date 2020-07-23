@@ -31,8 +31,11 @@ class _EmailSignInFormChangeNotifierState
     extends State<EmailSignInFormChangeNotifier> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordConfirmationController =
+      TextEditingController();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
+  final FocusNode _passwordConfirmationFocusNode = FocusNode();
 
   EmailSignInChangeModel get model => widget.model;
 
@@ -40,8 +43,10 @@ class _EmailSignInFormChangeNotifierState
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _passwordConfirmationController.dispose();
     _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
+    _passwordConfirmationFocusNode.dispose();
     super.dispose();
   }
 
@@ -65,9 +70,24 @@ class _EmailSignInFormChangeNotifierState
   }
 
   void _passwordEditingComplete() {
-    final newFocus = model.passwordValidator.isValid(model.password)
-        ? _emailFocusNode
-        : _passwordFocusNode;
+    var newFocus;
+    if (model.formType == EmailSignInFormType.signIn) {
+      newFocus = model.passwordValidator.isValid(model.password)
+          ? _emailFocusNode
+          : _passwordFocusNode;
+    } else {
+      newFocus = model.passwordValidator.isValid(model.password)
+          ? _passwordConfirmationFocusNode
+          : _passwordFocusNode;
+    }
+    FocusScope.of(context).requestFocus(newFocus);
+  }
+
+  void _passwordConfirmationEditingComplete() {
+    final newFocus =
+        model.passwordConfirmationValidator.isValid(model.passwordConfirmation)
+            ? _emailFocusNode
+            : _passwordConfirmationFocusNode;
     FocusScope.of(context).requestFocus(newFocus);
   }
 
@@ -75,6 +95,7 @@ class _EmailSignInFormChangeNotifierState
     model.toggleFormType();
     _emailController.clear();
     _passwordController.clear();
+    _passwordConfirmationController.clear();
   }
 
   List<Widget> _buildChildren() {
@@ -82,6 +103,9 @@ class _EmailSignInFormChangeNotifierState
       _buildEmailTextField(),
       SizedBox(height: 8.0),
       _buildPasswordTextField(),
+      SizedBox(height: 8.0),
+      if (model.formType == EmailSignInFormType.register)
+        _buildPasswordConfirmationTextField(),
       SizedBox(height: 8.0),
       FormSubmitButton(
         text: model.primaryButtonText,
@@ -125,6 +149,22 @@ class _EmailSignInFormChangeNotifierState
       textInputAction: TextInputAction.next,
       onChanged: model.updatePassword,
       onEditingComplete: () => _passwordEditingComplete(),
+    );
+  }
+
+  TextField _buildPasswordConfirmationTextField() {
+    return TextField(
+      controller: _passwordConfirmationController,
+      focusNode: _passwordConfirmationFocusNode,
+      decoration: InputDecoration(
+        labelText: 'Confirmación de la clave',
+        errorText: model.passwordConfirmationErrorText,
+        enabled: model.isLoading == false,
+      ),
+      obscureText: true,
+      textInputAction: TextInputAction.next,
+      onChanged: model.updatePasswordConfirmation,
+      onEditingComplete: () => _passwordConfirmationEditingComplete(),
     );
   }
 

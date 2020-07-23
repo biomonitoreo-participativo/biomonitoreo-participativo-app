@@ -60,15 +60,15 @@ class DailyJobsDetails {
     for (var entryJob in entries) {
       final entry = entryJob.entry;
       final pay = entry.durationInHours * entryJob.job.ratePerHour;
-      if (jobDuration[entry.eventId] == null) {
-        jobDuration[entry.eventId] = JobDetails(
+      if (jobDuration[entry.eventID] == null) {
+        jobDuration[entry.eventID] = JobDetails(
           name: entryJob.job.locality,
           durationInHours: entry.durationInHours,
           pay: pay,
         );
       } else {
-        jobDuration[entry.eventId].pay += pay;
-        jobDuration[entry.eventId].durationInHours += entry.durationInHours;
+        jobDuration[entry.eventID].pay += pay;
+        jobDuration[entry.eventID].durationInHours += entry.durationInHours;
       }
     }
     return jobDuration.values.toList();

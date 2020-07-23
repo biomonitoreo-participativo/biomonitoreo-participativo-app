@@ -25,12 +25,6 @@ class EventsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Inicio de código útil para pruebas
-    // final database = Provider.of<Database>(context);
-    // print('Listado de trabajos: ');
-    // database.jobsStream();
-    // Fin de código útil para pruebas
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Eventos de monitoreo'),
