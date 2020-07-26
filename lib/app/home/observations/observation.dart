@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'taxon.dart';
+import '../models/taxon.dart';
 
 class Observation with ChangeNotifier {
   final String id;

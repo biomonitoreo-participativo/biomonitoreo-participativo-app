@@ -37,7 +37,7 @@ class ObservationTile extends StatelessWidget {
         spacing: 8,
         children: <Widget>[
           CircleAvatar(
-            backgroundImage: NetworkImage(observation.taxon.urlImage01),
+            backgroundImage: NetworkImage(observation.taxon.urlImage),
           ),
           Text(
             observation.quantity > 0 ? '${observation.quantity}' : '',

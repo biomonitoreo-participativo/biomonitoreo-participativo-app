@@ -1,3 +1,4 @@
+import 'package:biomonitoreoparticipativoapp/app/home/opportunistic_observations/taxon_data.dart';
 import 'package:biomonitoreoparticipativoapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,9 @@ class MyApp extends StatelessWidget {
       providers: [
         Provider<AuthBase>(create: (_) => Auth()),
         ChangeNotifierProvider.value(
+          value: Taxa(),
+        ),
+        ChangeNotifierProvider.value(
           value: ObservationData(),
         ),
         ChangeNotifierProvider.value(
@@ -26,7 +30,7 @@ class MyApp extends StatelessWidget {
       ],
       // builder: (context) => Auth(),
       child: MaterialApp(
-        title: 'Time Tracker',
+        title: 'Monitoreo biológico participativo',
         theme: ThemeData(
           // primarySwatch: Colors.indigo,
           primaryColor: Color.fromRGBO(117, 164, 103, 1),

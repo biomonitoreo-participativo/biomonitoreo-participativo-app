@@ -11,8 +11,10 @@ import 'package:biomonitoreoparticipativoapp/services/database.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/models/occurrence.dart';
 
 import '../../../common_widgets/locality_picker.dart';
+import 'package:biomonitoreoparticipativoapp/common_widgets/taxon_picker.dart';
 
 var _scientificNameController;
+var _individualCountController;
 var _localityController;
 var _decimalLongitudeController;
 var _decimalLatitudeController;
@@ -68,6 +70,7 @@ class _OpportunisticObservationEditScreenState
   DateTime _end = DateTime.now();
 
   List<double> _pickedLocation;
+  List<String> _pickedTaxon;
 
   @override
   void initState() {
@@ -202,6 +205,20 @@ class _OpportunisticObservationEditScreenState
     );
   }
 
+  void _selectTaxon(String scientificName, int individualCount) {
+    _pickedTaxon = [scientificName, individualCount.toString()];
+    setState(() {
+      _scientificName = scientificName;
+      _individualCount = individualCount;
+    });
+    _scientificNameController = TextEditingController(
+      text: _scientificName,
+    );
+    _individualCountController = TextEditingController(
+      text: _individualCount.toString(),
+    );
+  }
+
   List<Widget> _buildFormChildren() {
     return [
       TextFormField(
@@ -223,6 +240,7 @@ class _OpportunisticObservationEditScreenState
         ),
         onChanged: (value) => _individualCount = int.tryParse(value) ?? 0,
       ),
+      TaxonPicker(_selectTaxon),
       TextFormField(
         controller: _localityController,
         decoration: InputDecoration(labelText: 'Localidad'),
