@@ -1,17 +1,20 @@
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/models/occurrence.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/models/taxon.dart';
 
-import 'package:biomonitoreoparticipativoapp/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:biomonitoreoparticipativoapp/services/database.dart';
 
-import 'package:biomonitoreoparticipativoapp/app/home/models/occurrence.dart';
-
-import '../../../common_widgets/locality_picker.dart';
+import 'package:biomonitoreoparticipativoapp/common_widgets/locality_picker.dart';
+import 'package:biomonitoreoparticipativoapp/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:biomonitoreoparticipativoapp/common_widgets/taxon_picker.dart';
+
+import 'package:biomonitoreoparticipativoapp/app/home/opportunistic_observations/taxon_data.dart';
 
 var _scientificNameController;
 var _individualCountController;
@@ -51,11 +54,19 @@ class OpportunisticObservationEditScreen extends StatefulWidget {
 class _OpportunisticObservationEditScreenState
     extends State<OpportunisticObservationEditScreen> {
   final _formKey = GlobalKey<FormState>();
+  var _taxaData;
 
   String _eventID = '0';
   String _basisOfRecord = 'Human Observation';
   String _kingdom = 'Animalia';
+  String _phylum;
+  String _class_;
+  String _order;
+  String _family;
+  String _genus;
+  String _specificEpithet;
   String _scientificName;
+  String _scientificNameAuthorship;
   String _vernacularName = '';
   String _taxonRank = 'species';
   int _individualCount = 1;
@@ -79,7 +90,14 @@ class _OpportunisticObservationEditScreenState
       _eventID = widget.occurrence.eventID;
       _basisOfRecord = widget.occurrence.basisOfRecord;
       _kingdom = widget.occurrence.kingdom;
+      _phylum = widget.occurrence.phylum;
+      _class_ = widget.occurrence.class_;
+      _order = widget.occurrence.order;
+      _family = widget.occurrence.family;
+      _genus = widget.occurrence.genus;
+      _specificEpithet = widget.occurrence.specificEpithet;
       _scientificName = widget.occurrence.scientificName;
+      _scientificNameAuthorship = widget.occurrence.scientificNameAuthorship;
       _vernacularName = widget.occurrence.vernacularName;
       _taxonRank = widget.occurrence.taxonRank;
       _individualCount = widget.occurrence.individualCount;
@@ -122,7 +140,14 @@ class _OpportunisticObservationEditScreenState
           eventID: _eventID,
           basisOfRecord: _basisOfRecord,
           kingdom: _kingdom,
+          phylum: _phylum,
+          class_: _class_,
+          order: _order,
+          family: _family,
+          genus: _genus,
+          specificEpithet: _specificEpithet,
           scientificName: _scientificName,
+          scientificNameAuthorship: _scientificNameAuthorship,
           vernacularName: _vernacularName,
           taxonRank: _taxonRank,
           individualCount: _individualCount,
@@ -150,6 +175,8 @@ class _OpportunisticObservationEditScreenState
 
   @override
   Widget build(BuildContext context) {
+    _taxaData = Provider.of<Taxa>(context);
+
     return Scaffold(
       appBar: AppBar(
         elevation: 2.0,
@@ -205,10 +232,21 @@ class _OpportunisticObservationEditScreenState
     );
   }
 
-  void _selectTaxon(String scientificName, int individualCount) {
-    _pickedTaxon = [scientificName, individualCount.toString()];
+  void _selectTaxon(String taxonId, int individualCount) {
+    Taxon taxon = _taxaData.findById(taxonId);
+
+    _pickedTaxon = [taxon.scientificName, individualCount.toString()];
     setState(() {
-      _scientificName = scientificName;
+      _kingdom = taxon.kingdom;
+      _phylum = taxon.phylum;
+      _class_ = taxon.class_;
+      _order = taxon.order;
+      _family = taxon.family;
+      _genus = taxon.genus;
+      _specificEpithet = taxon.specificEpithet;
+      _scientificName = taxon.scientificName;
+      _scientificNameAuthorship = taxon.scientificNameAuthorship;
+      _taxonRank = taxon.taxonRank;
       _individualCount = individualCount;
     });
     _scientificNameController = TextEditingController(

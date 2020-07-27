@@ -2,30 +2,44 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 class Occurrence {
-  String eventID;
-  String id;
-  String basisOfRecord;
-  String kingdom;
-  String scientificName;
-  String vernacularName;
-  String taxonRank;
-  int individualCount;
-  String countryCode;
-  String locality;
-  double decimalLongitude;
-  double decimalLatitude;
-  String geodeticDatum;
-  DateTime eventDate;
-  String occurrenceRemarks;
-  DateTime start;
-  DateTime end;
+  final String eventID;
+  final String id;
+  final String basisOfRecord;
+  final String kingdom;
+  final String phylum;
+  final String class_;
+  final String order;
+  final String family;
+  final String genus;
+  final String specificEpithet;
+  final String scientificName;
+  final String scientificNameAuthorship;
+  final String vernacularName;
+  final String taxonRank;
+  final int individualCount;
+  final String countryCode;
+  final String locality;
+  final double decimalLongitude;
+  final double decimalLatitude;
+  final String geodeticDatum;
+  final DateTime eventDate;
+  final String occurrenceRemarks;
+  final DateTime start;
+  final DateTime end;
 
   Occurrence({
     @required this.eventID,
     @required this.id,
     this.basisOfRecord = 'Human Observation',
     this.kingdom = 'Animalia',
+    this.phylum = '',
+    this.class_ = '',
+    this.order = '',
+    this.family = '',
+    this.genus = '',
+    this.specificEpithet = '',
     @required this.scientificName,
+    this.scientificNameAuthorship = '',
     this.vernacularName = '',
     this.taxonRank = 'species',
     @required this.individualCount,
@@ -52,7 +66,14 @@ class Occurrence {
       eventID: value['eventID'],
       basisOfRecord: value['basisOfRecord'],
       kingdom: value['kingdom'],
+      phylum: value['phylum'],
+      class_: value['class_'],
+      order: value['order'],
+      family: value['family'],
+      genus: value['genus'],
+      specificEpithet: value['specificEpithet'],
       scientificName: value['scientificName'],
+      scientificNameAuthorship: value['scientificNameAuthorship'],
       vernacularName: value['vernacularName'],
       taxonRank: value['taxonRank'],
       individualCount: value['individualCount'],
@@ -73,7 +94,14 @@ class Occurrence {
       'eventId': eventID,
       'basisOfRecord': basisOfRecord,
       'kingdom': kingdom,
+      'phylum': phylum,
+      'class_': class_,
+      'order': order,
+      'family': family,
+      'genus': genus,
+      'specificEpithet': specificEpithet,
       'scientificName': scientificName,
+      'scientificNameAuthorship': scientificNameAuthorship,
       'vernacularName': vernacularName,
       'taxonRank': taxonRank,
       'individualCount': individualCount,

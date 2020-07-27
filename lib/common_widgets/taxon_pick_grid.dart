@@ -1,50 +1,47 @@
-import 'package:biomonitoreoparticipativoapp/app/home/opportunistic_observations/taxon_data.dart';
-import 'package:biomonitoreoparticipativoapp/common_widgets/taxon_grid_tile.dart';
-import 'package:flutter/material.dart';
-
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
-class TaxonPickGrid extends StatefulWidget {
-  final List<double> initialLocality;
+import 'package:flutter/material.dart';
+
+import 'package:biomonitoreoparticipativoapp/app/home/models/opportunistic_observation_taxon_cart.dart';
+
+import 'package:biomonitoreoparticipativoapp/common_widgets/taxon_grid_tile.dart';
+
+import 'package:biomonitoreoparticipativoapp/app/home/opportunistic_observations/taxon_data.dart';
+
+class TaxonPickGrid extends StatelessWidget {
+  final List<String> initialTaxon;
   final bool isSelecting;
 
   TaxonPickGrid({
-    this.initialLocality = const [-84.0, 10.0],
+    this.initialTaxon = const ['000001', '1'],
     this.isSelecting = false,
   });
-
-  @override
-  _TaxonPickGridState createState() => _TaxonPickGridState();
-}
-
-class _TaxonPickGridState extends State<TaxonPickGrid> {
-  LatLng _pickedLocality;
-
-  void _pickLocality(LatLng position) {
-    setState(() {
-      _pickedLocality = position;
-      print(
-          'LocalityPickMap::_pickLocality() ${_pickedLocality.longitude} ${_pickedLocality.latitude}');
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     final taxaData = Provider.of<Taxa>(context);
     final taxa = taxaData.items;
+    final taxonCart =
+        Provider.of<OpportunisticObservationTaxonCart>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text('Seleccionar taxón'),
         actions: <Widget>[
-          if (widget.isSelecting)
+          if (isSelecting)
             IconButton(
               icon: Icon(Icons.check),
-              onPressed: _pickedLocality == null
-                  ? null
-                  : () {
-                      Navigator.of(context).pop(_pickedLocality);
-                    },
+              onPressed: () {
+                print('Check: ${taxonCart.items.values.toList()[0].taxonId}');
+                Navigator.of(context).pop(
+                  [
+                    taxonCart.items.values.toList()[0].taxonId,
+                    taxonCart.items.values
+                        .toList()[0]
+                        .individualCount
+                        .toString(),
+                  ],
+                );
+              },
             ),
         ],
       ),

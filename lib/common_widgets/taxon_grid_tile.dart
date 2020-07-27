@@ -1,12 +1,19 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:flutter/material.dart';
+
+import 'package:biomonitoreoparticipativoapp/app/home/models/opportunistic_observation_taxon_cart.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/models/taxon.dart';
 
-class TaxonGridTile extends StatelessWidget {
+class TaxonGridTile extends StatefulWidget {
+  @override
+  _TaxonGridTileState createState() => _TaxonGridTileState();
+}
+
+class _TaxonGridTileState extends State<TaxonGridTile> {
+  int _individualCount = 0;
+
   _launchURL(url) async {
     if (await canLaunch(url)) {
       await launch(url);
@@ -18,6 +25,16 @@ class TaxonGridTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final taxon = Provider.of<Taxon>(context, listen: false);
+    final taxonCart =
+        Provider.of<OpportunisticObservationTaxonCart>(context, listen: false);
+
+    if (taxonCart.itemCount > 0) {
+      print(
+          'Taxones en el carrito: ${taxonCart.itemCount}. ${taxonCart.items.values.toList()[0].taxonId} (${taxonCart.items.values.toList()[0].individualCount})');
+    } else {
+      print('Carrito vacío');
+    }
+
     return Card(
       elevation: 20.0,
       shape: RoundedRectangleBorder(
@@ -50,7 +67,7 @@ class TaxonGridTile extends StatelessWidget {
                 GestureDetector(
                   child: CircleAvatar(
                     child: Text(
-                      '1',
+                      '$_individualCount',
                       style: TextStyle(
                         fontSize: 12.0,
                         fontWeight: FontWeight.bold,
@@ -59,27 +76,70 @@ class TaxonGridTile extends StatelessWidget {
                     backgroundColor: Colors.green,
                     radius: 15.0,
                   ),
+                  onTap: () {
+                    // Add individual
+                    setState(() {
+                      _individualCount += 1;
+                    });
+
+                    taxonCart.clear();
+                    taxonCart.addItem(taxon.id, _individualCount);
+                    Scaffold.of(context).hideCurrentSnackBar();
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Individuo agregado',
+                        ),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                  },
+                  onLongPress: () {
+                    // Substract individual
+                    if (_individualCount > 0) {
+                      setState(() {
+                        _individualCount -= 1;
+                      });
+                      taxonCart.clear();
+                      taxonCart.addItem(taxon.id, _individualCount);
+                      Scaffold.of(context).hideCurrentSnackBar();
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Individuo restado',
+                          ),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    }
+                  },
                 ),
                 SizedBox(
                   width: 5.0,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      taxon.scientificName,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          fontSize: 12.0,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      taxon.vernacularName,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(fontSize: 12.0),
-                    ),
-                  ],
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        taxon.scientificName,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontSize: 12.0,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        taxon.vernacularName,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: 12.0),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        softWrap: false,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

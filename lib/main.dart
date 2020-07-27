@@ -1,3 +1,4 @@
+import 'package:biomonitoreoparticipativoapp/app/home/models/opportunistic_observation_taxon_cart.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/opportunistic_observations/taxon_data.dart';
 import 'package:biomonitoreoparticipativoapp/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,9 @@ class MyApp extends StatelessWidget {
         Provider<AuthBase>(create: (_) => Auth()),
         ChangeNotifierProvider.value(
           value: Taxa(),
+        ),
+        ChangeNotifierProvider.value(
+          value: OpportunisticObservationTaxonCart(),
         ),
         ChangeNotifierProvider.value(
           value: ObservationData(),
