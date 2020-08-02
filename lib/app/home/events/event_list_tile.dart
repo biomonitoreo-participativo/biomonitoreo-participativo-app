@@ -13,8 +13,10 @@ class EventListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-          '${DateFormat("yyyy/MM/dd").format(event.eventDateTime)} - ${event.locality}'),
-      trailing: Icon(Icons.chevron_right),
+        '${event.locality}',
+      ),
+      subtitle: Text('${DateFormat("yyyy/MM/dd").format(event.eventDate)}'),
+      trailing: Icon(Icons.edit),
       onTap: onTap,
     );
   }

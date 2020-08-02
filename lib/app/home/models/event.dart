@@ -5,7 +5,7 @@ class Event {
   final String locality;
   final double decimalLongitude;
   final double decimalLatitude;
-  final DateTime eventDateTime;
+  final DateTime eventDate;
   final String eventRemarks;
   final String conservationArea;
   final int ratePerHour;
@@ -15,7 +15,7 @@ class Event {
     @required this.locality,
     @required this.decimalLongitude,
     @required this.decimalLatitude,
-    @required this.eventDateTime,
+    @required this.eventDate,
     this.eventRemarks = '',
     this.conservationArea = 'ACLAP',
     this.ratePerHour = 1,
@@ -28,7 +28,7 @@ class Event {
     final String locality = data['locality'];
     final double decimalLongitude = data['decimalLongitude'];
     final double decimalLatitude = data['decimalLatitude'];
-    final int eventDateTimeMilliseconds = data['eventDateTime'];
+    final int eventDateMilliseconds = data['eventDate'];
     final String eventRemarks = data['eventRemarks'];
     final String conservationArea = data['conservationArea'];
     final int ratePerHour = data['ratePerHour'];
@@ -37,8 +37,7 @@ class Event {
       locality: locality,
       decimalLongitude: decimalLongitude,
       decimalLatitude: decimalLatitude,
-      eventDateTime:
-          DateTime.fromMillisecondsSinceEpoch(eventDateTimeMilliseconds),
+      eventDate: DateTime.fromMillisecondsSinceEpoch(eventDateMilliseconds),
       eventRemarks: eventRemarks,
       conservationArea: conservationArea,
       ratePerHour: ratePerHour,
@@ -50,7 +49,7 @@ class Event {
       'locality': locality,
       'decimalLongitude': decimalLongitude,
       'decimalLatitude': decimalLatitude,
-      'eventDateTime': eventDateTime.millisecondsSinceEpoch,
+      'eventDate': eventDate.millisecondsSinceEpoch,
       'eventRemarks': eventRemarks,
       'conservationArea': conservationArea,
       'ratePerHour': ratePerHour,

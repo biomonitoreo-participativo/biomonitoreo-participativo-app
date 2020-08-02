@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:biomonitoreoparticipativoapp/app/home/models/occurrence.dart';
@@ -13,8 +16,13 @@ class OpportunisticObservationListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text('${occurrence.scientificName}'),
-      trailing: Icon(Icons.chevron_right),
+      leading: Text('${DateFormat("yyyy/MM/dd").format(occurrence.eventDate)}'),
+      title: Text(
+        '${occurrence.scientificName} (${occurrence.individualCount})',
+        style: TextStyle(fontStyle: FontStyle.italic),
+      ),
+      subtitle: Text('${occurrence.vernacularName}'),
+      trailing: Icon(Icons.edit),
       onTap: onTap,
     );
   }

@@ -2,11 +2,11 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:biomonitoreoparticipativoapp/app/home/models/opportunistic_observation_taxon_cart.dart';
-
-import 'package:biomonitoreoparticipativoapp/common_widgets/taxon_grid_tile.dart';
-
 import 'package:biomonitoreoparticipativoapp/app/home/models/taxon_data.dart';
+
+import 'package:biomonitoreoparticipativoapp/app/home/events/event_taxon_grid_tile.dart';
+
+import 'package:biomonitoreoparticipativoapp/app/home/events/event_taxa_cart.dart';
 
 enum FilterClassOptions {
   Eukaryota,
@@ -15,18 +15,18 @@ enum FilterClassOptions {
   Aves,
 }
 
-class TaxonPickGrid extends StatefulWidget {
+class EventTaxaPickScreen extends StatefulWidget {
   final List<String> initialTaxon;
 
-  TaxonPickGrid({
+  EventTaxaPickScreen({
     this.initialTaxon = const ['000001', '1'],
   });
 
   @override
-  _TaxonPickGridState createState() => _TaxonPickGridState();
+  _EventTaxaPickScreenState createState() => _EventTaxaPickScreenState();
 }
 
-class _TaxonPickGridState extends State<TaxonPickGrid> {
+class _EventTaxaPickScreenState extends State<EventTaxaPickScreen> {
   String _filterClass = 'Eukaryota';
 
   @override
@@ -36,11 +36,10 @@ class _TaxonPickGridState extends State<TaxonPickGrid> {
         ? taxaData.items
         : taxaData.findByClass(_filterClass);
 
-    final taxonCart =
-        Provider.of<OpportunisticObservationTaxonCart>(context, listen: false);
+    final taxaCart = Provider.of<EventTaxaCart>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Seleccionar especie'),
+        title: Text('Seleccionar especies'),
         actions: <Widget>[
           PopupMenuButton(
             onSelected: (FilterClassOptions selectedValue) {
@@ -81,12 +80,14 @@ class _TaxonPickGridState extends State<TaxonPickGrid> {
           IconButton(
             icon: Icon(Icons.done),
             onPressed: () {
-              Navigator.of(context).pop(
-                [
-                  taxonCart.items.values.toList()[0].taxonId,
-                  taxonCart.items.values.toList()[0].individualCount,
-                ],
-              );
+              print('taxaCart: len ${taxaCart.items.length}');
+              List list = [];
+              List subList = [
+                taxaCart.items.values.toList()[0].taxonId,
+                taxaCart.items.values.toList()[0].individualCount,
+              ];
+              list.add(subList);
+              Navigator.of(context).pop(list);
             },
           ),
         ],
@@ -97,7 +98,7 @@ class _TaxonPickGridState extends State<TaxonPickGrid> {
         itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
           // builder: (c) => products[i],
           value: taxa[i],
-          child: TaxonGridTile(),
+          child: EventTaxonGridTile(),
         ),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,

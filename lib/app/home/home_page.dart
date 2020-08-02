@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/account/account_page.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/cupertino_home_scaffold.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/entries/entries_page.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/events/events_page.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/events/events_list_screen.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/tab_item.dart';
 
 import 'observations/observations_screen.dart';
@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
 
   Map<TabItem, WidgetBuilder> get widgetBuilders {
     return {
-      TabItem.events: (_) => EventsPage(),
+      TabItem.events: (_) => EventsListScreen(),
       //TabItem.occurrences: (context) => EntriesPage.create(context),
       //TabItem.localities: (_) => LocalitiesPage(),
       //TabItem.occurrences2: (_) => ObservationsScreen(),

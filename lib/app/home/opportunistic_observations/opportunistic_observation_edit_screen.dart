@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
 import 'package:biomonitoreoparticipativoapp/app/home/models/occurrence.dart';
@@ -12,11 +13,12 @@ import 'package:biomonitoreoparticipativoapp/services/database.dart';
 
 import 'package:biomonitoreoparticipativoapp/common_widgets/locality_picker.dart';
 import 'package:biomonitoreoparticipativoapp/common_widgets/platform_exception_alert_dialog.dart';
-import 'package:biomonitoreoparticipativoapp/common_widgets/taxon_picker.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/opportunistic_observations/opportunistic_observation_taxon_picker_widget.dart';
 
-import 'package:biomonitoreoparticipativoapp/app/home/opportunistic_observations/taxon_data.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/models/taxon_data.dart';
 
 var _scientificNameController;
+var _vernacularNameController;
 var _individualCountController;
 var _localityController;
 var _decimalLongitudeController;
@@ -57,8 +59,9 @@ class _OpportunisticObservationEditScreenState
   var _taxaData;
 
   String _eventID = '0';
-  String _basisOfRecord = 'Human Observation';
-  String _kingdom = 'Animalia';
+  String _taxonID;
+  String _basisOfRecord;
+  String _kingdom;
   String _phylum;
   String _class_;
   String _order;
@@ -67,14 +70,14 @@ class _OpportunisticObservationEditScreenState
   String _specificEpithet;
   String _scientificName;
   String _scientificNameAuthorship;
-  String _vernacularName = '';
-  String _taxonRank = 'species';
-  int _individualCount = 1;
-  String _countryCode = 'CR';
+  String _vernacularName;
+  String _taxonRank;
+  int _individualCount;
+  String _countryCode;
   String _locality;
   double _decimalLongitude;
   double _decimalLatitude;
-  String _geodeticDatum = 'EPSG:4326';
+  String _geodeticDatum;
   DateTime _eventDate = DateTime.now();
   String _occurrenceRemarks;
   DateTime _start = DateTime.now();
@@ -88,6 +91,7 @@ class _OpportunisticObservationEditScreenState
     super.initState();
     if (widget.occurrence != null) {
       _eventID = widget.occurrence.eventID;
+      _taxonID = widget.occurrence.taxonID;
       _basisOfRecord = widget.occurrence.basisOfRecord;
       _kingdom = widget.occurrence.kingdom;
       _phylum = widget.occurrence.phylum;
@@ -113,6 +117,10 @@ class _OpportunisticObservationEditScreenState
     }
 
     _scientificNameController = TextEditingController(text: _scientificName);
+    _vernacularNameController = TextEditingController(text: _vernacularName);
+    _individualCountController = TextEditingController(
+      text: _individualCount.toString(),
+    );
     _localityController = TextEditingController(text: _locality);
     _decimalLongitudeController = TextEditingController(
       text: _decimalLongitude != null ? '$_decimalLongitude' : null,
@@ -138,6 +146,7 @@ class _OpportunisticObservationEditScreenState
         final occurrence = Occurrence(
           id: id,
           eventID: _eventID,
+          taxonID: _taxonID,
           basisOfRecord: _basisOfRecord,
           kingdom: _kingdom,
           phylum: _phylum,
@@ -161,7 +170,6 @@ class _OpportunisticObservationEditScreenState
           start: _start,
           end: _end,
         );
-
         await widget.database.setOccurrence(occurrence);
         Navigator.of(context).pop();
       } on PlatformException catch (e) {
@@ -175,7 +183,7 @@ class _OpportunisticObservationEditScreenState
 
   @override
   Widget build(BuildContext context) {
-    _taxaData = Provider.of<Taxa>(context);
+    _taxaData = Provider.of<Taxa>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -218,67 +226,70 @@ class _OpportunisticObservationEditScreenState
     );
   }
 
-  void _selectPlace(double lat, double lng) {
-    _pickedLocation = [lat, lng];
-    setState(() {
-      _decimalLongitude = lng;
-      _decimalLatitude = lat;
-    });
-    _decimalLongitudeController = TextEditingController(
-      text: _decimalLongitude.toStringAsFixed(2),
-    );
-    _decimalLatitudeController = TextEditingController(
-      text: _decimalLatitude.toStringAsFixed(2),
-    );
-  }
-
-  void _selectTaxon(String taxonId, int individualCount) {
-    Taxon taxon = _taxaData.findById(taxonId);
-
-    _pickedTaxon = [taxon.scientificName, individualCount.toString()];
-    setState(() {
-      _kingdom = taxon.kingdom;
-      _phylum = taxon.phylum;
-      _class_ = taxon.class_;
-      _order = taxon.order;
-      _family = taxon.family;
-      _genus = taxon.genus;
-      _specificEpithet = taxon.specificEpithet;
-      _scientificName = taxon.scientificName;
-      _scientificNameAuthorship = taxon.scientificNameAuthorship;
-      _taxonRank = taxon.taxonRank;
-      _individualCount = individualCount;
-    });
-    _scientificNameController = TextEditingController(
-      text: _scientificName,
-    );
-    _individualCountController = TextEditingController(
-      text: _individualCount.toString(),
-    );
-  }
-
   List<Widget> _buildFormChildren() {
     return [
+      OpportunisticObservationTaxonPickerWidget(_selectTaxon),
       TextFormField(
+        readOnly: true,
         controller: _scientificNameController,
-        decoration: InputDecoration(labelText: 'Nombre científico'),
+        decoration: InputDecoration(
+          labelText: 'Nombre científico',
+        ),
+        style: TextStyle(fontStyle: FontStyle.italic),
         validator: (value) => value.isNotEmpty
             ? null
             : 'El nombre científico no puede estar vacío',
         onSaved: (value) => _scientificName = value,
       ),
       TextFormField(
+        readOnly: true,
+        controller: _vernacularNameController,
+        decoration: InputDecoration(labelText: 'Nombre común'),
+        onSaved: (value) => _vernacularName = value,
+      ),
+      TextFormField(
+        controller: _individualCountController,
         keyboardType: TextInputType.numberWithOptions(
           signed: false,
           decimal: false,
         ),
-        controller: TextEditingController(text: '$_individualCount'),
         decoration: InputDecoration(
           labelText: 'Cantidad',
         ),
         onChanged: (value) => _individualCount = int.tryParse(value) ?? 0,
       ),
-      TaxonPicker(_selectTaxon),
+      LocalityPicker(_selectPlace),
+      Row(
+        children: <Widget>[
+          Expanded(
+            child: TextFormField(
+              readOnly: true,
+              controller: _decimalLongitudeController,
+              decoration: InputDecoration(labelText: 'Longitud'),
+              keyboardType: TextInputType.numberWithOptions(
+                signed: false,
+                decimal: false,
+              ),
+              onSaved: (value) =>
+                  _decimalLongitude = double.tryParse(value) ?? 0.0,
+            ),
+          ),
+          SizedBox(width: 10.0),
+          Expanded(
+            child: TextFormField(
+              readOnly: true,
+              controller: _decimalLatitudeController,
+              decoration: InputDecoration(labelText: 'Latitud'),
+              keyboardType: TextInputType.numberWithOptions(
+                signed: false,
+                decimal: false,
+              ),
+              onSaved: (value) =>
+                  _decimalLatitude = double.tryParse(value) ?? 0.0,
+            ),
+          ),
+        ],
+      ),
       TextFormField(
         controller: _localityController,
         decoration: InputDecoration(labelText: 'Localidad'),
@@ -286,27 +297,6 @@ class _OpportunisticObservationEditScreenState
             value.isNotEmpty ? null : 'La localidad no puede estar vacía',
         onSaved: (value) => _locality = value,
       ),
-      TextFormField(
-        readOnly: true,
-        controller: _decimalLongitudeController,
-        decoration: InputDecoration(labelText: 'Longitud'),
-        keyboardType: TextInputType.numberWithOptions(
-          signed: false,
-          decimal: false,
-        ),
-        onSaved: (value) => _decimalLongitude = double.tryParse(value) ?? 0.0,
-      ),
-      TextFormField(
-        readOnly: true,
-        controller: _decimalLatitudeController,
-        decoration: InputDecoration(labelText: 'Latitud'),
-        keyboardType: TextInputType.numberWithOptions(
-          signed: false,
-          decimal: false,
-        ),
-        onSaved: (value) => _decimalLatitude = double.tryParse(value) ?? 0.0,
-      ),
-      LocalityPicker(_selectPlace),
       DateTimeField(
         decoration: InputDecoration(labelText: 'Fecha'),
         format: DateFormat("yyyy-MM-dd"),
@@ -331,5 +321,49 @@ class _OpportunisticObservationEditScreenState
         onSaved: (value) => _occurrenceRemarks = value,
       ),
     ];
+  }
+
+  void _selectPlace(double lat, double lng) {
+    _pickedLocation = [lat, lng];
+    setState(() {
+      _decimalLongitude = lng;
+      _decimalLatitude = lat;
+    });
+    _decimalLongitudeController = TextEditingController(
+      text: _decimalLongitude.toStringAsFixed(6),
+    );
+    _decimalLatitudeController = TextEditingController(
+      text: _decimalLatitude.toStringAsFixed(6),
+    );
+  }
+
+  void _selectTaxon(String taxonId, int individualCount) {
+    Taxon taxon = _taxaData.findById(taxonId);
+
+    _pickedTaxon = [taxon.scientificName, individualCount.toString()];
+    setState(() {
+      _taxonID = taxon.id;
+      _kingdom = taxon.kingdom;
+      _phylum = taxon.phylum;
+      _class_ = taxon.class_;
+      _order = taxon.order;
+      _family = taxon.family;
+      _genus = taxon.genus;
+      _specificEpithet = taxon.specificEpithet;
+      _scientificName = taxon.scientificName;
+      _vernacularName = taxon.vernacularName;
+      _scientificNameAuthorship = taxon.scientificNameAuthorship;
+      _taxonRank = taxon.taxonRank;
+      _individualCount = individualCount;
+    });
+    _scientificNameController = TextEditingController(
+      text: _scientificName,
+    );
+    _vernacularNameController = TextEditingController(
+      text: _vernacularName,
+    );
+    _individualCountController = TextEditingController(
+      text: _individualCount.toString(),
+    );
   }
 }

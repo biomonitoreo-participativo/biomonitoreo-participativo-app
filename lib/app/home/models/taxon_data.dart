@@ -560,4 +560,20 @@ class Taxa with ChangeNotifier {
       (taxon) => taxon.id == id,
     );
   }
+
+  List<Taxon> findByClass(String class_) {
+    return _items.where((taxon) => taxon.class_ == class_).toList();
+  }
+
+  List<Taxon> get onlyMammaliaItems {
+    return _items.where((taxon) => taxon.class_ == 'Mammalia').toList();
+  }
+
+  List<Taxon> get onlyAvesItems {
+    return _items.where((taxon) => taxon.class_ == 'Aves').toList();
+  }
+
+  List<Taxon> get onlyAmphibiaItems {
+    return _items.where((taxon) => taxon.class_ == 'Amphibia').toList();
+  }
 }

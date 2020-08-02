@@ -62,13 +62,13 @@ class OccurrenceListItem extends StatelessWidget {
             ),
           ],
         ]),
-        if (occurrence.occurrenceRemarks.isNotEmpty)
+/*        if (occurrence.occurrenceRemarks.isNotEmpty)
           Text(
             occurrence.occurrenceRemarks,
             style: TextStyle(fontSize: 12.0),
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
-          ),
+          ),*/
       ],
     );
   }

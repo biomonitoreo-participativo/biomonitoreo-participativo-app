@@ -1,16 +1,20 @@
+import 'package:provider/provider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/event_occurrences/event_occurrences_page.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/events/edit_event_page.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/events/event_list_tile.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/events/list_items_builder.dart';
-import 'package:biomonitoreoparticipativoapp/common_widgets/platform_exception_alert_dialog.dart';
+
+import 'package:biomonitoreoparticipativoapp/app/home/models/event.dart';
+
 import 'package:biomonitoreoparticipativoapp/services/database.dart';
 
-import '../models/event.dart';
+import 'package:biomonitoreoparticipativoapp/common_widgets/platform_exception_alert_dialog.dart';
 
-class EventsPage extends StatelessWidget {
+import 'package:biomonitoreoparticipativoapp/app/home/events/event_edit_screen.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/events/event_list_tile.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/events/list_items_builder.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/event_occurrences/event_occurrences_page.dart';
+
+class EventsListScreen extends StatelessWidget {
   Future<void> _delete(BuildContext context, Event event) async {
     try {
       final database = Provider.of<Database>(context);
@@ -31,7 +35,7 @@ class EventsPage extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () => EditEventPage.show(
+            onPressed: () => EventEditScreen.show(
               context,
               database: Provider.of<Database>(context),
             ),
@@ -39,11 +43,11 @@ class EventsPage extends StatelessWidget {
           ),
         ],
       ),
-      body: _builContents(context),
+      body: _buildContents(context),
     );
   }
 
-  Widget _builContents(BuildContext context) {
+  Widget _buildContents(BuildContext context) {
     final database = Provider.of<Database>(context);
     return StreamBuilder<List<Event>>(
       stream: database.eventsStream(),

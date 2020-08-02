@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 
 class Occurrence {
   final String eventID;
+  final String taxonID;
   final String id;
   final String basisOfRecord;
   final String kingdom;
@@ -29,6 +30,7 @@ class Occurrence {
 
   Occurrence({
     @required this.eventID,
+    @required this.taxonID,
     @required this.id,
     this.basisOfRecord = 'Human Observation',
     this.kingdom = 'Animalia',
@@ -64,6 +66,7 @@ class Occurrence {
     return Occurrence(
       id: id,
       eventID: value['eventID'],
+      taxonID: value['taxonID'],
       basisOfRecord: value['basisOfRecord'],
       kingdom: value['kingdom'],
       phylum: value['phylum'],
@@ -91,7 +94,8 @@ class Occurrence {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'eventId': eventID,
+      'eventID': eventID,
+      'taxonID': taxonID,
       'basisOfRecord': basisOfRecord,
       'kingdom': kingdom,
       'phylum': phylum,

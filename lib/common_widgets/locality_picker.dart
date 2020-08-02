@@ -51,23 +51,11 @@ class _LocalityPickerState extends State<LocalityPicker> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-/*        Container(
-          height: 50,
-          width: double.infinity,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            border: Border.all(width: 1, color: Colors.grey),
-          ),
-          child: Text(
-            _localityText,
-            textAlign: TextAlign.center,
-          ),
-        ),*/
         FlatButton.icon(
           icon: Icon(
-            Icons.map,
+            Icons.place,
           ),
-          label: Text('Seleccionar coordenadas desde el mapa'),
+          label: Text('Seleccionar coordenadas en mapa'),
           textColor: Theme.of(context).primaryColor,
           onPressed: _selectOnMap,
         ),

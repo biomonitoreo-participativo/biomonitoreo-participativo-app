@@ -3,15 +3,16 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:biomonitoreoparticipativoapp/app/home/models/opportunistic_observation_taxon_cart.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/models/taxon.dart';
 
-class TaxonGridTile extends StatefulWidget {
+import 'package:biomonitoreoparticipativoapp/app/home/events/event_taxa_cart.dart';
+
+class EventTaxonGridTile extends StatefulWidget {
   @override
-  _TaxonGridTileState createState() => _TaxonGridTileState();
+  _EventTaxonGridTileState createState() => _EventTaxonGridTileState();
 }
 
-class _TaxonGridTileState extends State<TaxonGridTile> {
+class _EventTaxonGridTileState extends State<EventTaxonGridTile> {
   int _individualCount = 0;
   bool _selected = false;
 
@@ -26,23 +27,22 @@ class _TaxonGridTileState extends State<TaxonGridTile> {
   @override
   Widget build(BuildContext context) {
     final taxon = Provider.of<Taxon>(context, listen: false);
-    final taxonCart =
-        Provider.of<OpportunisticObservationTaxonCart>(context, listen: false);
+    final taxaCart = Provider.of<EventTaxaCart>(context);
 
-    String taxonCartItemTaxonId;
-    int taxonCartItemIndividualCount;
+    String taxaCartItemTaxonId;
+    int taxaCartItemIndividualCount;
 
-    if (taxonCart.itemCount > 0) {
+    if (taxaCart.itemCount > 0) {
       print(
-          'Taxones en el carrito: ${taxonCart.itemCount}. ${taxonCart.items.values.toList()[0].taxonId} (${taxonCart.items.values.toList()[0].individualCount})');
+          'Taxones en el carrito: ${taxaCart.itemCount}. ${taxaCart.items.values.toList()[0].taxonId} (${taxaCart.items.values.toList()[0].individualCount})');
 
-      taxonCartItemTaxonId = taxonCart.items.values.toList()[0].taxonId;
-      taxonCartItemIndividualCount =
-          taxonCart.items.values.toList()[0].individualCount;
+      taxaCartItemTaxonId = taxaCart.items.values.toList()[0].taxonId;
+      taxaCartItemIndividualCount =
+          taxaCart.items.values.toList()[0].individualCount;
 
-      if (taxon.id == taxonCartItemTaxonId) {
+      if (taxon.id == taxaCartItemTaxonId) {
         setState(() {
-          _individualCount = taxonCartItemIndividualCount;
+          _individualCount = taxaCartItemIndividualCount;
         });
       }
     } else {
@@ -99,8 +99,7 @@ class _TaxonGridTileState extends State<TaxonGridTile> {
                       _individualCount += 1;
                       _selected = true;
                     });
-                    taxonCart.clear();
-                    taxonCart.addItem(taxon.id, _individualCount);
+                    taxaCart.addItem(taxon.id, _individualCount);
                   },
                   onLongPress: () {
                     // Substract individual
@@ -108,8 +107,7 @@ class _TaxonGridTileState extends State<TaxonGridTile> {
                       setState(() {
                         _individualCount -= 1;
                       });
-                      taxonCart.clear();
-                      taxonCart.addItem(taxon.id, _individualCount);
+                      taxaCart.addItem(taxon.id, _individualCount);
                     }
                   },
                 ),

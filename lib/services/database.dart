@@ -15,6 +15,7 @@ abstract class Database {
   Future<void> setOccurrence(Occurrence occurrence);
   Future<void> deleteOccurrence(Occurrence occurrence);
   Stream<List<Occurrence>> occurrencesStream({Event event});
+  Stream<List<Occurrence>> opportunisticOccurrencesStream({Event event});
 }
 
 String documentIdFromCurrentDate() => DateTime.now().toIso8601String();
@@ -73,9 +74,18 @@ class FirestoreDatabase implements Database {
       _service.collectionStream<Occurrence>(
         path: APIPath.occurrences(uid),
         queryBuilder: event != null
-            ? (query) => query.where('eventId', isEqualTo: event.id)
+            ? (query) => query.where('eventID', isEqualTo: event.id)
             : null,
         builder: (data, documentID) => Occurrence.fromMap(data, documentID),
-        sort: (lhs, rhs) => rhs.start.compareTo(lhs.start),
+        sort: (lhs, rhs) => rhs.eventDate.compareTo(lhs.eventDate),
+      );
+
+  @override
+  Stream<List<Occurrence>> opportunisticOccurrencesStream({Event event}) =>
+      _service.collectionStream<Occurrence>(
+        path: APIPath.occurrences(uid),
+        queryBuilder: (query) => query.where('eventID', isEqualTo: '0'),
+        builder: (data, documentID) => Occurrence.fromMap(data, documentID),
+        sort: (lhs, rhs) => rhs.eventDate.compareTo(lhs.eventDate),
       );
 }
