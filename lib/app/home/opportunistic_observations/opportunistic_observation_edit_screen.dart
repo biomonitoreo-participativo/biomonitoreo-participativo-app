@@ -286,7 +286,7 @@ class _OpportunisticObservationEditScreenState
       Row(
         children: <Widget>[
           Expanded(
-            flex: 2,
+            flex: 3,
             child: TextFormField(
               readOnly: true,
               controller: _scientificNameController,
