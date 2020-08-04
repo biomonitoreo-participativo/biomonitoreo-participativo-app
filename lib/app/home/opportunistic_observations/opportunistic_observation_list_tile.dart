@@ -18,7 +18,7 @@ class OpportunisticObservationListTile extends StatelessWidget {
     return ListTile(
       leading: Text('${DateFormat("yyyy/MM/dd").format(occurrence.eventDate)}'),
       title: Text(
-        '${occurrence.scientificName} (${occurrence.individualCount})',
+        '${occurrence.scientificName} ${occurrence.individualCount}',
         style: TextStyle(fontStyle: FontStyle.italic),
       ),
       subtitle: Text('${occurrence.vernacularName}'),

@@ -192,11 +192,11 @@ class _OpportunisticObservationEditScreenState
             ? 'Creación de observación'
             : 'Edición de observación'),
         actions: <Widget>[
-          FlatButton(
-            child: Text('Guardar',
-                style: TextStyle(fontSize: 18.0, color: Colors.white)),
+          IconButton(
+            icon: Icon(Icons.save),
+            tooltip: 'Guardar observación',
             onPressed: _submmit,
-          )
+          ),
         ],
       ),
       body: _buildContents(),
@@ -228,35 +228,20 @@ class _OpportunisticObservationEditScreenState
 
   List<Widget> _buildFormChildren() {
     return [
-      OpportunisticObservationTaxonPickerWidget(_selectTaxon),
-      TextFormField(
-        readOnly: true,
-        controller: _scientificNameController,
-        decoration: InputDecoration(
-          labelText: 'Nombre científico',
-        ),
-        style: TextStyle(fontStyle: FontStyle.italic),
-        validator: (value) => value.isNotEmpty
-            ? null
-            : 'El nombre científico no puede estar vacío',
-        onSaved: (value) => _scientificName = value,
-      ),
-      TextFormField(
-        readOnly: true,
-        controller: _vernacularNameController,
-        decoration: InputDecoration(labelText: 'Nombre común'),
-        onSaved: (value) => _vernacularName = value,
-      ),
-      TextFormField(
-        controller: _individualCountController,
-        keyboardType: TextInputType.numberWithOptions(
-          signed: false,
-          decimal: false,
-        ),
-        decoration: InputDecoration(
-          labelText: 'Cantidad',
-        ),
-        onChanged: (value) => _individualCount = int.tryParse(value) ?? 0,
+      DateTimeField(
+        decoration: InputDecoration(labelText: 'Fecha'),
+        format: DateFormat("yyyy-MM-dd"),
+        initialValue: _eventDate,
+        onShowPicker: (context, currentValue) {
+          return showDatePicker(
+            context: context,
+            firstDate: DateTime(2018),
+            initialDate: currentValue ?? DateTime.now(),
+            lastDate: DateTime(2020),
+            locale: Locale('es'),
+          );
+        },
+        onSaved: (value) => _eventDate = value,
       ),
       LocalityPicker(_selectPlace),
       Row(
@@ -297,20 +282,46 @@ class _OpportunisticObservationEditScreenState
             value.isNotEmpty ? null : 'La localidad no puede estar vacía',
         onSaved: (value) => _locality = value,
       ),
-      DateTimeField(
-        decoration: InputDecoration(labelText: 'Fecha'),
-        format: DateFormat("yyyy-MM-dd"),
-        initialValue: _eventDate,
-        onShowPicker: (context, currentValue) {
-          return showDatePicker(
-            context: context,
-            firstDate: DateTime(2018),
-            initialDate: currentValue ?? DateTime.now(),
-            lastDate: DateTime(2020),
-            locale: Locale('es'),
-          );
-        },
-        onSaved: (value) => _eventDate = value,
+      OpportunisticObservationTaxonPickerWidget(_selectTaxon),
+      Row(
+        children: <Widget>[
+          Expanded(
+            flex: 2,
+            child: TextFormField(
+              readOnly: true,
+              controller: _scientificNameController,
+              decoration: InputDecoration(
+                labelText: 'Nombre científico',
+              ),
+              style: TextStyle(fontStyle: FontStyle.italic),
+              validator: (value) => value.isNotEmpty
+                  ? null
+                  : 'El nombre científico no puede estar vacío',
+              onSaved: (value) => _scientificName = value,
+            ),
+          ),
+          SizedBox(width: 10.0),
+          Expanded(
+            flex: 1,
+            child: TextFormField(
+              controller: _individualCountController,
+              keyboardType: TextInputType.numberWithOptions(
+                signed: false,
+                decimal: false,
+              ),
+              decoration: InputDecoration(
+                labelText: 'Cantidad',
+              ),
+              onChanged: (value) => _individualCount = int.tryParse(value) ?? 0,
+            ),
+          ),
+        ],
+      ),
+      TextFormField(
+        readOnly: true,
+        controller: _vernacularNameController,
+        decoration: InputDecoration(labelText: 'Nombre común'),
+        onSaved: (value) => _vernacularName = value,
       ),
       TextFormField(
         keyboardType: TextInputType.text,

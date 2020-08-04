@@ -61,7 +61,11 @@ class EventsListScreen extends StatelessWidget {
             onDismissed: (direction) => _delete(context, event),
             child: EventListTile(
               event: event,
-              onTap: () => EventOccurrencesPage.show(context, event),
+              onTap: () => EventEditScreen.show(
+                context,
+                database: Provider.of<Database>(context),
+                event: event,
+              ),
             ),
           ),
         );

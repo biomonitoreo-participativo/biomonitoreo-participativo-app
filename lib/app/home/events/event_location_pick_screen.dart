@@ -10,6 +10,12 @@ import 'package:biomonitoreoparticipativoapp/app/home/observations/Location.dart
 import 'package:biomonitoreoparticipativoapp/app/home/observations/location_data.dart';
 
 class EventLocationPickScreen extends StatefulWidget {
+  final List<double> initialLocality;
+
+  EventLocationPickScreen({
+    this.initialLocality,
+  });
+
   @override
   _EventLocationPickScreenState createState() =>
       _EventLocationPickScreenState();
@@ -17,9 +23,6 @@ class EventLocationPickScreen extends StatefulWidget {
 
 class _EventLocationPickScreenState extends State<EventLocationPickScreen> {
   Completer<GoogleMapController> _controller = Completer();
-
-  static const LatLng _center = const LatLng(9.3384541, -83.4233894);
-  // static const LatLng _center = const LatLng(37.77483, -122.41942);
 
   Set<Marker> markers = Set();
   List<Location> locations = <Location>[];
@@ -305,150 +308,192 @@ class _EventLocationPickScreenState extends State<EventLocationPickScreen> {
           markerId: MarkerId('11'),
           position: LatLng(9.34146, -83.50421),
           infoWindow: InfoWindow(
-            title: "Sendero Zaddy",
+            title: "SJ-01 San Jerónimo-01",
           ),
           onTap: () {
-            Navigator.pop(context, 'Sendero Zaddy');
+            setState(() {
+              _pickedLocation = [-83.50421, 9.34146, 'SJ-01 San Jerónimo-01'];
+            });
           },
         ),
         Marker(
           markerId: MarkerId('12'),
           position: LatLng(9.36354, -83.49639),
           infoWindow: InfoWindow(
-            title: "Sendero Ena",
+            title: "SJ-02 San Jerónimo-02",
           ),
           onTap: () {
-            Navigator.pop(context, 'Sendero Ena');
+            setState(() {
+              _pickedLocation = [-83.49639, 9.36354, 'SJ-02 San Jerónimo-02'];
+            });
           },
         ),
         Marker(
           markerId: MarkerId('13'),
           position: LatLng(9.28686, -83.45692),
           infoWindow: InfoWindow(
-            title: "Sendero Perica",
+            title: "AV-01	Altamira de Volcán-01",
           ),
           onTap: () {
-            Navigator.pop(context, 'Sendero Perica');
+            setState(() {
+              _pickedLocation = [
+                -83.45692,
+                9.28686,
+                'AV-01 Altamira de Volcán-01'
+              ];
+            });
           },
         ),
         Marker(
           markerId: MarkerId('14'),
           position: LatLng(9.23980, -83.37892),
           infoWindow: InfoWindow(
-            title: "Guadalajara",
+            title: "RC-01 Río Cañas-01",
           ),
           onTap: () {
-            Navigator.pop(context, 'Guadalajara');
+            setState(() {
+              _pickedLocation = [-83.37892, 9.23980, 'RC-01 Río Cañas-01'];
+            });
           },
         ),
         Marker(
           markerId: MarkerId('15'),
           position: LatLng(9.25712, -83.39225),
           infoWindow: InfoWindow(
-            title: "Sendero Mirador",
+            title: "RC-02	Río Cañas-02",
           ),
           onTap: () {
-            Navigator.pop(context, 'Sendero Mirador');
+            setState(() {
+              _pickedLocation = [-83.39225, 9.25712, 'RC-02	Río Cañas-02'];
+            });
           },
         ),
         Marker(
           markerId: MarkerId('16'),
           position: LatLng(9.27587, -83.37080),
           infoWindow: InfoWindow(
-            title: "Ruta las aves",
+            title: "RC-03 Río Cañas-03",
           ),
           onTap: () {
-            Navigator.pop(context, 'Ruta las aves');
+            setState(() {
+              _pickedLocation = [-83.37080, 9.27587, 'RC-03 Río Cañas-03'];
+            });
           },
         ),
         Marker(
           markerId: MarkerId('17'),
           position: LatLng(9.23270, -83.30128),
           infoWindow: InfoWindow(
-            title: "Ujarrás",
+            title: "UJ-01 Ujarrás-01",
           ),
           onTap: () {
-            Navigator.pop(context, 'Ujarrás');
+            setState(() {
+              _pickedLocation = [-83.30128, 9.23270, 'UJ-01 Ujarrás-01'];
+            });
           },
         ),
         Marker(
           markerId: MarkerId('18'),
           position: LatLng(9.26302, -83.33883),
           infoWindow: InfoWindow(
-            title: "Sendero Zapotal",
+            title: "UJ-02 Ujarrás-02",
           ),
           onTap: () {
-            Navigator.pop(context, 'Sendero Zapotal');
+            setState(() {
+              _pickedLocation = [-83.33883, 9.26302, 'UJ-02 Ujarrás-02'];
+            });
           },
         ),
         Marker(
           markerId: MarkerId('19'),
           position: LatLng(9.08958, -83.11559),
           infoWindow: InfoWindow(
-            title: "Sendero Parcelas",
+            title: "LU-01 La Luchita-01",
           ),
           onTap: () {
-            Navigator.pop(context, 'Sendero Parcelas');
+            setState(() {
+              _pickedLocation = [-83.11559, 9.08958, 'LU-01 La Luchita-01'];
+            });
           },
         ),
         Marker(
           markerId: MarkerId('20'),
           position: LatLng(9.11940, -83.06877),
           infoWindow: InfoWindow(
-            title: "Sendero Huacas",
+            title: "TC-01 Tres Colinas-01",
           ),
           onTap: () {
-            Navigator.pop(context, 'Sendero Huacas');
+            setState(() {
+              _pickedLocation = [-83.06877, 9.11940, 'TC-01 Tres Colinas-01'];
+            });
           },
         ),
         Marker(
           markerId: MarkerId('21'),
           position: LatLng(9.02319, -83.05455),
           infoWindow: InfoWindow(
-            title: "Sendero 1",
+            title: "Sendero 1 (BI-01 Biolley-01)",
           ),
           onTap: () {
-            Navigator.pop(context, 'Sendero 1');
+            setState(() {
+              _pickedLocation = [-83.05455, 9.02319, 'BI-01 Biolley-01'];
+            });
           },
         ),
         Marker(
           markerId: MarkerId('22'),
           position: LatLng(9.03876, -83.03779),
           infoWindow: InfoWindow(
-            title: "Finca María Isabel",
+            title: "BI-02 Biolley-02",
           ),
           onTap: () {
-            Navigator.pop(context, 'Finca María Isabel');
+            setState(() {
+              _pickedLocation = [-83.03779, 9.03876, 'BI-02 Biolley-02'];
+            });
           },
         ),
         Marker(
           markerId: MarkerId('23'),
           position: LatLng(9.03426, -83.04131),
           infoWindow: InfoWindow(
-            title: "Sendero Biolley",
+            title: "BI-03 Biolley-03",
           ),
           onTap: () {
-            Navigator.pop(context, 'Sendero Biolley');
+            setState(() {
+              _pickedLocation = [-83.04131, 9.03426, 'BI-03 Biolley-03'];
+            });
           },
         ),
         Marker(
           markerId: MarkerId('24'),
           position: LatLng(9.01146, -83.02309),
           infoWindow: InfoWindow(
-            title: "Sendero Colorado",
+            title: "AB-02 Altamira de Biolley-02",
           ),
           onTap: () {
-            Navigator.pop(context, 'Sendero Colorado');
+            setState(() {
+              _pickedLocation = [
+                -83.02309,
+                9.01146,
+                'AB-02 Altamira de Biolley-02'
+              ];
+            });
           },
         ),
         Marker(
           markerId: MarkerId('25'),
           position: LatLng(9.00549, -83.00901),
           infoWindow: InfoWindow(
-            title: "Sendero Asoprola",
+            title: "AB-01 Altamira de Biolley-01",
           ),
           onTap: () {
-            Navigator.pop(context, 'Sendero Asoprola');
+            setState(() {
+              _pickedLocation = [
+                -83.00901,
+                9.00549,
+                'AB-01 Altamira de Biolley-01'
+              ];
+            });
           },
         ),
         Marker(
@@ -458,7 +503,9 @@ class _EventLocationPickScreenState extends State<EventLocationPickScreen> {
             title: "Sendero Cabagra",
           ),
           onTap: () {
-            Navigator.pop(context, 'Sendero Cabagra');
+            setState(() {
+              _pickedLocation = [-83.19557, 9.13701, 'Sendero Cabagra'];
+            });
           },
         ),
         Marker(
@@ -468,7 +515,9 @@ class _EventLocationPickScreenState extends State<EventLocationPickScreen> {
             title: "Sendero Chánguena",
           ),
           onTap: () {
-            Navigator.pop(context, 'Sendero Chánguena');
+            setState(() {
+              _pickedLocation = [-83.20337, 8.93879, 'Sendero Chánguena'];
+            });
           },
         ),
         Marker(
@@ -478,7 +527,9 @@ class _EventLocationPickScreenState extends State<EventLocationPickScreen> {
             title: "Sendero Pittier",
           ),
           onTap: () {
-            Navigator.pop(context, 'Sendero Pittier');
+            setState(() {
+              _pickedLocation = [-82.93996, 8.95203, 'Sendero Chánguena'];
+            });
           },
         ),
         Marker(
@@ -488,7 +539,9 @@ class _EventLocationPickScreenState extends State<EventLocationPickScreen> {
             title: "Sendero Tablas",
           ),
           onTap: () {
-            Navigator.pop(context, 'Sendero Tablas');
+            setState(() {
+              _pickedLocation = [-82.81732, 8.88802, 'Sendero Tablas'];
+            });
           },
         ),
       ],
@@ -526,8 +579,11 @@ class _EventLocationPickScreenState extends State<EventLocationPickScreen> {
       markers: markers,
       polygons: _polygons,
       initialCameraPosition: CameraPosition(
-        target: _center,
-        zoom: 9.0,
+        target: LatLng(
+          widget.initialLocality[1],
+          widget.initialLocality[0],
+        ),
+        zoom: 10,
       ),
     );
   }

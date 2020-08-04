@@ -7,7 +7,7 @@ class LocalityPickMap extends StatefulWidget {
   final bool isSelecting;
 
   LocalityPickMap({
-    this.initialLocality = const [-84.0, 10.0],
+    this.initialLocality,
     this.isSelecting = false,
   });
 
@@ -17,6 +17,7 @@ class LocalityPickMap extends StatefulWidget {
 
 class _LocalityPickMapState extends State<LocalityPickMap> {
   LatLng _pickedLocality;
+  LatLng _currentLocation;
 
   void _pickLocality(LatLng position) {
     setState(() {
@@ -44,12 +45,13 @@ class _LocalityPickMapState extends State<LocalityPickMap> {
         ],
       ),
       body: GoogleMap(
+        mapType: MapType.hybrid,
         initialCameraPosition: CameraPosition(
           target: LatLng(
             widget.initialLocality[1],
             widget.initialLocality[0],
           ),
-          zoom: 16,
+          zoom: 10,
         ),
         onTap: widget.isSelecting ? _pickLocality : null,
         markers: (_pickedLocality == null && widget.isSelecting)
@@ -59,8 +61,8 @@ class _LocalityPickMapState extends State<LocalityPickMap> {
                   markerId: MarkerId('Inicio'),
                   position: _pickedLocality ??
                       LatLng(
-                        widget.initialLocality[0],
                         widget.initialLocality[1],
+                        widget.initialLocality[0],
                       ),
                 ),
               },

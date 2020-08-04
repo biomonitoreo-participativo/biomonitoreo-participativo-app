@@ -1,6 +1,9 @@
-import 'package:biomonitoreoparticipativoapp/common_widgets/locality_pick_map.dart';
-import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+
+import 'package:flutter/material.dart';
+
+import 'package:biomonitoreoparticipativoapp/common_widgets/locality_pick_map.dart';
 
 class LocalityPicker extends StatefulWidget {
   final Function onSelectPlace;
@@ -23,14 +26,20 @@ class _LocalityPickerState extends State<LocalityPicker> {
   }
 
   Future<void> _selectOnMap() async {
-    _selectedLocation = await Navigator.of(context).push<LatLng>(
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (ctx) => LocalityPickMap(
-          isSelecting: true,
+    try {
+      final locData = await Location().getLocation();
+      _selectedLocation = await Navigator.of(context).push<LatLng>(
+        MaterialPageRoute(
+          fullscreenDialog: true,
+          builder: (ctx) => LocalityPickMap(
+            initialLocality: [locData.longitude, locData.latitude],
+            isSelecting: true,
+          ),
         ),
-      ),
-    );
+      );
+    } catch (error) {
+      return;
+    }
 
     if (_selectedLocation == null) {
       return;

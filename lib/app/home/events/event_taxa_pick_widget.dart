@@ -1,7 +1,6 @@
-import 'package:biomonitoreoparticipativoapp/app/home/events/event_taxa_pick_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'package:biomonitoreoparticipativoapp/common_widgets/taxon_pick_grid.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/events/event_taxa_pick_screen.dart';
 
 class EventTaxaPickWidget extends StatefulWidget {
   final Function onPickTaxa;
@@ -27,10 +26,14 @@ class _EventTaxaPickWidgetState extends State<EventTaxaPickWidget> {
       return;
     }
 
-    print('_pickedTaxa: ${_pickedTaxa[0][0]} ${_pickedTaxa[0][1]}');
+    print(
+        'event_taxa_pick_widget::_pickOnGrid::_pickedTaxa.length ${_pickedTaxa.length}');
+    for (var l in _pickedTaxa) {
+      print('_pickedTaxaItem: [0]: ${l[0]} [1]: ${l[1]}');
+    }
+
     widget.onPickTaxa(
-      _pickedTaxa[0][0],
-      _pickedTaxa[0][1],
+      _pickedTaxa,
     );
   }
 
@@ -42,7 +45,7 @@ class _EventTaxaPickWidgetState extends State<EventTaxaPickWidget> {
           icon: Icon(
             Icons.nature,
           ),
-          label: Text('Seleccionar especie de lista'),
+          label: Text('Seleccionar especies de lista'),
           textColor: Theme.of(context).primaryColor,
           onPressed: _pickOnGrid,
         ),

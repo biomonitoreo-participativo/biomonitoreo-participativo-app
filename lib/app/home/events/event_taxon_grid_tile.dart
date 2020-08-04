@@ -16,18 +16,18 @@ class _EventTaxonGridTileState extends State<EventTaxonGridTile> {
   int _individualCount = 0;
   bool _selected = false;
 
-  _launchURL(url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'No fue posible acceder a $url';
-    }
+  var taxaCart;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    taxaCart = Provider.of<EventTaxaCart>(context);
   }
 
   @override
   Widget build(BuildContext context) {
     final taxon = Provider.of<Taxon>(context, listen: false);
-    final taxaCart = Provider.of<EventTaxaCart>(context);
 
     String taxaCartItemTaxonId;
     int taxaCartItemIndividualCount;
@@ -144,5 +144,13 @@ class _EventTaxonGridTileState extends State<EventTaxonGridTile> {
         ],
       ),
     );
+  }
+
+  _launchURL(url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'No fue posible acceder a $url';
+    }
   }
 }

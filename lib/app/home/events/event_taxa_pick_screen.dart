@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:biomonitoreoparticipativoapp/app/home/models/taxon_data.dart';
 
-import 'package:biomonitoreoparticipativoapp/app/home/events/event_taxon_grid_tile.dart';
-
 import 'package:biomonitoreoparticipativoapp/app/home/events/event_taxa_cart.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/events/event_taxon_grid_tile.dart';
 
 enum FilterClassOptions {
   Eukaryota,
@@ -16,10 +15,10 @@ enum FilterClassOptions {
 }
 
 class EventTaxaPickScreen extends StatefulWidget {
-  final List<String> initialTaxon;
+  final List initialTaxa;
 
   EventTaxaPickScreen({
-    this.initialTaxon = const ['000001', '1'],
+    this.initialTaxa,
   });
 
   @override
@@ -27,16 +26,21 @@ class EventTaxaPickScreen extends StatefulWidget {
 }
 
 class _EventTaxaPickScreenState extends State<EventTaxaPickScreen> {
+  var _eventTaxaCart;
   String _filterClass = 'Eukaryota';
 
   @override
-  Widget build(BuildContext context) {
-    final taxaData = Provider.of<Taxa>(context);
-    final taxa = _filterClass == 'Eukaryota'
-        ? taxaData.items
-        : taxaData.findByClass(_filterClass);
+  void didChangeDependencies() {
+    _eventTaxaCart = Provider.of<EventTaxaCart>(context, listen: false);
+  }
 
-    final taxaCart = Provider.of<EventTaxaCart>(context, listen: false);
+  @override
+  Widget build(BuildContext context) {
+    final _taxaData = Provider.of<Taxa>(context);
+    final _taxa = _filterClass == 'Eukaryota'
+        ? _taxaData.items
+        : _taxaData.findByClass(_filterClass);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Seleccionar especies'),
@@ -80,24 +84,17 @@ class _EventTaxaPickScreenState extends State<EventTaxaPickScreen> {
           IconButton(
             icon: Icon(Icons.done),
             onPressed: () {
-              print('taxaCart: len ${taxaCart.items.length}');
-              List list = [];
-              List subList = [
-                taxaCart.items.values.toList()[0].taxonId,
-                taxaCart.items.values.toList()[0].individualCount,
-              ];
-              list.add(subList);
-              Navigator.of(context).pop(list);
+              _done();
             },
           ),
         ],
       ),
       body: GridView.builder(
         padding: const EdgeInsets.all(2.0),
-        itemCount: taxa.length,
+        itemCount: _taxa.length,
         itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
           // builder: (c) => products[i],
-          value: taxa[i],
+          value: _taxa[i],
           child: EventTaxonGridTile(),
         ),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -107,5 +104,23 @@ class _EventTaxaPickScreenState extends State<EventTaxaPickScreen> {
         ),
       ),
     );
+  }
+
+  void _done() {
+    List _eventTaxaCartList = _eventTaxaCart.items.values.toList();
+    List _pickedTaxa = [];
+
+    for (var _eventTaxaCartItem in _eventTaxaCartList) {
+      _pickedTaxa.add(
+        [
+          _eventTaxaCartItem.taxonId,
+          _eventTaxaCartItem.individualCount,
+        ],
+      );
+    }
+
+    _eventTaxaCart.clear();
+
+    Navigator.of(context).pop(_pickedTaxa);
   }
 }

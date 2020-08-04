@@ -1,3 +1,5 @@
+import 'package:location/location.dart';
+
 import 'package:flutter/material.dart';
 
 import 'event_location_pick_screen.dart';
@@ -28,12 +30,19 @@ class _EventLocationPickWidgetState extends State<EventLocationPickWidget> {
   }
 
   Future<void> _selectOnMap() async {
-    _pickedLocation = await Navigator.of(context).push<List>(
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (ctx) => EventLocationPickScreen(),
-      ),
-    );
+    try {
+      final locData = await Location().getLocation();
+      _pickedLocation = await Navigator.of(context).push<List>(
+        MaterialPageRoute(
+          fullscreenDialog: true,
+          builder: (ctx) => EventLocationPickScreen(
+            initialLocality: [locData.longitude, locData.latitude],
+          ),
+        ),
+      );
+    } catch (error) {
+      return;
+    }
 
     if (_pickedLocation == null) {
       return;
