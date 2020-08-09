@@ -168,7 +168,7 @@ class _EventLocationPickScreenState extends State<EventLocationPickScreen> {
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: LatLng(lat, long),
-          zoom: 15,
+          zoom: 16,
           tilt: 50.0,
           bearing: 45.0,
         ),

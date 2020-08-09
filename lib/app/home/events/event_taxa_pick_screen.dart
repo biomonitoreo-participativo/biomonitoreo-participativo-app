@@ -15,11 +15,11 @@ enum FilterClassOptions {
 }
 
 class EventTaxaPickScreen extends StatefulWidget {
-  final List initialTaxa;
+  final List pickedTaxa;
 
-  EventTaxaPickScreen({
-    this.initialTaxa,
-  });
+  EventTaxaPickScreen(
+    this.pickedTaxa,
+  );
 
   @override
   _EventTaxaPickScreenState createState() => _EventTaxaPickScreenState();
@@ -45,7 +45,7 @@ class _EventTaxaPickScreenState extends State<EventTaxaPickScreen> {
       appBar: AppBar(
         title: Text('Seleccionar especies'),
         actions: <Widget>[
-          PopupMenuButton(
+/*          PopupMenuButton(
             onSelected: (FilterClassOptions selectedValue) {
               setState(() {
                 if (selectedValue == FilterClassOptions.Mammalia) {
@@ -80,7 +80,7 @@ class _EventTaxaPickScreenState extends State<EventTaxaPickScreen> {
                 value: FilterClassOptions.Mammalia,
               ),
             ],
-          ),
+          ),*/
           IconButton(
             icon: Icon(Icons.done),
             onPressed: () {
@@ -95,7 +95,7 @@ class _EventTaxaPickScreenState extends State<EventTaxaPickScreen> {
         itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
           // builder: (c) => products[i],
           value: _taxa[i],
-          child: EventTaxonGridTile(),
+          child: EventTaxonGridTile(widget.pickedTaxa),
         ),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -115,6 +115,7 @@ class _EventTaxaPickScreenState extends State<EventTaxaPickScreen> {
         [
           _eventTaxaCartItem.taxonId,
           _eventTaxaCartItem.individualCount,
+          _eventTaxaCartItem.occurrenceId,
         ],
       );
     }

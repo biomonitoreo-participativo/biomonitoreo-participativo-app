@@ -12,7 +12,6 @@ import 'package:biomonitoreoparticipativoapp/common_widgets/platform_exception_a
 import 'package:biomonitoreoparticipativoapp/app/home/events/event_edit_screen.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/events/event_list_tile.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/events/list_items_builder.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/event_occurrences/event_occurrences_page.dart';
 
 class EventsListScreen extends StatelessWidget {
   Future<void> _delete(BuildContext context, Event event) async {

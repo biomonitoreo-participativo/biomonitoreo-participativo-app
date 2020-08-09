@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:biomonitoreoparticipativoapp/common_widgets/platform_alert_dialog.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -68,9 +69,7 @@ class _EventEditScreenState extends State<EventEditScreen> {
 
   var _taxaData;
   var taxaCart;
-  List _occurrencesList;
   var _occurrencesStream;
-
   var _pickedTaxa;
 
   @override
@@ -84,15 +83,16 @@ class _EventEditScreenState extends State<EventEditScreen> {
       _eventRemarks = widget.event.eventRemarks;
 
       // Load occurrences data in List
-      _occurrencesStream =
-          widget.database.occurrencesStream(event: widget.event);
-
-      _pickedTaxa = [];
+      _occurrencesStream = widget.database.occurrencesStream(
+        event: widget.event,
+      );
 
       _occurrencesStream.listen((value) {
+        _pickedTaxa = [];
         for (var occ in value) {
           setState(() {
-            _pickedTaxa.add([occ.taxonID, occ.individualCount]);
+            _pickedTaxa.add([occ.taxonID, occ.individualCount, occ.id]);
+            print('add()');
           });
         }
       });
@@ -113,13 +113,11 @@ class _EventEditScreenState extends State<EventEditScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    taxaCart = Provider.of<EventTaxaCart>(context);
+    _taxaData = Provider.of<Taxa>(context, listen: false);
   }
 
   @override
   Widget build(BuildContext context) {
-    _taxaData = Provider.of<Taxa>(context, listen: false);
-
     return Scaffold(
       appBar: AppBar(
         elevation: 2.0,
@@ -181,6 +179,9 @@ class _EventEditScreenState extends State<EventEditScreen> {
                   readOnly: true,
                   controller: _decimalLongitudeController,
                   decoration: InputDecoration(labelText: 'Longitud'),
+                  validator: (value) => value.isNotEmpty
+                      ? null
+                      : 'La longitud no puede estar vacía',
                   keyboardType: TextInputType.numberWithOptions(
                     signed: false,
                     decimal: false,
@@ -195,6 +196,9 @@ class _EventEditScreenState extends State<EventEditScreen> {
                   readOnly: true,
                   controller: _decimalLatitudeController,
                   decoration: InputDecoration(labelText: 'Latitud'),
+                  validator: (value) => value.isNotEmpty
+                      ? null
+                      : 'La latitud no puede estar vacía',
                   keyboardType: TextInputType.numberWithOptions(
                     signed: false,
                     decimal: false,
@@ -213,7 +217,7 @@ class _EventEditScreenState extends State<EventEditScreen> {
                 value.isNotEmpty ? null : 'La localidad no puede estar vacía',
             onSaved: (value) => _locality = value,
           ),
-          EventTaxaPickWidget(_pickTaxa),
+          EventTaxaPickWidget(_pickedTaxa, _pickTaxa),
           _buildPickedTaxaListView(),
           TextFormField(
             keyboardType: TextInputType.text,
@@ -238,6 +242,15 @@ class _EventEditScreenState extends State<EventEditScreen> {
   }
 
   Future<void> _submmit() async {
+    if (_pickedTaxa == null || _pickedTaxa.length == 0) {
+      print('Debe ingresar por lo menos una observación');
+      PlatformAlertDialog(
+        title: 'Debe ingresar por lo menos una observación',
+        content: 'Debe ingresar por lo menos una observación',
+        defaultActionText: 'Ok',
+      );
+      return;
+    }
     if (_validateAndSaveForm()) {
       try {
         final eventId = widget.event?.id ?? documentIdFromCurrentDate();
@@ -258,10 +271,14 @@ class _EventEditScreenState extends State<EventEditScreen> {
           print('_pickedTaxaItem: [0]: ${taxaItem[0]} [1]: ${taxaItem[1]}');
           final taxonId = taxaItem[0];
           final individualCount = taxaItem[1];
+          var occurrenceId = taxaItem[2];
 
-          Taxon taxon = _taxaData.findById(taxonId);
+          final taxon = _taxaData.findById(taxonId);
 
-          final occurrenceId = documentIdFromCurrentDate();
+          if (occurrenceId == null) {
+            occurrenceId = documentIdFromCurrentDate();
+          }
+
           final occurrence = Occurrence(
             id: occurrenceId,
             eventID: eventId,
@@ -322,12 +339,20 @@ class _EventEditScreenState extends State<EventEditScreen> {
   }
 
   void _pickTaxa(List pickedTaxa) {
-    _pickedTaxa = pickedTaxa;
+    setState(() {
+      _pickedTaxa = pickedTaxa;
+    });
   }
 
   Widget _buildPickedTaxaListView() {
     if (_pickedTaxa == null) {
+      print('_buildPickedTaxaListView _pickedTaxa: vacío');
       return Container();
+    } else {
+      print('_buildPickedTaxaListView _pickedTaxa:');
+      for (var occ in _pickedTaxa) {
+        print('${occ[0]} ${occ[1]} ${occ[2]}');
+      }
     }
 
     return Container(

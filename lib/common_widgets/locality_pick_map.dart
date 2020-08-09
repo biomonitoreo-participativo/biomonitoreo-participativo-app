@@ -51,7 +51,7 @@ class _LocalityPickMapState extends State<LocalityPickMap> {
             widget.initialLocality[1],
             widget.initialLocality[0],
           ),
-          zoom: 10,
+          zoom: 16,
         ),
         onTap: widget.isSelecting ? _pickLocality : null,
         markers: (_pickedLocality == null && widget.isSelecting)

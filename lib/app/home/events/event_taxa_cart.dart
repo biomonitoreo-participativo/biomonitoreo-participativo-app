@@ -11,7 +11,7 @@ class EventTaxaCart with ChangeNotifier {
     return _items.length;
   }
 
-  void addItem(String taxonId, int individualCount) {
+  void addItem(String taxonId, int individualCount, String occurrenceId) {
     print('addItem');
     if (_items.containsKey(taxonId)) {
       print('present');
@@ -21,6 +21,7 @@ class EventTaxaCart with ChangeNotifier {
         (existingCartItem) => EventTaxaCartItem(
           taxonId: existingCartItem.taxonId,
           individualCount: individualCount,
+          occurrenceId: occurrenceId,
         ),
       );
     } else {
@@ -30,10 +31,11 @@ class EventTaxaCart with ChangeNotifier {
         () => EventTaxaCartItem(
           taxonId: taxonId,
           individualCount: individualCount,
+          occurrenceId: occurrenceId,
         ),
       );
     }
-    notifyListeners();
+    //notifyListeners();
   }
 
   void removeItem(String taxonId) {
@@ -51,6 +53,7 @@ class EventTaxaCart with ChangeNotifier {
           (existingCartItem) => EventTaxaCartItem(
                 taxonId: existingCartItem.taxonId,
                 individualCount: existingCartItem.individualCount - 1,
+                occurrenceId: existingCartItem.occurrenceId,
               ));
     } else {
       _items.remove(taxonId);
@@ -67,9 +70,11 @@ class EventTaxaCart with ChangeNotifier {
 class EventTaxaCartItem {
   final String taxonId;
   final int individualCount;
+  final String occurrenceId;
 
   EventTaxaCartItem({
     @required this.taxonId,
     @required this.individualCount,
+    this.occurrenceId,
   });
 }

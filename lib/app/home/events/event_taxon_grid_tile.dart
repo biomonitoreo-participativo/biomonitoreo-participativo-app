@@ -1,3 +1,4 @@
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -8,6 +9,10 @@ import 'package:biomonitoreoparticipativoapp/app/home/models/taxon.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/events/event_taxa_cart.dart';
 
 class EventTaxonGridTile extends StatefulWidget {
+  final List pickedTaxa;
+
+  EventTaxonGridTile(this.pickedTaxa);
+
   @override
   _EventTaxonGridTileState createState() => _EventTaxonGridTileState();
 }
@@ -16,39 +21,38 @@ class _EventTaxonGridTileState extends State<EventTaxonGridTile> {
   int _individualCount = 0;
   bool _selected = false;
 
-  var taxaCart;
+  var _taxaCart;
+  var _taxon;
+
+  var _occurrenceId;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    taxaCart = Provider.of<EventTaxaCart>(context);
+    _taxaCart = Provider.of<EventTaxaCart>(context, listen: false);
+    _taxon = Provider.of<Taxon>(context, listen: false);
+
+    if (widget.pickedTaxa != null) {
+      for (var occ in widget.pickedTaxa) {
+        if (occ[0] == _taxon.id) {
+          setState(() {
+            _individualCount = occ[1];
+            _occurrenceId = occ[2];
+            _selected = true;
+          });
+          _taxaCart.addItem(
+            _taxon.id,
+            _individualCount,
+            _occurrenceId,
+          );
+        }
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final taxon = Provider.of<Taxon>(context, listen: false);
-
-    String taxaCartItemTaxonId;
-    int taxaCartItemIndividualCount;
-
-    if (taxaCart.itemCount > 0) {
-      print(
-          'Taxones en el carrito: ${taxaCart.itemCount}. ${taxaCart.items.values.toList()[0].taxonId} (${taxaCart.items.values.toList()[0].individualCount})');
-
-      taxaCartItemTaxonId = taxaCart.items.values.toList()[0].taxonId;
-      taxaCartItemIndividualCount =
-          taxaCart.items.values.toList()[0].individualCount;
-
-      if (taxon.id == taxaCartItemTaxonId) {
-        setState(() {
-          _individualCount = taxaCartItemIndividualCount;
-        });
-      }
-    } else {
-      print('Carrito vacío');
-    }
-
     return Card(
       elevation: 20.0,
       shape: RoundedRectangleBorder(
@@ -67,9 +71,9 @@ class _EventTaxonGridTileState extends State<EventTaxonGridTile> {
               child: GridTile(
                 child: GestureDetector(
                   onTap: () {},
-                  onLongPress: () => _launchURL(taxon.urlSpeciesPage),
+                  onLongPress: () => _launchURL(_taxon.urlSpeciesPage),
                   child: Image.network(
-                    taxon.urlImage,
+                    _taxon.urlImage,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -99,15 +103,27 @@ class _EventTaxonGridTileState extends State<EventTaxonGridTile> {
                       _individualCount += 1;
                       _selected = true;
                     });
-                    taxaCart.addItem(taxon.id, _individualCount);
+                    _taxaCart.addItem(
+                      _taxon.id,
+                      _individualCount,
+                      _occurrenceId,
+                    );
                   },
                   onLongPress: () {
                     // Substract individual
                     if (_individualCount > 0) {
                       setState(() {
                         _individualCount -= 1;
+                        _taxaCart.addItem(
+                          _taxon.id,
+                          _individualCount,
+                          _occurrenceId,
+                        );
+                        if (_individualCount <= 0) {
+                          _taxaCart.removeItem(_taxon.id);
+                          _selected = false;
+                        }
                       });
-                      taxaCart.addItem(taxon.id, _individualCount);
                     }
                   },
                 ),
@@ -119,7 +135,7 @@ class _EventTaxonGridTileState extends State<EventTaxonGridTile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        taxon.scientificName,
+                        _taxon.scientificName,
                         textAlign: TextAlign.left,
                         style: TextStyle(
                             fontSize: 12.0,
@@ -128,7 +144,7 @@ class _EventTaxonGridTileState extends State<EventTaxonGridTile> {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        taxon.vernacularName,
+                        _taxon.vernacularName,
                         textAlign: TextAlign.left,
                         style: TextStyle(fontSize: 12.0),
                         overflow: TextOverflow.ellipsis,
