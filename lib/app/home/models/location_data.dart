@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'Location.dart';
+import 'location.dart';
 
 class LocationData {
   static List<Location> _locations = [

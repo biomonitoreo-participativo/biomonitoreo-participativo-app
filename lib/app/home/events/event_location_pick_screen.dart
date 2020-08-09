@@ -6,8 +6,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:biomonitoreoparticipativoapp/app/home/observations/Location.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/observations/location_data.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/models/location.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/models/location_data.dart';
 
 class EventLocationPickScreen extends StatefulWidget {
   final List<double> initialLocality;

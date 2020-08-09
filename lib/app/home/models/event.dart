@@ -8,7 +8,6 @@ class Event {
   final DateTime eventDate;
   final String eventRemarks;
   final String conservationArea;
-  final int ratePerHour;
 
   Event({
     @required this.id,
@@ -18,7 +17,6 @@ class Event {
     @required this.eventDate,
     this.eventRemarks = '',
     this.conservationArea = 'ACLAP',
-    this.ratePerHour = 1,
   });
 
   factory Event.fromMap(Map<String, dynamic> data, String documentId) {
@@ -31,7 +29,6 @@ class Event {
     final int eventDateMilliseconds = data['eventDate'];
     final String eventRemarks = data['eventRemarks'];
     final String conservationArea = data['conservationArea'];
-    final int ratePerHour = data['ratePerHour'];
     return Event(
       id: documentId,
       locality: locality,
@@ -40,7 +37,6 @@ class Event {
       eventDate: DateTime.fromMillisecondsSinceEpoch(eventDateMilliseconds),
       eventRemarks: eventRemarks,
       conservationArea: conservationArea,
-      ratePerHour: ratePerHour,
     );
   }
 
@@ -52,7 +48,6 @@ class Event {
       'eventDate': eventDate.millisecondsSinceEpoch,
       'eventRemarks': eventRemarks,
       'conservationArea': conservationArea,
-      'ratePerHour': ratePerHour,
     };
   }
 }

@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:meta/meta.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/models/occurrence.dart';
+
 import 'package:biomonitoreoparticipativoapp/app/home/models/event.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/models/occurrence.dart';
+
 import 'package:biomonitoreoparticipativoapp/services/api_path.dart';
 import 'package:biomonitoreoparticipativoapp/services/firestore_service.dart';
 

@@ -25,8 +25,6 @@ class Occurrence {
   final String geodeticDatum;
   final DateTime eventDate;
   final String occurrenceRemarks;
-  final DateTime start;
-  final DateTime end;
 
   Occurrence({
     @required this.eventID,
@@ -52,12 +50,7 @@ class Occurrence {
     this.geodeticDatum = 'EPSG:4326',
     @required this.eventDate,
     this.occurrenceRemarks = '',
-    @required this.start,
-    @required this.end,
   });
-
-  double get durationInHours =>
-      end.difference(start).inMinutes.toDouble() / 60.0;
 
   factory Occurrence.fromMap(Map<dynamic, dynamic> value, String id) {
     final int startMilliseconds = value['start'];
@@ -87,8 +80,6 @@ class Occurrence {
       geodeticDatum: value['geodeticDatum'],
       eventDate: DateTime.fromMillisecondsSinceEpoch(eventDateMilliseconds),
       occurrenceRemarks: value['occurrenceRemarks'],
-      start: DateTime.fromMillisecondsSinceEpoch(startMilliseconds),
-      end: DateTime.fromMillisecondsSinceEpoch(endMilliseconds),
     );
   }
 
@@ -116,8 +107,6 @@ class Occurrence {
       'geodeticDatum': geodeticDatum,
       'eventDate': eventDate.millisecondsSinceEpoch,
       'occurrenceRemarks': occurrenceRemarks,
-      'start': start.millisecondsSinceEpoch,
-      'end': end.millisecondsSinceEpoch,
     };
   }
 }

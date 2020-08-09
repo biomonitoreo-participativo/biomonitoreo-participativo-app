@@ -1,14 +1,16 @@
+import 'package:provider/provider.dart';
+
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter/material.dart';
+
+import 'package:biomonitoreoparticipativoapp/services/auth.dart';
+
 import 'package:biomonitoreoparticipativoapp/app/home/models/opportunistic_observation_taxon_cart.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/models/taxon_data.dart';
-import 'package:biomonitoreoparticipativoapp/services/auth.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:biomonitoreoparticipativoapp/app/landing_page.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'app/home/events/event_taxa_cart.dart';
-import 'app/home/observations/input_observation_quantity.dart';
-import 'app/home/observations/observation_data.dart';
+import 'package:biomonitoreoparticipativoapp/app/landing_page.dart';
+
+import 'app/home/models/event_taxa_cart.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,12 +30,6 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: OpportunisticObservationTaxonCart(),
-        ),
-        ChangeNotifierProvider.value(
-          value: ObservationData(),
-        ),
-        ChangeNotifierProvider.value(
-          value: InputObservationQuantity(),
         ),
       ],
       // builder: (context) => Auth(),

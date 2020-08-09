@@ -11,9 +11,9 @@ import 'package:biomonitoreoparticipativoapp/app/home/models/taxon.dart';
 
 import 'package:biomonitoreoparticipativoapp/services/database.dart';
 
-import 'package:biomonitoreoparticipativoapp/common_widgets/locality_picker.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/opportunistic_observations/opportunistic_observation_locality_pick_widget.dart';
 import 'package:biomonitoreoparticipativoapp/common_widgets/platform_exception_alert_dialog.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/opportunistic_observations/opportunistic_observation_taxon_picker_widget.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/opportunistic_observations/opportunistic_observation_taxon_pick_widget.dart';
 
 import 'package:biomonitoreoparticipativoapp/app/home/models/taxon_data.dart';
 
@@ -60,7 +60,7 @@ class _OpportunisticObservationEditScreenState
 
   String _eventID = '0';
   String _taxonID;
-  String _basisOfRecord;
+  String _basisOfRecord = 'Human Observation';
   String _kingdom;
   String _phylum;
   String _class_;
@@ -73,15 +73,13 @@ class _OpportunisticObservationEditScreenState
   String _vernacularName;
   String _taxonRank;
   int _individualCount;
-  String _countryCode;
+  String _countryCode = 'CR';
   String _locality;
   double _decimalLongitude;
   double _decimalLatitude;
-  String _geodeticDatum;
+  String _geodeticDatum = 'EPSG:4326';
   DateTime _eventDate = DateTime.now();
   String _occurrenceRemarks;
-  DateTime _start = DateTime.now();
-  DateTime _end = DateTime.now();
 
   List<double> _pickedLocation;
   List<String> _pickedTaxon;
@@ -112,8 +110,6 @@ class _OpportunisticObservationEditScreenState
       _geodeticDatum = widget.occurrence.geodeticDatum;
       _eventDate = widget.occurrence.eventDate;
       _occurrenceRemarks = widget.occurrence.occurrenceRemarks;
-      _start = widget.occurrence.start;
-      _end = widget.occurrence.end;
     }
 
     _scientificNameController = TextEditingController(text: _scientificName);
@@ -167,8 +163,6 @@ class _OpportunisticObservationEditScreenState
           geodeticDatum: _geodeticDatum,
           eventDate: _eventDate,
           occurrenceRemarks: _occurrenceRemarks,
-          start: _start,
-          end: _end,
         );
         await widget.database.setOccurrence(occurrence);
         Navigator.of(context).pop();

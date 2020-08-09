@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:biomonitoreoparticipativoapp/app/home/models/opportunistic_observation_taxon_cart.dart';
 
-import 'package:biomonitoreoparticipativoapp/common_widgets/taxon_grid_tile.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/opportunistic_observations/opportunistic_observation_taxon_grid_tile.dart';
 
 import 'package:biomonitoreoparticipativoapp/app/home/models/taxon_data.dart';
 

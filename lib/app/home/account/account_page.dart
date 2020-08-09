@@ -1,8 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:flutter/material.dart';
+
+import 'package:biomonitoreoparticipativoapp/services/auth.dart';
+
 import 'package:biomonitoreoparticipativoapp/common_widgets/avatar.dart';
 import 'package:biomonitoreoparticipativoapp/common_widgets/platform_alert_dialog.dart';
-import 'package:biomonitoreoparticipativoapp/services/auth.dart';
 
 class AccountPage extends StatelessWidget {
   Future<void> _signOut(BuildContext context) async {

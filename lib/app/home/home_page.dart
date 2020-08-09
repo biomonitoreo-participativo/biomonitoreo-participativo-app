@@ -1,13 +1,9 @@
-import 'package:biomonitoreoparticipativoapp/app/home/observations/localities_page.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/opportunistic_observations/opportunistic_observations_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/account/account_page.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/cupertino_home_scaffold.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/entries/entries_page.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/events/events_list_screen.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/tab_item.dart';
-
-import 'observations/observations_screen.dart';
 
 class HomePage extends StatefulWidget {
   @override

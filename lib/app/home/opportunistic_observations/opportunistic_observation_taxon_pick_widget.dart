@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:biomonitoreoparticipativoapp/common_widgets/taxon_pick_grid.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/opportunistic_observations/opportunistic_observation_taxon_pick_screen.dart';
 
 class OpportunisticObservationTaxonPickerWidget extends StatefulWidget {
   final Function onPickTaxon;

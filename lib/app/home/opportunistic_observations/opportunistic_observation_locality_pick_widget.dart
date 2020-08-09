@@ -3,7 +3,7 @@ import 'package:location/location.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:biomonitoreoparticipativoapp/common_widgets/locality_pick_map.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/opportunistic_observations/opportunistic_observation_locality_pick_screen.dart';
 
 class LocalityPicker extends StatefulWidget {
   final Function onSelectPlace;

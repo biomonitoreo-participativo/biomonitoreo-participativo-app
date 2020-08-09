@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:biomonitoreoparticipativoapp/common_widgets/platform_alert_dialog.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -10,15 +9,14 @@ import 'package:flutter/services.dart';
 
 import 'package:biomonitoreoparticipativoapp/app/home/models/event.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/models/occurrence.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/models/taxon.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/models/taxon_data.dart';
 
 import 'package:biomonitoreoparticipativoapp/services/database.dart';
 
+import 'package:biomonitoreoparticipativoapp/common_widgets/platform_alert_dialog.dart';
 import 'package:biomonitoreoparticipativoapp/common_widgets/platform_exception_alert_dialog.dart';
 
 import 'package:biomonitoreoparticipativoapp/app/home/events/event_location_pick_widget.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/events/event_taxa_cart.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/events/event_taxa_pick_widget.dart';
 
 // Text editing controllers
@@ -303,8 +301,6 @@ class _EventEditScreenState extends State<EventEditScreen> {
             geodeticDatum: _geodeticDatum,
             eventDate: _eventDate,
             occurrenceRemarks: _occurrenceRemarks,
-            start: _eventDate,
-            end: _eventDate,
           );
           await widget.database.setOccurrence(occurrence);
         }

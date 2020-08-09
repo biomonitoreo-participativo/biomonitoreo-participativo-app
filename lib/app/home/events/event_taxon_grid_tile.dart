@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:biomonitoreoparticipativoapp/app/home/models/taxon.dart';
 
-import 'package:biomonitoreoparticipativoapp/app/home/events/event_taxa_cart.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/models/event_taxa_cart.dart';
 
 class EventTaxonGridTile extends StatefulWidget {
   final List pickedTaxa;

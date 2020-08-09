@@ -11,7 +11,7 @@ import 'package:biomonitoreoparticipativoapp/common_widgets/platform_exception_a
 
 import 'package:biomonitoreoparticipativoapp/app/home/opportunistic_observations/opportunistic_observation_edit_screen.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/opportunistic_observations/opportunistic_observation_list_tile.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/events/list_items_builder.dart';
+import 'package:biomonitoreoparticipativoapp/common_widgets/list_items_builder.dart';
 
 class OpportunisticObservationsListScreen extends StatelessWidget {
   Future<void> _delete(BuildContext context, Occurrence occurrence) async {

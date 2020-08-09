@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/events/empty_content.dart';
+import 'package:biomonitoreoparticipativoapp/common_widgets/empty_content.dart';
 
 typedef ItemWidgetBuilder<T> = Widget Function(BuildContext context, T item);
 
