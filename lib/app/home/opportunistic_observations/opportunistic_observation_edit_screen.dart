@@ -78,7 +78,7 @@ class _OpportunisticObservationEditScreenState
   double _decimalLongitude;
   double _decimalLatitude;
   String _geodeticDatum = 'EPSG:4326';
-  DateTime _eventDate = DateTime.now();
+  DateTime _eventDate;
   String _occurrenceRemarks;
 
   List<double> _pickedLocation;
@@ -223,17 +223,31 @@ class _OpportunisticObservationEditScreenState
   List<Widget> _buildFormChildren() {
     return [
       DateTimeField(
-        decoration: InputDecoration(labelText: 'Fecha'),
-        format: DateFormat("yyyy-MM-dd"),
+        decoration: InputDecoration(labelText: 'Fecha y hora'),
+        format: DateFormat("yyyy-MM-dd HH:mm"),
         initialValue: _eventDate,
-        onShowPicker: (context, currentValue) {
-          return showDatePicker(
-            context: context,
-            firstDate: DateTime(2018),
-            initialDate: currentValue ?? DateTime.now(),
-            lastDate: DateTime(2020),
-            locale: Locale('es'),
-          );
+        validator: (DateTime dateTime) {
+          if (dateTime == null) {
+            return "La fecha y la hora no pueden estar vacías";
+          }
+          return null;
+        },
+        onShowPicker: (context, currentValue) async {
+          final date = await showDatePicker(
+              context: context,
+              firstDate: DateTime(2018),
+              initialDate: currentValue ?? DateTime.now(),
+              lastDate: DateTime(2022));
+          if (date != null) {
+            final time = await showTimePicker(
+              context: context,
+              initialTime:
+                  TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
+            );
+            return DateTimeField.combine(date, time);
+          } else {
+            return currentValue;
+          }
         },
         onSaved: (value) => _eventDate = value,
       ),

@@ -5,6 +5,7 @@ class Occurrence {
   final String eventID;
   final String taxonID;
   final String id;
+  final String occurrenceID;
   final String basisOfRecord;
   final String kingdom;
   final String phylum;
@@ -30,6 +31,7 @@ class Occurrence {
     @required this.eventID,
     @required this.taxonID,
     @required this.id,
+    @required this.occurrenceID,
     this.basisOfRecord = 'Human Observation',
     this.kingdom = 'Animalia',
     this.phylum = '',
@@ -58,6 +60,7 @@ class Occurrence {
     final int eventDateMilliseconds = value['eventDate'];
     return Occurrence(
       id: id,
+      occurrenceID: id,
       eventID: value['eventID'],
       taxonID: value['taxonID'],
       basisOfRecord: value['basisOfRecord'],
@@ -87,6 +90,7 @@ class Occurrence {
     return <String, dynamic>{
       'eventID': eventID,
       'taxonID': taxonID,
+      'occurrenceID': occurrenceID,
       'basisOfRecord': basisOfRecord,
       'kingdom': kingdom,
       'phylum': phylum,

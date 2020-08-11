@@ -54,16 +54,23 @@ class EventEditScreen extends StatefulWidget {
 class _EventEditScreenState extends State<EventEditScreen> {
   final _formKey = GlobalKey<FormState>();
 
+  String _parentEventID = 'Pronamec';
+  String _samplingProtocol = 'Protocolo de Pronamec';
+  String _sampleSizeUnit = 'metro';
+
   double _decimalLongitude;
   double _decimalLatitude;
   String _locality;
-  DateTime _eventDate = DateTime.now();
+  DateTime _eventDate;
+  DateTime _startEventDate;
+  DateTime _endEventDate;
   String _eventRemarks;
 
   String _basisOfRecord = 'Human Observation';
   String _countryCode = 'CR';
   String _geodeticDatum = 'EPSG:4326';
-  String _occurrenceRemarks = '';
+
+  String _occurrenceRemarks;
 
   var _taxaData;
   var taxaCart;
@@ -74,10 +81,15 @@ class _EventEditScreenState extends State<EventEditScreen> {
   void initState() {
     super.initState();
     if (widget.event != null) {
+      _parentEventID = widget.event.parentEventID;
+      _samplingProtocol = widget.event.samplingProtocol;
+      _sampleSizeUnit = widget.event.sampleSizeUnit;
       _locality = widget.event.locality;
       _decimalLongitude = widget.event.decimalLongitude;
       _decimalLatitude = widget.event.decimalLatitude;
       _eventDate = widget.event.eventDate;
+      _startEventDate = widget.event.startEventDate;
+      _endEventDate = widget.event.endEventDate;
       _eventRemarks = widget.event.eventRemarks;
 
       // Load occurrences data in List
@@ -155,19 +167,33 @@ class _EventEditScreenState extends State<EventEditScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           DateTimeField(
-            decoration: InputDecoration(labelText: 'Fecha'),
-            format: DateFormat("yyyy-MM-dd"),
-            initialValue: _eventDate,
-            onShowPicker: (context, currentValue) {
-              return showDatePicker(
-                context: context,
-                firstDate: DateTime(2018),
-                initialDate: currentValue ?? DateTime.now(),
-                lastDate: DateTime(2020),
-                locale: Locale('es'),
-              );
+            decoration: InputDecoration(labelText: 'Fecha y hora iniciales'),
+            format: DateFormat("yyyy-MM-dd HH:mm"),
+            initialValue: _startEventDate,
+            validator: (DateTime dateTime) {
+              if (dateTime == null) {
+                return "La fecha y la hora iniciales no pueden estar vacías";
+              }
+              return null;
             },
-            onSaved: (value) => _eventDate = value,
+            onShowPicker: (context, currentValue) async {
+              final date = await showDatePicker(
+                  context: context,
+                  firstDate: DateTime(2018),
+                  initialDate: currentValue ?? DateTime.now(),
+                  lastDate: DateTime(2022));
+              if (date != null) {
+                final time = await showTimePicker(
+                  context: context,
+                  initialTime:
+                      TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
+                );
+                return DateTimeField.combine(date, time);
+              } else {
+                return currentValue;
+              }
+            },
+            onSaved: (value) => _startEventDate = value,
           ),
           EventLocationPickWidget(_selectPlace),
           Row(
@@ -217,6 +243,35 @@ class _EventEditScreenState extends State<EventEditScreen> {
           ),
           EventTaxaPickWidget(_pickedTaxa, _pickTaxa),
           _buildPickedTaxaListView(),
+          DateTimeField(
+            decoration: InputDecoration(labelText: 'Fecha y hora finales'),
+            format: DateFormat("yyyy-MM-dd HH:mm"),
+            initialValue: _endEventDate,
+            validator: (DateTime dateTime) {
+              if (dateTime == null) {
+                return "La fecha y la hora finales no pueden estar vacías";
+              }
+              return null;
+            },
+            onShowPicker: (context, currentValue) async {
+              final date = await showDatePicker(
+                  context: context,
+                  firstDate: DateTime(2018),
+                  initialDate: currentValue ?? DateTime.now(),
+                  lastDate: DateTime(2022));
+              if (date != null) {
+                final time = await showTimePicker(
+                  context: context,
+                  initialTime:
+                      TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
+                );
+                return DateTimeField.combine(date, time);
+              } else {
+                return currentValue;
+              }
+            },
+            onSaved: (value) => _endEventDate = value,
+          ),
           TextFormField(
             keyboardType: TextInputType.text,
             maxLength: 50,
@@ -251,13 +306,19 @@ class _EventEditScreenState extends State<EventEditScreen> {
     }
     if (_validateAndSaveForm()) {
       try {
-        final eventId = widget.event?.id ?? documentIdFromCurrentDate();
+        final eventID = widget.event?.id ?? documentIdFromCurrentDate();
         final event = Event(
-          id: eventId,
+          id: eventID,
+          eventID: eventID,
+          parentEventID: _parentEventID,
+          samplingProtocol: _samplingProtocol,
+          sampleSizeUnit: _sampleSizeUnit,
           locality: _locality,
           decimalLongitude: _decimalLongitude,
           decimalLatitude: _decimalLatitude,
-          eventDate: _eventDate,
+          eventDate: _startEventDate,
+          startEventDate: _startEventDate,
+          endEventDate: _endEventDate,
           eventRemarks: _eventRemarks,
         );
         await widget.database.setEvent(event);
@@ -269,17 +330,18 @@ class _EventEditScreenState extends State<EventEditScreen> {
           print('_pickedTaxaItem: [0]: ${taxaItem[0]} [1]: ${taxaItem[1]}');
           final taxonId = taxaItem[0];
           final individualCount = taxaItem[1];
-          var occurrenceId = taxaItem[2];
+          var occurrenceID = taxaItem[2];
 
           final taxon = _taxaData.findById(taxonId);
 
-          if (occurrenceId == null) {
-            occurrenceId = documentIdFromCurrentDate();
+          if (occurrenceID == null) {
+            occurrenceID = documentIdFromCurrentDate();
           }
 
           final occurrence = Occurrence(
-            id: occurrenceId,
-            eventID: eventId,
+            id: occurrenceID,
+            occurrenceID: occurrenceID,
+            eventID: eventID,
             taxonID: taxonId,
             basisOfRecord: _basisOfRecord,
             kingdom: taxon.kingdom,
@@ -299,7 +361,7 @@ class _EventEditScreenState extends State<EventEditScreen> {
             decimalLongitude: _decimalLongitude,
             decimalLatitude: _decimalLatitude,
             geodeticDatum: _geodeticDatum,
-            eventDate: _eventDate,
+            eventDate: _startEventDate,
             occurrenceRemarks: _occurrenceRemarks,
           );
           await widget.database.setOccurrence(occurrence);

@@ -58,6 +58,27 @@ class EventsListScreen extends StatelessWidget {
             background: Container(color: Colors.red),
             direction: DismissDirection.endToStart,
             onDismissed: (direction) => _delete(context, event),
+            confirmDismiss: (DismissDirection direction) async {
+              return await showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text("Confirmación de borrado"),
+                    content: const Text(
+                        "¿Está seguro de borrar el evento y sus observaciones?"),
+                    actions: <Widget>[
+                      FlatButton(
+                          onPressed: () => Navigator.of(context).pop(true),
+                          child: const Text("Sí")),
+                      FlatButton(
+                        onPressed: () => Navigator.of(context).pop(false),
+                        child: const Text("No"),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
             child: EventListTile(
               event: event,
               onTap: () => EventEditScreen.show(
