@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
+import 'package:biomonitoreoparticipativoapp/constants.dart';
+
 import 'package:biomonitoreoparticipativoapp/app/home/models/occurrence.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/models/taxon.dart';
 
@@ -58,9 +60,22 @@ class _OpportunisticObservationEditScreenState
   final _formKey = GlobalKey<FormState>();
   var _taxaData;
 
-  String _eventID = '0';
+  String _basisOfRecord = kBasisOfRecord;
+  String _occurrenceID;
+  int _individualCount;
+  String _occurrenceStatus = kOccurrenceStatus;
+  String _occurrenceRemarks;
+  String _eventID = kOpportunisticOccurrenceEventID;
+  DateTime _eventDate;
+  String _locationID;
+  String _country = kCountry;
+  String _countryCode = kCountryCode;
+  String _locality;
+  double _decimalLatitude;
+  double _decimalLongitude;
+  String _geodeticDatum = kGeodeticDatum;
   String _taxonID;
-  String _basisOfRecord = 'Human Observation';
+  String _scientificName;
   String _kingdom;
   String _phylum;
   String _class_;
@@ -68,18 +83,9 @@ class _OpportunisticObservationEditScreenState
   String _family;
   String _genus;
   String _specificEpithet;
-  String _scientificName;
+  String _taxonRank;
   String _scientificNameAuthorship;
   String _vernacularName;
-  String _taxonRank;
-  int _individualCount;
-  String _countryCode = 'CR';
-  String _locality;
-  double _decimalLongitude;
-  double _decimalLatitude;
-  String _geodeticDatum = 'EPSG:4326';
-  DateTime _eventDate;
-  String _occurrenceRemarks;
 
   List<double> _pickedLocation;
   List<String> _pickedTaxon;
@@ -88,9 +94,22 @@ class _OpportunisticObservationEditScreenState
   void initState() {
     super.initState();
     if (widget.occurrence != null) {
-      _eventID = widget.occurrence.eventID;
-      _taxonID = widget.occurrence.taxonID;
       _basisOfRecord = widget.occurrence.basisOfRecord;
+      _occurrenceID = widget.occurrence.occurrenceID;
+      _individualCount = widget.occurrence.individualCount;
+      _occurrenceStatus = widget.occurrence.occurrenceStatus;
+      _occurrenceRemarks = widget.occurrence.occurrenceRemarks;
+      _eventID = widget.occurrence.eventID;
+      _eventDate = widget.occurrence.eventDate;
+      _locationID = widget.occurrence.locationID;
+      _country = widget.occurrence.country;
+      _countryCode = widget.occurrence.countryCode;
+      _locality = widget.occurrence.locality;
+      _decimalLatitude = widget.occurrence.decimalLatitude;
+      _decimalLongitude = widget.occurrence.decimalLongitude;
+      _geodeticDatum = widget.occurrence.geodeticDatum;
+      _taxonID = widget.occurrence.taxonID;
+      _scientificName = widget.occurrence.scientificName;
       _kingdom = widget.occurrence.kingdom;
       _phylum = widget.occurrence.phylum;
       _class_ = widget.occurrence.class_;
@@ -98,18 +117,9 @@ class _OpportunisticObservationEditScreenState
       _family = widget.occurrence.family;
       _genus = widget.occurrence.genus;
       _specificEpithet = widget.occurrence.specificEpithet;
-      _scientificName = widget.occurrence.scientificName;
+      _taxonRank = widget.occurrence.taxonRank;
       _scientificNameAuthorship = widget.occurrence.scientificNameAuthorship;
       _vernacularName = widget.occurrence.vernacularName;
-      _taxonRank = widget.occurrence.taxonRank;
-      _individualCount = widget.occurrence.individualCount;
-      _countryCode = widget.occurrence.countryCode;
-      _locality = widget.occurrence.locality;
-      _decimalLongitude = widget.occurrence.decimalLongitude;
-      _decimalLatitude = widget.occurrence.decimalLatitude;
-      _geodeticDatum = widget.occurrence.geodeticDatum;
-      _eventDate = widget.occurrence.eventDate;
-      _occurrenceRemarks = widget.occurrence.occurrenceRemarks;
     }
 
     _scientificNameController = TextEditingController(text: _scientificName);
@@ -141,9 +151,22 @@ class _OpportunisticObservationEditScreenState
         final id = widget.occurrence?.id ?? documentIdFromCurrentDate();
         final occurrence = Occurrence(
           id: id,
-          eventID: _eventID,
-          taxonID: _taxonID,
           basisOfRecord: _basisOfRecord,
+          occurrenceID: id,
+          individualCount: _individualCount,
+          occurrenceStatus: _occurrenceStatus,
+          occurrenceRemarks: _occurrenceRemarks,
+          eventID: _eventID,
+          eventDate: _eventDate,
+          locationID: _locationID,
+          country: _country,
+          countryCode: _countryCode,
+          locality: _locality,
+          decimalLatitude: _decimalLatitude,
+          decimalLongitude: _decimalLongitude,
+          geodeticDatum: _geodeticDatum,
+          taxonID: _taxonID,
+          scientificName: _scientificName,
           kingdom: _kingdom,
           phylum: _phylum,
           class_: _class_,
@@ -151,18 +174,9 @@ class _OpportunisticObservationEditScreenState
           family: _family,
           genus: _genus,
           specificEpithet: _specificEpithet,
-          scientificName: _scientificName,
+          taxonRank: _taxonRank,
           scientificNameAuthorship: _scientificNameAuthorship,
           vernacularName: _vernacularName,
-          taxonRank: _taxonRank,
-          individualCount: _individualCount,
-          countryCode: _countryCode,
-          locality: _locality,
-          decimalLongitude: _decimalLongitude,
-          decimalLatitude: _decimalLatitude,
-          geodeticDatum: _geodeticDatum,
-          eventDate: _eventDate,
-          occurrenceRemarks: _occurrenceRemarks,
         );
         await widget.database.setOccurrence(occurrence);
         Navigator.of(context).pop();
@@ -361,7 +375,9 @@ class _OpportunisticObservationEditScreenState
 
     _pickedTaxon = [taxon.scientificName, individualCount.toString()];
     setState(() {
+      _individualCount = individualCount;
       _taxonID = taxon.id;
+      _scientificName = taxon.scientificName;
       _kingdom = taxon.kingdom;
       _phylum = taxon.phylum;
       _class_ = taxon.class_;
@@ -369,11 +385,9 @@ class _OpportunisticObservationEditScreenState
       _family = taxon.family;
       _genus = taxon.genus;
       _specificEpithet = taxon.specificEpithet;
-      _scientificName = taxon.scientificName;
-      _vernacularName = taxon.vernacularName;
-      _scientificNameAuthorship = taxon.scientificNameAuthorship;
       _taxonRank = taxon.taxonRank;
-      _individualCount = individualCount;
+      _scientificNameAuthorship = taxon.scientificNameAuthorship;
+      _vernacularName = taxon.vernacularName;
     });
     _scientificNameController = TextEditingController(
       text: _scientificName,

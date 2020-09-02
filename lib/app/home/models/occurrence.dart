@@ -1,12 +1,23 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 class Occurrence {
-  final String eventID;
-  final String taxonID;
   final String id;
-  final String occurrenceID;
   final String basisOfRecord;
+  final String occurrenceID;
+  final int individualCount;
+  final String occurrenceStatus;
+  final String occurrenceRemarks;
+  final String eventID;
+  final DateTime eventDate;
+  final String locationID;
+  final String country;
+  final String countryCode;
+  final String locality;
+  final double decimalLatitude;
+  final double decimalLongitude;
+  final String geodeticDatum;
+  final String taxonID;
+  final String scientificName;
   final String kingdom;
   final String phylum;
   final String class_;
@@ -14,44 +25,38 @@ class Occurrence {
   final String family;
   final String genus;
   final String specificEpithet;
-  final String scientificName;
+  final String taxonRank;
   final String scientificNameAuthorship;
   final String vernacularName;
-  final String taxonRank;
-  final int individualCount;
-  final String countryCode;
-  final String locality;
-  final double decimalLongitude;
-  final double decimalLatitude;
-  final String geodeticDatum;
-  final DateTime eventDate;
-  final String occurrenceRemarks;
 
   Occurrence({
-    @required this.eventID,
-    @required this.taxonID,
     @required this.id,
+    @required this.basisOfRecord,
     @required this.occurrenceID,
-    this.basisOfRecord = 'Human Observation',
-    this.kingdom = 'Animalia',
-    this.phylum = '',
-    this.class_ = '',
-    this.order = '',
-    this.family = '',
-    this.genus = '',
-    this.specificEpithet = '',
-    @required this.scientificName,
-    this.scientificNameAuthorship = '',
-    this.vernacularName = '',
-    this.taxonRank = 'species',
-    @required this.individualCount,
-    this.countryCode = 'CR',
-    @required this.locality,
-    @required this.decimalLongitude,
-    @required this.decimalLatitude,
-    this.geodeticDatum = 'EPSG:4326',
+    this.individualCount,
+    this.occurrenceStatus,
+    this.occurrenceRemarks,
+    this.eventID,
     @required this.eventDate,
-    this.occurrenceRemarks = '',
+    this.locationID,
+    this.country,
+    this.countryCode,
+    this.locality,
+    this.decimalLatitude,
+    this.decimalLongitude,
+    this.geodeticDatum,
+    this.taxonID,
+    @required this.scientificName,
+    this.kingdom,
+    this.phylum,
+    this.class_,
+    this.order,
+    this.family,
+    this.genus,
+    this.specificEpithet,
+    this.taxonRank,
+    this.scientificNameAuthorship,
+    this.vernacularName,
   });
 
   factory Occurrence.fromMap(Map<dynamic, dynamic> value, String id) {
@@ -60,10 +65,22 @@ class Occurrence {
     final int eventDateMilliseconds = value['eventDate'];
     return Occurrence(
       id: id,
-      occurrenceID: id,
-      eventID: value['eventID'],
-      taxonID: value['taxonID'],
       basisOfRecord: value['basisOfRecord'],
+      occurrenceID: id,
+      individualCount: value['individualCount'],
+      occurrenceStatus: value['occurrenceStatus'],
+      occurrenceRemarks: value['occurrenceRemarks'],
+      eventID: value['eventID'],
+      eventDate: DateTime.fromMillisecondsSinceEpoch(eventDateMilliseconds),
+      locationID: value['locationID'],
+      country: value['country'],
+      countryCode: value['countryCode'],
+      locality: value['locality'],
+      decimalLatitude: value['decimalLatitude'],
+      decimalLongitude: value['decimalLongitude'],
+      geodeticDatum: value['geodeticDatum'],
+      taxonID: value['taxonID'],
+      scientificName: value['scientificName'],
       kingdom: value['kingdom'],
       phylum: value['phylum'],
       class_: value['class_'],
@@ -71,27 +88,30 @@ class Occurrence {
       family: value['family'],
       genus: value['genus'],
       specificEpithet: value['specificEpithet'],
-      scientificName: value['scientificName'],
+      taxonRank: value['taxonRank'],
       scientificNameAuthorship: value['scientificNameAuthorship'],
       vernacularName: value['vernacularName'],
-      taxonRank: value['taxonRank'],
-      individualCount: value['individualCount'],
-      countryCode: value['countryCode'],
-      locality: value['locality'],
-      decimalLongitude: value['decimalLongitude'],
-      decimalLatitude: value['decimalLatitude'],
-      geodeticDatum: value['geodeticDatum'],
-      eventDate: DateTime.fromMillisecondsSinceEpoch(eventDateMilliseconds),
-      occurrenceRemarks: value['occurrenceRemarks'],
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'eventID': eventID,
-      'taxonID': taxonID,
-      'occurrenceID': occurrenceID,
       'basisOfRecord': basisOfRecord,
+      'occurrenceID': occurrenceID,
+      'individualCount': individualCount,
+      'occurrenceStatus': occurrenceStatus,
+      'occurrenceRemarks': occurrenceRemarks,
+      'eventID': eventID,
+      'eventDate': eventDate.millisecondsSinceEpoch,
+      'locationID': locationID,
+      'country': country,
+      'countryCode': countryCode,
+      'locality': locality,
+      'decimalLatitude': decimalLatitude,
+      'decimalLongitude': decimalLongitude,
+      'geodeticDatum': geodeticDatum,
+      'taxonID': taxonID,
+      'scientificName': scientificName,
       'kingdom': kingdom,
       'phylum': phylum,
       'class_': class_,
@@ -99,18 +119,9 @@ class Occurrence {
       'family': family,
       'genus': genus,
       'specificEpithet': specificEpithet,
-      'scientificName': scientificName,
+      'taxonRank': taxonRank,
       'scientificNameAuthorship': scientificNameAuthorship,
       'vernacularName': vernacularName,
-      'taxonRank': taxonRank,
-      'individualCount': individualCount,
-      'countryCode': countryCode,
-      'locality': locality,
-      'decimalLongitude': decimalLongitude,
-      'decimalLatitude': decimalLatitude,
-      'geodeticDatum': geodeticDatum,
-      'eventDate': eventDate.millisecondsSinceEpoch,
-      'occurrenceRemarks': occurrenceRemarks,
     };
   }
 }

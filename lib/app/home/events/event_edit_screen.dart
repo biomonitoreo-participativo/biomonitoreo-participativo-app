@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:biomonitoreoparticipativoapp/constants.dart';
+
 import 'package:biomonitoreoparticipativoapp/app/home/models/event.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/models/occurrence.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/models/taxon_data.dart';
@@ -54,22 +56,29 @@ class EventEditScreen extends StatefulWidget {
 class _EventEditScreenState extends State<EventEditScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  String _parentEventID = 'Pronamec';
-  String _samplingProtocol = 'Protocolo de Pronamec';
-  String _sampleSizeUnit = 'metro';
-
-  double _decimalLongitude;
-  double _decimalLatitude;
-  String _locality;
+  // DwC Event
+  String _parentEventID = kParentEventID;
   DateTime _eventDate;
   DateTime _startEventDate;
   DateTime _endEventDate;
+  String _samplingProtocol = kSamplingProtocol;
+  double _sampleSizeValue;
+  String _sampleSizeUnit = kSampleSizeUnit;
+  String _samplingEffort;
   String _eventRemarks;
 
-  String _basisOfRecord = 'Human Observation';
-  String _countryCode = 'CR';
-  String _geodeticDatum = 'EPSG:4326';
+  // DwC Location
+  String _locationID;
+  String _country = kCountry;
+  String _countryCode = kCountryCode;
+  String _locality;
+  double _decimalLatitude;
+  double _decimalLongitude;
+  String _geodeticDatum = kGeodeticDatum;
 
+  // DwC Occurrence
+  String _basisOfRecord = kBasisOfRecord;
+  String _occurrenceStatus = kOccurrenceStatus;
   String _occurrenceRemarks;
 
   var _taxaData;
@@ -82,15 +91,19 @@ class _EventEditScreenState extends State<EventEditScreen> {
     super.initState();
     if (widget.event != null) {
       _parentEventID = widget.event.parentEventID;
-      _samplingProtocol = widget.event.samplingProtocol;
-      _sampleSizeUnit = widget.event.sampleSizeUnit;
-      _locality = widget.event.locality;
-      _decimalLongitude = widget.event.decimalLongitude;
-      _decimalLatitude = widget.event.decimalLatitude;
       _eventDate = widget.event.eventDate;
       _startEventDate = widget.event.startEventDate;
       _endEventDate = widget.event.endEventDate;
+      _samplingProtocol = widget.event.samplingProtocol;
+      _sampleSizeValue = widget.event.sampleSizeValue;
+      _sampleSizeUnit = widget.event.sampleSizeUnit;
+      _samplingEffort = widget.event.samplingEffort;
       _eventRemarks = widget.event.eventRemarks;
+      _locationID = widget.event.locationID;
+      _locality = widget.event.locality;
+      _decimalLongitude = widget.event.decimalLongitude;
+      _decimalLatitude = widget.event.decimalLatitude;
+      _geodeticDatum = widget.event.geodeticDatum;
 
       // Load occurrences data in List
       _occurrencesStream = widget.database.occurrencesStream(
@@ -311,15 +324,21 @@ class _EventEditScreenState extends State<EventEditScreen> {
           id: eventID,
           eventID: eventID,
           parentEventID: _parentEventID,
-          samplingProtocol: _samplingProtocol,
-          sampleSizeUnit: _sampleSizeUnit,
-          locality: _locality,
-          decimalLongitude: _decimalLongitude,
-          decimalLatitude: _decimalLatitude,
           eventDate: _startEventDate,
           startEventDate: _startEventDate,
           endEventDate: _endEventDate,
+          samplingProtocol: _samplingProtocol,
+          sampleSizeValue: _sampleSizeValue,
+          sampleSizeUnit: _sampleSizeUnit,
+          samplingEffort: _samplingEffort,
           eventRemarks: _eventRemarks,
+          locationID: _locationID,
+          country: _country,
+          countryCode: _countryCode,
+          locality: _locality,
+          decimalLongitude: _decimalLongitude,
+          decimalLatitude: _decimalLatitude,
+          geodeticDatum: _geodeticDatum,
         );
         await widget.database.setEvent(event);
 
@@ -340,10 +359,22 @@ class _EventEditScreenState extends State<EventEditScreen> {
 
           final occurrence = Occurrence(
             id: occurrenceID,
-            occurrenceID: occurrenceID,
-            eventID: eventID,
-            taxonID: taxonId,
             basisOfRecord: _basisOfRecord,
+            occurrenceID: occurrenceID,
+            individualCount: individualCount,
+            occurrenceStatus: _occurrenceStatus,
+            occurrenceRemarks: _eventRemarks,
+            eventID: eventID,
+            eventDate: _startEventDate,
+            locationID: _locationID,
+            country: _country,
+            countryCode: _countryCode,
+            locality: _locality,
+            decimalLongitude: _decimalLongitude,
+            decimalLatitude: _decimalLatitude,
+            geodeticDatum: _geodeticDatum,
+            taxonID: taxonId,
+            scientificName: taxon.scientificName,
             kingdom: taxon.kingdom,
             phylum: taxon.phylum,
             class_: taxon.class_,
@@ -351,18 +382,9 @@ class _EventEditScreenState extends State<EventEditScreen> {
             family: taxon.family,
             genus: taxon.genus,
             specificEpithet: taxon.specificEpithet,
-            scientificName: taxon.scientificName,
+            taxonRank: taxon.taxonRank,
             scientificNameAuthorship: taxon.scientificNameAuthorship,
             vernacularName: taxon.vernacularName,
-            taxonRank: taxon.taxonRank,
-            individualCount: individualCount,
-            countryCode: _countryCode,
-            locality: _locality,
-            decimalLongitude: _decimalLongitude,
-            decimalLatitude: _decimalLatitude,
-            geodeticDatum: _geodeticDatum,
-            eventDate: _startEventDate,
-            occurrenceRemarks: _occurrenceRemarks,
           );
           await widget.database.setOccurrence(occurrence);
         }
@@ -386,6 +408,7 @@ class _EventEditScreenState extends State<EventEditScreen> {
       _decimalLongitude = decimalLongitude;
       _decimalLatitude = decimalLatitude;
       _locality = locality;
+      _locationID = locality;
     });
     _decimalLongitudeController = TextEditingController(
       text: _decimalLongitude.toStringAsFixed(6),
