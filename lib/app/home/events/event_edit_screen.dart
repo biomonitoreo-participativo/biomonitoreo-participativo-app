@@ -81,10 +81,17 @@ class _EventEditScreenState extends State<EventEditScreen> {
   String _occurrenceStatus = kOccurrenceStatus;
   String _occurrenceRemarks;
 
-  var _taxaData;
   var taxaCart;
+
+  var _taxaData;
+  // Taxa data hardcoded in taxon_data.dart
+
   var _occurrencesStream;
+  // Stream to read occurrence data for this event
+
   var _pickedTaxa;
+  // Array with taxa data in occurrences associated to this event
+  // [0]=occ.taxonID, [1]=occ.individualCount, [2]=occ.id
 
   @override
   void initState() {

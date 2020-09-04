@@ -18,6 +18,22 @@ class EventTaxaPickWidget extends StatefulWidget {
 class _EventTaxaPickWidgetState extends State<EventTaxaPickWidget> {
   List _pickedTaxa;
 
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        FlatButton.icon(
+          icon: Icon(
+            Icons.nature,
+          ),
+          label: Text('Seleccionar especies de lista'),
+          textColor: Theme.of(context).primaryColor,
+          onPressed: _pickOnGrid,
+        ),
+      ],
+    );
+  }
+
   Future<void> _pickOnGrid() async {
     _pickedTaxa = await Navigator.of(context).push<List>(
       MaterialPageRoute(
@@ -38,22 +54,6 @@ class _EventTaxaPickWidgetState extends State<EventTaxaPickWidget> {
 
     widget.onPickTaxa(
       _pickedTaxa,
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        FlatButton.icon(
-          icon: Icon(
-            Icons.nature,
-          ),
-          label: Text('Seleccionar especies de lista'),
-          textColor: Theme.of(context).primaryColor,
-          onPressed: _pickOnGrid,
-        ),
-      ],
     );
   }
 }
