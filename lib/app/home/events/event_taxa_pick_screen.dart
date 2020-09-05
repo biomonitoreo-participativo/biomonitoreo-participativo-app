@@ -33,9 +33,13 @@ class _EventTaxaPickScreenState extends State<EventTaxaPickScreen> {
   var _eventTaxaCart;
   String _filterClass = 'Eukaryota';
 
+  var _taxaCart;
+
   @override
   void didChangeDependencies() {
     _eventTaxaCart = Provider.of<EventTaxaCart>(context, listen: false);
+
+    _taxaCart = Provider.of<EventTaxaCart>(context, listen: false);
   }
 
   @override
@@ -95,19 +99,34 @@ class _EventTaxaPickScreenState extends State<EventTaxaPickScreen> {
       ),
       body: ListView(
         children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
+            child: Text(
+              'Especies observadas',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
           Container(
-            height: 200.0,
+            height: 180.0,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: widget.pickedTaxa.length,
               itemBuilder: (ctx, i) {
+                _taxaCart.addItem(
+                  widget.pickedTaxa[i][0],
+                  widget.pickedTaxa[i][1],
+                  widget.pickedTaxa[i][2],
+                );
                 return Card(
                   elevation: 20.0,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Expanded(
-                        flex: 2,
+                        flex: 4,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10.0),
                           child: GridTile(
@@ -130,7 +149,8 @@ class _EventTaxaPickScreenState extends State<EventTaxaPickScreen> {
                           ),
                         ),
                       ),
-                      Expanded(
+                      Container(
+                        padding: EdgeInsets.all(5.0),
                         child: Row(
                           children: <Widget>[
                             GestureDetector(
@@ -151,11 +171,11 @@ class _EventTaxaPickScreenState extends State<EventTaxaPickScreen> {
                                   widget.pickedTaxa[i][1] += 1;
                                   //_selected = true;
                                 });
-/*                                _taxaCart.addItem(
-                                  _taxon.id,
-                                  _individualCount,
-                                  _occurrenceId,
-                                );*/
+                                _taxaCart.addItem(
+                                  widget.pickedTaxa[i][0],
+                                  widget.pickedTaxa[i][1],
+                                  widget.pickedTaxa[i][2],
+                                );
                               },
                               onLongPress: () {
                                 // Substract individual
@@ -167,7 +187,13 @@ class _EventTaxaPickScreenState extends State<EventTaxaPickScreen> {
                                       _individualCount,
                                       _occurrenceId,
                                     );*/
+                                    _taxaCart.addItem(
+                                      widget.pickedTaxa[i][0],
+                                      widget.pickedTaxa[i][1],
+                                      widget.pickedTaxa[i][2],
+                                    );
                                     if (widget.pickedTaxa[i][1] <= 0) {
+                                      widget.pickedTaxa.removeAt(i);
                                       //_taxaCart.removeItem(_taxon.id);
                                       //_selected = false;
                                     }
@@ -215,6 +241,16 @@ class _EventTaxaPickScreenState extends State<EventTaxaPickScreen> {
               },
             ),
           ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
+            child: Text(
+              'Especies indicadoras',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
           Container(
             height: 600.0,
             child: GridView.builder(
@@ -223,7 +259,7 @@ class _EventTaxaPickScreenState extends State<EventTaxaPickScreen> {
               itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
                 // builder: (c) => products[i],
                 value: _taxa[i],
-                child: EventTaxonGridTile(widget.pickedTaxa),
+                child: EventTaxonGridTile(widget.pickedTaxa, _insertPickedTaxa),
               ),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -235,6 +271,25 @@ class _EventTaxaPickScreenState extends State<EventTaxaPickScreen> {
         ],
       ),
     );
+  }
+
+  void _insertPickedTaxa(taxonId, individualCount, occurrenceId) {
+    var found = false;
+    for (var occ in widget.pickedTaxa) {
+      if (occ[0] == taxonId) {
+        found = true;
+      }
+    }
+    if (!found) {
+      setState(() {
+        widget.pickedTaxa.insert(0, [taxonId, individualCount, occurrenceId]);
+      });
+      _taxaCart.addItem(
+        widget.pickedTaxa[0][0],
+        widget.pickedTaxa[0][1],
+        widget.pickedTaxa[0][2],
+      );
+    }
   }
 
   _launchURL(url) async {

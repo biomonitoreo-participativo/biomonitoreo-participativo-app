@@ -1,4 +1,3 @@
-import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -10,8 +9,12 @@ import 'package:biomonitoreoparticipativoapp/app/home/models/event_taxa_cart.dar
 
 class EventTaxonGridTile extends StatefulWidget {
   final List pickedTaxa;
+  final Function onInsertPickedTaxa;
 
-  EventTaxonGridTile(this.pickedTaxa);
+  EventTaxonGridTile(
+    this.pickedTaxa,
+    this.onInsertPickedTaxa,
+  );
 
   @override
   _EventTaxonGridTileState createState() => _EventTaxonGridTileState();
@@ -88,24 +91,19 @@ class _EventTaxonGridTileState extends State<EventTaxonGridTile> {
                 GestureDetector(
                   child: CircleAvatar(
                     child: Text(
-                      '$_individualCount',
+                      '+',
                       style: TextStyle(
                         fontSize: 12.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    backgroundColor: Colors.green,
+                    backgroundColor: Colors.deepOrange,
                     radius: 15.0,
                   ),
                   onTap: () {
-                    // Add individual
-                    setState(() {
-                      _individualCount += 1;
-                      _selected = true;
-                    });
-                    _taxaCart.addItem(
+                    widget.onInsertPickedTaxa(
                       _taxon.id,
-                      _individualCount,
+                      _individualCount + 1,
                       _occurrenceId,
                     );
                   },

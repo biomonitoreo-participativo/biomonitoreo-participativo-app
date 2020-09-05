@@ -89,7 +89,7 @@ class _EventEditScreenState extends State<EventEditScreen> {
   var _occurrencesStream;
   // Stream to read occurrence data for this event
 
-  var _pickedTaxa;
+  var _pickedTaxa = [];
   // Array with taxa data in occurrences associated to this event
   // [0]=occ.taxonID, [1]=occ.individualCount, [2]=occ.id
 
