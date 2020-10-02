@@ -22,6 +22,8 @@ import 'package:biomonitoreoparticipativoapp/app/home/events/event_location_pick
 import 'package:biomonitoreoparticipativoapp/app/home/events/event_taxa_pick_widget.dart';
 
 // Text editing controllers
+var _sampleSizeValueController;
+var _samplingEffortController;
 var _localityController;
 var _decimalLongitudeController;
 var _decimalLatitudeController;
@@ -128,6 +130,13 @@ class _EventEditScreenState extends State<EventEditScreen> {
       });
     }
 
+    // Initialization of text editing controllers
+    _sampleSizeValueController = TextEditingController(
+      text: _sampleSizeValue != null ? '$_sampleSizeValue' : null,
+    );
+    _samplingEffortController = TextEditingController(
+      text: _samplingEffort,
+    );
     _localityController = TextEditingController(
       text: _locality,
     );
@@ -185,123 +194,219 @@ class _EventEditScreenState extends State<EventEditScreen> {
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          DateTimeField(
-            decoration: InputDecoration(labelText: 'Fecha y hora iniciales'),
-            format: DateFormat("yyyy-MM-dd HH:mm"),
-            initialValue: _startEventDate,
-            validator: (DateTime dateTime) {
-              if (dateTime == null) {
-                return "La fecha y la hora iniciales no pueden estar vacías";
-              }
-              return null;
-            },
-            onShowPicker: (context, currentValue) async {
-              final date = await showDatePicker(
-                  context: context,
-                  firstDate: DateTime(2018),
-                  initialDate: currentValue ?? DateTime.now(),
-                  lastDate: DateTime(2022));
-              if (date != null) {
-                final time = await showTimePicker(
-                  context: context,
-                  initialTime:
-                      TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
-                );
-                return DateTimeField.combine(date, time);
-              } else {
-                return currentValue;
-              }
-            },
-            onSaved: (value) => _startEventDate = value,
-          ),
-          EventLocationPickWidget(_selectPlace),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: TextFormField(
-                  readOnly: true,
-                  controller: _decimalLongitudeController,
-                  decoration: InputDecoration(labelText: 'Longitud'),
-                  validator: (value) => value.isNotEmpty
-                      ? null
-                      : 'La longitud no puede estar vacía',
-                  keyboardType: TextInputType.numberWithOptions(
-                    signed: false,
-                    decimal: false,
-                  ),
-                  onSaved: (value) =>
-                      _decimalLongitude = double.tryParse(value) ?? 0.0,
-                ),
+        children: _buildFormChildren(),
+      ),
+    );
+  }
+
+  List<Widget> _buildFormChildren() {
+    return [
+      DateTimeField(
+        decoration: InputDecoration(labelText: 'Fecha y hora iniciales'),
+        format: DateFormat("yyyy-MM-dd HH:mm"),
+        initialValue: _startEventDate,
+        validator: (DateTime dateTime) {
+          if (dateTime == null) {
+            return "La fecha y la hora iniciales no pueden estar vacías";
+          }
+          return null;
+        },
+        onShowPicker: (context, currentValue) async {
+          final date = await showDatePicker(
+              context: context,
+              firstDate: DateTime(2018),
+              initialDate: currentValue ?? DateTime.now(),
+              lastDate: DateTime(2022));
+          if (date != null) {
+            final time = await showTimePicker(
+              context: context,
+              initialTime:
+                  TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
+            );
+            return DateTimeField.combine(date, time);
+          } else {
+            return currentValue;
+          }
+        },
+        onSaved: (value) => _startEventDate = value,
+      ),
+      EventLocationPickWidget(_selectPlace),
+      Row(
+        children: <Widget>[
+          Expanded(
+            child: TextFormField(
+              readOnly: true,
+              controller: _decimalLongitudeController,
+              decoration: InputDecoration(labelText: 'Longitud'),
+              validator: (value) =>
+                  value.isNotEmpty ? null : 'La longitud no puede estar vacía',
+              keyboardType: TextInputType.numberWithOptions(
+                signed: false,
+                decimal: false,
               ),
-              SizedBox(width: 10.0),
-              Expanded(
-                child: TextFormField(
-                  readOnly: true,
-                  controller: _decimalLatitudeController,
-                  decoration: InputDecoration(labelText: 'Latitud'),
-                  validator: (value) => value.isNotEmpty
-                      ? null
-                      : 'La latitud no puede estar vacía',
-                  keyboardType: TextInputType.numberWithOptions(
-                    signed: false,
-                    decimal: false,
-                  ),
-                  onSaved: (value) =>
-                      _decimalLatitude = double.tryParse(value) ?? 0.0,
-                ),
+              onSaved: (value) =>
+                  _decimalLongitude = double.tryParse(value) ?? 0.0,
+            ),
+          ),
+          SizedBox(width: 10.0),
+          Expanded(
+            child: TextFormField(
+              readOnly: true,
+              controller: _decimalLatitudeController,
+              decoration: InputDecoration(labelText: 'Latitud'),
+              validator: (value) =>
+                  value.isNotEmpty ? null : 'La latitud no puede estar vacía',
+              keyboardType: TextInputType.numberWithOptions(
+                signed: false,
+                decimal: false,
               ),
-            ],
-          ),
-          TextFormField(
-            readOnly: true,
-            controller: _localityController,
-            decoration: InputDecoration(labelText: 'Localidad'),
-            validator: (value) =>
-                value.isNotEmpty ? null : 'La localidad no puede estar vacía',
-            onSaved: (value) => _locality = value,
-          ),
-          EventTaxaPickWidget(_pickedTaxa, _pickTaxa),
-          _buildPickedTaxaListView(),
-          DateTimeField(
-            decoration: InputDecoration(labelText: 'Fecha y hora finales'),
-            format: DateFormat("yyyy-MM-dd HH:mm"),
-            initialValue: _endEventDate,
-            validator: (DateTime dateTime) {
-              if (dateTime == null) {
-                return "La fecha y la hora finales no pueden estar vacías";
-              }
-              return null;
-            },
-            onShowPicker: (context, currentValue) async {
-              final date = await showDatePicker(
-                  context: context,
-                  firstDate: DateTime(2018),
-                  initialDate: currentValue ?? DateTime.now(),
-                  lastDate: DateTime(2022));
-              if (date != null) {
-                final time = await showTimePicker(
-                  context: context,
-                  initialTime:
-                      TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
-                );
-                return DateTimeField.combine(date, time);
-              } else {
-                return currentValue;
-              }
-            },
-            onSaved: (value) => _endEventDate = value,
-          ),
-          TextFormField(
-            keyboardType: TextInputType.text,
-            maxLength: 50,
-            maxLines: null,
-            decoration: InputDecoration(labelText: 'Comentarios'),
-            initialValue: _eventRemarks != null ? '$_eventRemarks' : null,
-            onSaved: (value) => _eventRemarks = value,
+              onSaved: (value) =>
+                  _decimalLatitude = double.tryParse(value) ?? 0.0,
+            ),
           ),
         ],
       ),
+      TextFormField(
+        readOnly: true,
+        controller: _localityController,
+        decoration: InputDecoration(labelText: 'Localidad'),
+        validator: (value) =>
+            value.isNotEmpty ? null : 'La localidad no puede estar vacía',
+        onSaved: (value) => _locality = value,
+      ),
+      EventTaxaPickWidget(_pickedTaxa, _pickTaxa),
+      _buildPickedTaxaListView(),
+      DateTimeField(
+        decoration: InputDecoration(labelText: 'Fecha y hora finales'),
+        format: DateFormat("yyyy-MM-dd HH:mm"),
+        initialValue: _endEventDate,
+        validator: (DateTime dateTime) {
+          if (dateTime == null) {
+            return "La fecha y la hora finales no pueden estar vacías";
+          }
+          return null;
+        },
+        onShowPicker: (context, currentValue) async {
+          final date = await showDatePicker(
+              context: context,
+              firstDate: DateTime(2018),
+              initialDate: currentValue ?? DateTime.now(),
+              lastDate: DateTime(2022));
+          if (date != null) {
+            final time = await showTimePicker(
+              context: context,
+              initialTime:
+                  TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
+            );
+            return DateTimeField.combine(date, time);
+          } else {
+            return currentValue;
+          }
+        },
+        onSaved: (value) => _endEventDate = value,
+      ),
+      TextFormField(
+        controller: _sampleSizeValueController,
+        keyboardType: TextInputType.numberWithOptions(
+          signed: false,
+          decimal: false,
+        ),
+        decoration: InputDecoration(
+          labelText: 'Distancia recorrida (metros)',
+        ),
+        onSaved: (value) => _sampleSizeValue = double.tryParse(value) ?? 0.0,
+      ),
+      TextFormField(
+        keyboardType: TextInputType.numberWithOptions(
+          signed: false,
+          decimal: false,
+        ),
+        decoration: InputDecoration(
+          labelText: 'Cantidad de observadores',
+        ),
+        initialValue: _samplingEffort != null ? '$_samplingEffort' : null,
+        onSaved: (value) => _samplingEffort = value,
+      ),
+      TextFormField(
+        keyboardType: TextInputType.text,
+        maxLength: 50,
+        maxLines: null,
+        decoration: InputDecoration(
+          labelText: 'Comentarios',
+          hintText: 'Descripción del clima, hábitat,...',
+        ),
+        initialValue: _eventRemarks != null ? '$_eventRemarks' : null,
+        onSaved: (value) => _eventRemarks = value,
+      ),
+    ];
+  }
+
+  void _selectPlace(
+    double decimalLongitude,
+    double decimalLatitude,
+    String locality,
+  ) {
+    setState(() {
+      _decimalLongitude = decimalLongitude;
+      _decimalLatitude = decimalLatitude;
+      _locality = locality;
+      _locationID = locality;
+    });
+    _decimalLongitudeController = TextEditingController(
+      text: _decimalLongitude.toStringAsFixed(6),
+    );
+    _decimalLatitudeController = TextEditingController(
+      text: _decimalLatitude.toStringAsFixed(6),
+    );
+    _localityController = TextEditingController(text: _locality);
+  }
+
+  void _pickTaxa(List pickedTaxa) {
+    setState(() {
+      _pickedTaxa = pickedTaxa;
+    });
+  }
+
+  Widget _buildPickedTaxaListView() {
+    if (_pickedTaxa == null) {
+      print('_buildPickedTaxaListView _pickedTaxa: vacío');
+      return Container();
+    } else {
+      print('_buildPickedTaxaListView _pickedTaxa:');
+      for (var occ in _pickedTaxa) {
+        print('${occ[0]} ${occ[1]} ${occ[2]}');
+      }
+    }
+
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      padding: EdgeInsets.all(5),
+      height: 100,
+      child: ListView.separated(
+          itemCount: _pickedTaxa.length,
+          separatorBuilder: (context, index) => Divider(
+                height: 0.5,
+              ),
+          itemBuilder: (context, index) {
+            var _taxonId = _pickedTaxa[index][0];
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('${_pickedTaxa[index][1]}'),
+                SizedBox(width: 4.0),
+                Text(
+                  '${_taxaData.findById(_taxonId).scientificName}',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+                SizedBox(width: 4.0),
+                Text('(${_taxaData.findById(_taxonId).vernacularName})'),
+              ],
+            );
+          }),
     );
   }
 
@@ -404,74 +509,5 @@ class _EventEditScreenState extends State<EventEditScreen> {
         ).show(context);
       }
     }
-  }
-
-  void _selectPlace(
-    double decimalLongitude,
-    double decimalLatitude,
-    String locality,
-  ) {
-    setState(() {
-      _decimalLongitude = decimalLongitude;
-      _decimalLatitude = decimalLatitude;
-      _locality = locality;
-      _locationID = locality;
-    });
-    _decimalLongitudeController = TextEditingController(
-      text: _decimalLongitude.toStringAsFixed(6),
-    );
-    _decimalLatitudeController = TextEditingController(
-      text: _decimalLatitude.toStringAsFixed(6),
-    );
-    _localityController = TextEditingController(text: _locality);
-  }
-
-  void _pickTaxa(List pickedTaxa) {
-    setState(() {
-      _pickedTaxa = pickedTaxa;
-    });
-  }
-
-  Widget _buildPickedTaxaListView() {
-    if (_pickedTaxa == null) {
-      print('_buildPickedTaxaListView _pickedTaxa: vacío');
-      return Container();
-    } else {
-      print('_buildPickedTaxaListView _pickedTaxa:');
-      for (var occ in _pickedTaxa) {
-        print('${occ[0]} ${occ[1]} ${occ[2]}');
-      }
-    }
-
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      padding: EdgeInsets.all(5),
-      height: 100,
-      child: ListView.separated(
-          itemCount: _pickedTaxa.length,
-          separatorBuilder: (context, index) => Divider(
-                height: 0.5,
-              ),
-          itemBuilder: (context, index) {
-            var _taxonId = _pickedTaxa[index][0];
-            return Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('${_pickedTaxa[index][1]}'),
-                SizedBox(width: 4.0),
-                Text(
-                  '${_taxaData.findById(_taxonId).scientificName}',
-                  style: TextStyle(fontStyle: FontStyle.italic),
-                ),
-                SizedBox(width: 4.0),
-                Text('(${_taxaData.findById(_taxonId).vernacularName})'),
-              ],
-            );
-          }),
-    );
   }
 }

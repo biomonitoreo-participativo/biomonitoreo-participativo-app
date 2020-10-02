@@ -19,12 +19,13 @@ import 'package:biomonitoreoparticipativoapp/app/home/opportunistic_observations
 
 import 'package:biomonitoreoparticipativoapp/app/home/models/taxon_data.dart';
 
-var _scientificNameController;
-var _vernacularNameController;
+// Text editing controllers
 var _individualCountController;
 var _localityController;
-var _decimalLongitudeController;
 var _decimalLatitudeController;
+var _decimalLongitudeController;
+var _scientificNameController;
+var _vernacularNameController;
 
 class OpportunisticObservationEditScreen extends StatefulWidget {
   final Database database;
@@ -122,10 +123,11 @@ class _OpportunisticObservationEditScreenState
       _vernacularName = widget.occurrence.vernacularName;
     }
 
+    // Initialization of text editing controllers
     _scientificNameController = TextEditingController(text: _scientificName);
     _vernacularNameController = TextEditingController(text: _vernacularName);
     _individualCountController = TextEditingController(
-      text: _individualCount.toString(),
+      text: _individualCount != null ? '$_individualCount' : null,
     );
     _localityController = TextEditingController(text: _locality);
     _decimalLongitudeController = TextEditingController(
@@ -134,59 +136,6 @@ class _OpportunisticObservationEditScreenState
     _decimalLatitudeController = TextEditingController(
       text: _decimalLatitude != null ? '$_decimalLatitude' : null,
     );
-  }
-
-  bool _validateAndSaveForm() {
-    final form = _formKey.currentState;
-    if (form.validate()) {
-      form.save();
-      return true;
-    }
-    return false;
-  }
-
-  Future<void> _submmit() async {
-    if (_validateAndSaveForm()) {
-      try {
-        final id = widget.occurrence?.id ?? documentIdFromCurrentDate();
-        final occurrence = Occurrence(
-          id: id,
-          basisOfRecord: _basisOfRecord,
-          occurrenceID: id,
-          individualCount: _individualCount,
-          occurrenceStatus: _occurrenceStatus,
-          occurrenceRemarks: _occurrenceRemarks,
-          eventID: _eventID,
-          eventDate: _eventDate,
-          locationID: _locationID,
-          country: _country,
-          countryCode: _countryCode,
-          locality: _locality,
-          decimalLatitude: _decimalLatitude,
-          decimalLongitude: _decimalLongitude,
-          geodeticDatum: _geodeticDatum,
-          taxonID: _taxonID,
-          scientificName: _scientificName,
-          kingdom: _kingdom,
-          phylum: _phylum,
-          class_: _class_,
-          order: _order,
-          family: _family,
-          genus: _genus,
-          specificEpithet: _specificEpithet,
-          taxonRank: _taxonRank,
-          scientificNameAuthorship: _scientificNameAuthorship,
-          vernacularName: _vernacularName,
-        );
-        await widget.database.setOccurrence(occurrence);
-        Navigator.of(context).pop();
-      } on PlatformException catch (e) {
-        PlatformExceptionAlertDialog(
-          title: 'Error al ingresar observación',
-          exception: e,
-        ).show(context);
-      }
-    }
   }
 
   @override
@@ -304,7 +253,7 @@ class _OpportunisticObservationEditScreenState
             value.isNotEmpty ? null : 'La localidad no puede estar vacía',
         onSaved: (value) => _locality = value,
       ),
-      OpportunisticObservationTaxonPickerWidget(_selectTaxon),
+      OpportunisticObservationTaxonPickerWidget(_pickTaxon),
       Row(
         children: <Widget>[
           Expanded(
@@ -349,18 +298,24 @@ class _OpportunisticObservationEditScreenState
         keyboardType: TextInputType.text,
         maxLength: 50,
         maxLines: null,
-        decoration: InputDecoration(labelText: 'Comentarios'),
+        decoration: InputDecoration(
+          labelText: 'Comentarios',
+          hintText: 'Descripción del clima, hábitat,...',
+        ),
         initialValue: _occurrenceRemarks != null ? '$_occurrenceRemarks' : null,
         onSaved: (value) => _occurrenceRemarks = value,
       ),
     ];
   }
 
-  void _selectPlace(double lat, double lng) {
-    _pickedLocation = [lat, lng];
+  void _selectPlace(
+    double decimalLatitude,
+    double decimalLongitude,
+  ) {
+    _pickedLocation = [decimalLatitude, decimalLongitude];
     setState(() {
-      _decimalLongitude = lng;
-      _decimalLatitude = lat;
+      _decimalLongitude = decimalLongitude;
+      _decimalLatitude = decimalLatitude;
     });
     _decimalLongitudeController = TextEditingController(
       text: _decimalLongitude.toStringAsFixed(6),
@@ -370,7 +325,7 @@ class _OpportunisticObservationEditScreenState
     );
   }
 
-  void _selectTaxon(String taxonId, int individualCount) {
+  void _pickTaxon(String taxonId, int individualCount) {
     Taxon taxon = _taxaData.findById(taxonId);
 
     _pickedTaxon = [taxon.scientificName, individualCount.toString()];
@@ -398,5 +353,58 @@ class _OpportunisticObservationEditScreenState
     _individualCountController = TextEditingController(
       text: _individualCount.toString(),
     );
+  }
+
+  bool _validateAndSaveForm() {
+    final form = _formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
+  Future<void> _submmit() async {
+    if (_validateAndSaveForm()) {
+      try {
+        final id = widget.occurrence?.id ?? documentIdFromCurrentDate();
+        final occurrence = Occurrence(
+          id: id,
+          basisOfRecord: _basisOfRecord,
+          occurrenceID: id,
+          individualCount: _individualCount,
+          occurrenceStatus: _occurrenceStatus,
+          occurrenceRemarks: _occurrenceRemarks,
+          eventID: _eventID,
+          eventDate: _eventDate,
+          locationID: _locationID,
+          country: _country,
+          countryCode: _countryCode,
+          locality: _locality,
+          decimalLatitude: _decimalLatitude,
+          decimalLongitude: _decimalLongitude,
+          geodeticDatum: _geodeticDatum,
+          taxonID: _taxonID,
+          scientificName: _scientificName,
+          kingdom: _kingdom,
+          phylum: _phylum,
+          class_: _class_,
+          order: _order,
+          family: _family,
+          genus: _genus,
+          specificEpithet: _specificEpithet,
+          taxonRank: _taxonRank,
+          scientificNameAuthorship: _scientificNameAuthorship,
+          vernacularName: _vernacularName,
+        );
+        await widget.database.setOccurrence(occurrence);
+        Navigator.of(context).pop();
+      } on PlatformException catch (e) {
+        PlatformExceptionAlertDialog(
+          title: 'Error al ingresar observación',
+          exception: e,
+        ).show(context);
+      }
+    }
   }
 }

@@ -20,7 +20,7 @@ class _OpportunisticObservationTaxonPickerWidgetState
     _pickedTaxon = await Navigator.of(context).push<List<Object>>(
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (ctx) => TaxonPickGrid(),
+        builder: (ctx) => OpportunisticObservationPickScreen(),
       ),
     );
 

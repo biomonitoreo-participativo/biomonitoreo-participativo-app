@@ -9,7 +9,6 @@ import 'package:biomonitoreoparticipativoapp/app/home/models/taxon_data.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/models/event_taxa_cart.dart';
 
 import 'package:biomonitoreoparticipativoapp/app/home/events/event_taxon_grid_tile.dart';
-import 'package:biomonitoreoparticipativoapp/app/home/events/event_taxon_list_tile.dart';
 
 enum FilterClassOptions {
   Eukaryota,

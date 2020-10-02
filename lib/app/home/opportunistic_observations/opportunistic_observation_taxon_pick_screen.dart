@@ -15,18 +15,20 @@ enum FilterClassOptions {
   Aves,
 }
 
-class TaxonPickGrid extends StatefulWidget {
+class OpportunisticObservationPickScreen extends StatefulWidget {
   final List<String> initialTaxon;
 
-  TaxonPickGrid({
+  OpportunisticObservationPickScreen({
     this.initialTaxon = const ['000001', '1'],
   });
 
   @override
-  _TaxonPickGridState createState() => _TaxonPickGridState();
+  _OpportunisticObservationPickScreenState createState() =>
+      _OpportunisticObservationPickScreenState();
 }
 
-class _TaxonPickGridState extends State<TaxonPickGrid> {
+class _OpportunisticObservationPickScreenState
+    extends State<OpportunisticObservationPickScreen> {
   String _filterClass = 'Eukaryota';
 
   @override
