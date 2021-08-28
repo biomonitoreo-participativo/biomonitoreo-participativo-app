@@ -34,6 +34,7 @@ class _OpportunisticObservationPickScreenState
   @override
   Widget build(BuildContext context) {
     final taxaData = Provider.of<Taxa>(context);
+    taxaData.setItems(1);
     final taxa = _filterClass == 'Eukaryota'
         ? taxaData.items
         : taxaData.findByClass(_filterClass);

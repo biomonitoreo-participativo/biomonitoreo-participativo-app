@@ -43,7 +43,7 @@ class _EventTaxaPickScreenState extends State<EventTaxaPickScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _taxaData = Provider.of<Taxa>(context);
+    final _taxaData = Provider.of<Taxa>(context, listen: false);
     final _taxa = _filterClass == 'Eukaryota'
         ? _taxaData.items
         : _taxaData.findByClass(_filterClass);

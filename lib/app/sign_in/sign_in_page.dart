@@ -75,7 +75,7 @@ class SignInPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-          child: Text('Monitoreo biológico participativo'),
+          child: Text('Monitoreo Biológico Participativo'),
         ),
         elevation: 2.0,
       ),

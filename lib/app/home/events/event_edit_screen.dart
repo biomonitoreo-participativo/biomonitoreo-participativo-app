@@ -199,6 +199,8 @@ class _EventEditScreenState extends State<EventEditScreen> {
     );
   }
 
+  String dropdownValue = 'Lista de indicadores: ACLAP';
+
   List<Widget> _buildFormChildren() {
     return [
       DateTimeField(
@@ -273,6 +275,39 @@ class _EventEditScreenState extends State<EventEditScreen> {
         validator: (value) =>
             value.isNotEmpty ? null : 'La localidad no puede estar vacía',
         onSaved: (value) => _locality = value,
+      ),
+      DropdownButton<String>(
+        value: dropdownValue,
+        icon: Icon(Icons.arrow_downward),
+        iconSize: 24,
+        elevation: 16,
+        // style: TextStyle(color: Colors.deepPurple),
+        underline: Container(
+          height: 2,
+          // color: Colors.deepPurpleAccent,
+        ),
+        onChanged: (String newValue) {
+          if (newValue == 'Lista de indicadores: ACLAP') {
+            _taxaData.setItems(1);
+          } else if (newValue == 'Lista de indicadores: ACCVC') {
+            _taxaData.setItems(3);
+          } else if (newValue == 'Lista de indicadores: ACLAC') {
+            _taxaData.setItems(3);
+          }
+          setState(() {
+            dropdownValue = newValue;
+          });
+        },
+        items: <String>[
+          'Lista de indicadores: ACLAP',
+          'Lista de indicadores: ACCVC',
+          'Lista de indicadores: ACLAC',
+        ].map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
       ),
       EventTaxaPickWidget(_pickedTaxa, _pickTaxa),
       _buildPickedTaxaListView(),
