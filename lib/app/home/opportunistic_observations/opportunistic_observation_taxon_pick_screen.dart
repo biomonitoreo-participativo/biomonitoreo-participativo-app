@@ -8,6 +8,8 @@ import 'package:biomonitoreoparticipativoapp/app/home/opportunistic_observations
 
 import 'package:biomonitoreoparticipativoapp/app/home/models/taxon_data.dart';
 
+import 'package:biomonitoreoparticipativoapp/app/home/models/group.dart';
+
 enum FilterClassOptions {
   Eukaryota,
   Amphibia,
@@ -34,7 +36,17 @@ class _OpportunisticObservationPickScreenState
   @override
   Widget build(BuildContext context) {
     final taxaData = Provider.of<Taxa>(context);
-    taxaData.setItems(1);
+
+    final group = Provider.of<Group>(context);
+
+    if (group.group == "ACLAP") {
+      taxaData.setItems("ACLAP");
+    } else if (group.group == "ACOSA") {
+      taxaData.setItems("ACOSA");
+    } else {
+      taxaData.setItems("ACLAP");
+    }
+
     final taxa = _filterClass == 'Eukaryota'
         ? taxaData.items
         : taxaData.findByClass(_filterClass);
@@ -43,7 +55,7 @@ class _OpportunisticObservationPickScreenState
         Provider.of<OpportunisticObservationTaxonCart>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Seleccionar especie'),
+        title: Text('Indicadores de ${group.group}'),
         actions: <Widget>[
           PopupMenuButton(
             onSelected: (FilterClassOptions selectedValue) {

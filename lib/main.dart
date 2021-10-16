@@ -11,6 +11,7 @@ import 'package:biomonitoreoparticipativoapp/app/home/models/taxon_data.dart';
 import 'package:biomonitoreoparticipativoapp/app/landing_page.dart';
 
 import 'app/home/models/event_taxa_cart.dart';
+import 'app/home/models/group.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: OpportunisticObservationTaxonCart(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Group(),
         ),
       ],
       // builder: (context) => Auth(),

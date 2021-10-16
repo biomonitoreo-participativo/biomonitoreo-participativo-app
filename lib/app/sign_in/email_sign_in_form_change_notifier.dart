@@ -7,6 +7,7 @@ import 'package:biomonitoreoparticipativoapp/services/auth.dart';
 import 'package:flutter/services.dart';
 import 'email_sign_in_change_model.dart';
 import 'email_sign_in_model.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/models/group.dart';
 
 class EmailSignInFormChangeNotifier extends StatefulWidget {
   final EmailSignInChangeModel model;
@@ -107,6 +108,8 @@ class _EmailSignInFormChangeNotifierState
       if (model.formType == EmailSignInFormType.register)
         _buildPasswordConfirmationTextField(),
       SizedBox(height: 8.0),
+      _buildGroupDropdownButton(),
+      SizedBox(height: 8.0),
       FormSubmitButton(
         text: model.primaryButtonText,
         onPressed: model.canSubmit ? _submit : null,
@@ -149,6 +152,46 @@ class _EmailSignInFormChangeNotifierState
       textInputAction: TextInputAction.next,
       onChanged: model.updatePassword,
       onEditingComplete: () => _passwordEditingComplete(),
+    );
+  }
+
+  String dropdownValue = 'ACLAP';
+  DropdownButton _buildGroupDropdownButton() {
+    return DropdownButton<String>(
+      value: dropdownValue,
+      icon: const Icon(Icons.arrow_downward),
+      iconSize: 24,
+      elevation: 16,
+      style: const TextStyle(color: Colors.deepPurple),
+      underline: Container(
+        height: 2,
+        color: Colors.deepPurpleAccent,
+      ),
+      onChanged: (String newValue) {
+        setState(() {
+          dropdownValue = newValue;
+        });
+        Group group = Provider.of<Group>(context);
+        group.setGroup(newValue);
+      },
+      items: <String>[
+        'ACLAP',
+        'ACOSA',
+        'ACAHN',
+        'ACAT',
+        'ACC',
+        'ACG',
+        'ACLAC',
+        'ACMC',
+        'ACOPAC',
+        'ACT',
+        'ACTo'
+      ].map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 
