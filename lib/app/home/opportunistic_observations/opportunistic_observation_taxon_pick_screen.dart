@@ -38,14 +38,6 @@ class _OpportunisticObservationPickScreenState
     final taxaData = Provider.of<Taxa>(context);
 
     final group = Provider.of<Group>(context);
-
-/*    if (group.group == "ACLAP") {
-      taxaData.setItems("ACLAP");
-    } else if (group.group == "ACOSA") {
-      taxaData.setItems("ACOSA");
-    } else {
-      taxaData.setItems("ACLAP");
-    }*/
     taxaData.setItems(group.group);
 
 
