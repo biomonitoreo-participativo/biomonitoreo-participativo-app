@@ -17,7 +17,6 @@ class LocalityPickMap extends StatefulWidget {
 
 class _LocalityPickMapState extends State<LocalityPickMap> {
   LatLng _pickedLocality;
-  LatLng _currentLocation;
 
   void _pickLocality(LatLng position) {
     setState(() {
@@ -29,6 +28,10 @@ class _LocalityPickMapState extends State<LocalityPickMap> {
 
   @override
   Widget build(BuildContext context) {
+    if (_pickedLocality == null) {
+      _pickLocality(LatLng(widget.initialLocality[1], widget.initialLocality[0]));
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Seleccionar localidad'),
@@ -55,14 +58,23 @@ class _LocalityPickMapState extends State<LocalityPickMap> {
         ),
         onTap: widget.isSelecting ? _pickLocality : null,
         markers: (_pickedLocality == null && widget.isSelecting)
-            ? null
+            ? {
+                Marker(
+                  markerId: MarkerId('Inicio 01'),
+                  position: _pickedLocality ??
+                      LatLng(
+                        widget.initialLocality[1],
+                        widget.initialLocality[0],
+                      ),
+                ),
+              }
             : {
                 Marker(
                   markerId: MarkerId('Inicio'),
                   position: _pickedLocality ??
                       LatLng(
-                        widget.initialLocality[1],
-                        widget.initialLocality[0],
+                        _pickedLocality.longitude,
+                        _pickedLocality.latitude,
                       ),
                 ),
               },
