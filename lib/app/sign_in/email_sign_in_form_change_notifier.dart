@@ -157,6 +157,8 @@ class _EmailSignInFormChangeNotifierState
 
   String dropdownValue = 'ACLAP';
   DropdownButton _buildGroupDropdownButton() {
+    Group group = Provider.of<Group>(context);
+
     return DropdownButton<String>(
       value: dropdownValue,
       icon: const Icon(Icons.arrow_downward),
@@ -171,7 +173,6 @@ class _EmailSignInFormChangeNotifierState
         setState(() {
           dropdownValue = newValue;
         });
-        Group group = Provider.of<Group>(context);
         group.setGroup(newValue);
       },
       items: <String>[

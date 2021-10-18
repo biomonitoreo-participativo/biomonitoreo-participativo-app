@@ -39,13 +39,15 @@ class _OpportunisticObservationPickScreenState
 
     final group = Provider.of<Group>(context);
 
-    if (group.group == "ACLAP") {
+/*    if (group.group == "ACLAP") {
       taxaData.setItems("ACLAP");
     } else if (group.group == "ACOSA") {
       taxaData.setItems("ACOSA");
     } else {
       taxaData.setItems("ACLAP");
-    }
+    }*/
+    taxaData.setItems(group.group);
+
 
     final taxa = _filterClass == 'Eukaryota'
         ? taxaData.items
@@ -55,7 +57,7 @@ class _OpportunisticObservationPickScreenState
         Provider.of<OpportunisticObservationTaxonCart>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Indicadores de ${group.group}'),
+        title: Text('Indicadoras de ${group.group}'),
         actions: <Widget>[
           PopupMenuButton(
             onSelected: (FilterClassOptions selectedValue) {
