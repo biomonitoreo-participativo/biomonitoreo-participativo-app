@@ -1,9 +1,10 @@
 import 'dart:collection';
+import 'package:flutter/foundation.dart';
 
 import 'location.dart';
 
-class LocationData {
-  static List<Location> _locations = [
+class LocationData with ChangeNotifier {
+  static List<Location> _locations_aclap = [
     Location(
       id: '01',
       name: 'AB-01 Altamira de Biolley-01',
@@ -257,6 +258,64 @@ class LocationData {
       decimalLatitude: 9.25679632,
     ),
   ];
+
+  static List<Location> _locations_acosa = [
+    Location(
+      id: '37',
+      name: 'La Trocha',
+      description: 'La Trocha',
+      decimalLongitude: -83.60091,
+      decimalLatitude: 8.96393,
+    ),
+    Location(
+      id: '38',
+      name: 'Ciudad Cortés',
+      description: 'Ciudad Cortés',
+      decimalLongitude: -83.59841,
+      decimalLatitude: 8.98459,
+    ),
+    Location(
+      id: '39',
+      name: 'Isla Violines',
+      description: 'Isla Violines',
+      decimalLongitude: -83.60117,
+      decimalLatitude: 8.7981,
+    ),
+    Location(
+      id: '40',
+      name: 'Estero Azul',
+      description: 'Estero Azul',
+      decimalLongitude: -83.47083,
+      decimalLatitude: 8.88516,
+    ),
+    Location(
+      id: '41',
+      name: 'La Olla',
+      description: 'La Olla',
+      decimalLongitude: -83.40087,
+      decimalLatitude: 8.8444,
+    ),
+    Location(
+      id: '42',
+      name: 'Laguna Sierpe',
+      description: 'Laguna Sierpe',
+      decimalLongitude: -83.33076,
+      decimalLatitude: 8.80883,
+    ),
+  ];
+
+
+  static List<Location> _locations = _locations_aclap;
+
+  void setLocations(String list) {
+    if (list == "ACLAP") {
+      _locations = _locations_aclap;
+    } else if (list == "ACOSA") {
+      _locations = _locations_acosa;
+    } else {
+      _locations = _locations_aclap;
+    }
+  }
 
   static UnmodifiableListView<Location> get locations {
     return UnmodifiableListView(

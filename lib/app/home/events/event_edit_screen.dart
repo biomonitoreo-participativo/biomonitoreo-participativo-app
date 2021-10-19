@@ -12,6 +12,7 @@ import 'package:biomonitoreoparticipativoapp/constants.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/models/event.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/models/occurrence.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/models/taxon_data.dart';
+import 'package:biomonitoreoparticipativoapp/app/home/models/location_data.dart';
 
 import 'package:biomonitoreoparticipativoapp/services/database.dart';
 
@@ -88,10 +89,13 @@ class _EventEditScreenState extends State<EventEditScreen> {
 
   var taxaCart;
 
+  var _group;
+
   var _taxaData;
   // Taxa data hardcoded in taxon_data.dart
 
-  var _group;
+  var _locationData;
+  // Location data hardcoded in location_data.dart
 
   var _occurrencesStream;
   // Stream to read occurrence data for this event
@@ -158,8 +162,12 @@ class _EventEditScreenState extends State<EventEditScreen> {
     super.didChangeDependencies();
 
     _group = Provider.of<Group>(context);
+
     _taxaData = Provider.of<Taxa>(context, listen: false);
     _taxaData.setItems(_group.group);
+
+    _locationData = Provider.of<LocationData>(context, listen: false);
+    _locationData.setLocations(_group.group);
   }
 
   @override

@@ -5,9 +5,12 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:biomonitoreoparticipativoapp/app/home/models/group.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/models/location.dart';
 import 'package:biomonitoreoparticipativoapp/app/home/models/location_data.dart';
+
 
 class EventLocationPickScreen extends StatefulWidget {
   final List<double> initialLocality;
@@ -140,6 +143,75 @@ class _EventLocationPickScreenState extends State<EventLocationPickScreen> {
       [-83.49122080907378, 9.613933099130998],
     ];
 
+    // ACOSA
+    List IN_ACOSA = [
+      [-82.90321383, 8.73374146],
+      [-82.8297529, 8.634711],
+      [-82.83945931, 8.48018378],
+      [-83.05189098, 8.33451376],
+      [-82.99061868, 8.27126165],
+      [-82.94221309, 8.27179192],
+      [-82.8860846, 8.10847695],
+      [-82.9004578, 8.04008937],
+      [-82.90299418, 8.1136665],
+      [-82.96779927, 8.23354421],
+      [-83.14651085, 8.36722777],
+      [-83.09247969, 8.45012072],
+      [-83.180732, 8.61001653],
+      [-83.1522604, 8.60954547],
+      [-83.16721707, 8.58840864],
+      [-83.16240817, 8.57785643],
+      [-83.12388344, 8.60084992],
+      [-83.1716779, 8.64289767],
+      [-83.18230351, 8.62182174],
+      [-83.29533235, 8.653638],
+      [-83.32917322, 8.68056626],
+      [-83.32384965, 8.7180337],
+      [-83.38103979, 8.74660734],
+      [-83.48434854, 8.71187572],
+      [-83.3988905, 8.59229313],
+      [-83.28449394, 8.54162012],
+      [-83.29151271, 8.37488942],
+      [-83.45844479, 8.44153525],
+      [-83.56624373, 8.44054691],
+      [-83.73181438, 8.59181857],
+      [-83.71029198, 8.68520323],
+      [-83.65395063, 8.69792242],
+      [-83.64747943, 8.76777539],
+      [-83.61876784, 8.77426072],
+      [-83.65245048, 8.79422648],
+      [-83.58045551, 8.84758797],
+      [-83.6178721, 8.874738],
+      [-83.5921647, 8.89216545],
+      [-83.62224232, 8.91783295],
+      [-83.66026578, 9.06537884],
+      [-83.64789146, 9.05025241],
+      [-83.63294465, 9.04112712],
+      [-83.62581957, 9.04376806],
+      [-83.77922701, 9.19293259],
+      [-83.84478797, 9.22071984],
+      [-83.85880643, 9.27691321],
+      [-83.80016261, 9.22397503],
+      [-83.75646936, 9.21757726],
+      [-83.74803743, 9.24433256],
+      [-83.70597071, 9.22522191],
+      [-83.67245435, 9.15412689],
+      [-83.54955037, 9.08309157],
+      [-83.5595806, 9.05304933],
+      [-83.46939281, 8.99609597],
+      [-83.41700899, 8.97669869],
+      [-83.40269213, 8.99469079],
+      [-83.35654612, 8.94487563],
+      [-83.24776756, 8.91478759],
+      [-83.15988389, 8.80264689],
+      [-83.09597735, 8.77506269],
+      [-82.97946236, 8.78215904],
+      [-82.9833954, 8.73341211],
+      [-82.94892187, 8.69057175],
+      [-82.91018918, 8.69672183],
+      [-82.90321383, 8.73374146],
+    ];
+
     List<LatLng> polygonLatLongs = List<LatLng>();
 
     for (var i = 0; i < IN.length; i++) {
@@ -156,6 +228,25 @@ class _EventLocationPickScreenState extends State<EventLocationPickScreen> {
         strokeWidth: 3,
       ),
     );
+
+
+    List<LatLng> polygonLatLongs_acosa = List<LatLng>();
+
+    for (var i = 0; i < IN_ACOSA.length; i++) {
+      var ltlng = LatLng(IN_ACOSA[i][1], IN_ACOSA[i][0]);
+      polygonLatLongs_acosa.add(ltlng);
+    }
+
+    _polygons.add(
+      Polygon(
+        polygonId: PolygonId("ACOSA"),
+        points: polygonLatLongs_acosa,
+        fillColor: Color.fromARGB(10, 66, 165, 245),
+        strokeColor: Colors.blueAccent,
+        strokeWidth: 3,
+      ),
+    );
+
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -182,466 +273,559 @@ class _EventLocationPickScreenState extends State<EventLocationPickScreen> {
 
     var selectedLocation = 'Ninguna finca';
 
-    markers.addAll(
-      [
-        Marker(
-          markerId: MarkerId('01'),
-          position: LatLng(9.00549542, -83.0090092),
-          infoWindow: InfoWindow(
-            title: "AB-01 Altamira de Biolley-01",
+    Group group = Provider.of<Group>(context);
+
+    if (group.group == "ACLAP") {
+      markers.addAll(
+        [
+          Marker(
+            markerId: MarkerId('01'),
+            position: LatLng(9.00549542, -83.0090092),
+            infoWindow: InfoWindow(
+              title: "AB-01 Altamira de Biolley-01",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [
+                  -83.0090092,
+                  9.00549542,
+                  'AB-01 Altamira de Biolley-01'
+                ];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [
-                -83.0090092,
-                9.00549542,
-                'AB-01 Altamira de Biolley-01'
-              ];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('02'),
-          position: LatLng(9.28438765, -83.4516672),
-          infoWindow: InfoWindow(
-            title: "AV-02 Altamira de Vocán",
+          Marker(
+            markerId: MarkerId('02'),
+            position: LatLng(9.28438765, -83.4516672),
+            infoWindow: InfoWindow(
+              title: "AV-02 Altamira de Vocán",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [
+                  -83.4516672,
+                  9.28438765,
+                  'AV-02 Altamira de Vocán'
+                ];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [
-                -83.4516672,
-                9.28438765,
-                'AV-02 Altamira de Vocán'
-              ];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('03'),
-          position: LatLng(9.28729506, -83.4602387),
-          infoWindow: InfoWindow(
-            title: "AV-01 Altamira de Volcán",
+          Marker(
+            markerId: MarkerId('03'),
+            position: LatLng(9.28729506, -83.4602387),
+            infoWindow: InfoWindow(
+              title: "AV-01 Altamira de Volcán",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [
+                  -83.4602387,
+                  9.28729506,
+                  'AV-01 Altamira de Volcán'
+                ];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [
-                -83.4602387,
-                9.28729506,
-                'AV-01 Altamira de Volcán'
-              ];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('04'),
-          position: LatLng(9.0231913, -83.0545614),
-          infoWindow: InfoWindow(
-            title: "BI-01 Biolley",
+          Marker(
+            markerId: MarkerId('04'),
+            position: LatLng(9.0231913, -83.0545614),
+            infoWindow: InfoWindow(
+              title: "BI-01 Biolley",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.0545614, 9.0231913, 'BI-01 Biolley'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.0545614, 9.0231913, 'BI-01 Biolley'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('05'),
-          position: LatLng(9.03876183, -83.037795),
-          infoWindow: InfoWindow(
-            title: "BI-02 Biolley",
+          Marker(
+            markerId: MarkerId('05'),
+            position: LatLng(9.03876183, -83.037795),
+            infoWindow: InfoWindow(
+              title: "BI-02 Biolley",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.037795, 9.03876183, 'BI-02 Biolley'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.037795, 9.03876183, 'BI-02 Biolley'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('06'),
-          position: LatLng(9.03425048, -83.0413176),
-          infoWindow: InfoWindow(
-            title: "BI-03 Biolley",
+          Marker(
+            markerId: MarkerId('06'),
+            position: LatLng(9.03425048, -83.0413176),
+            infoWindow: InfoWindow(
+              title: "BI-03 Biolley",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.0413176, 9.03425048, 'BI-03 Biolley'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.0413176, 9.03425048, 'BI-03 Biolley'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('07'),
-          position: LatLng(9.13279284, -83.2036868),
-          infoWindow: InfoWindow(
-            title: "CB-01 Cabagra",
+          Marker(
+            markerId: MarkerId('07'),
+            position: LatLng(9.13279284, -83.2036868),
+            infoWindow: InfoWindow(
+              title: "CB-01 Cabagra",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.2036868, 9.13279284, 'CB-01 Cabagra'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.2036868, 9.13279284, 'CB-01 Cabagra'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('08'),
-          position: LatLng(9.12137815, -83.1557111),
-          infoWindow: InfoWindow(
-            title: "CB-03 Cabagra",
+          Marker(
+            markerId: MarkerId('08'),
+            position: LatLng(9.12137815, -83.1557111),
+            infoWindow: InfoWindow(
+              title: "CB-03 Cabagra",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.1557111, 9.12137815, 'CB-03 Cabagra'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.1557111, 9.12137815, 'CB-03 Cabagra'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('09'),
-          position: LatLng(8.91894041, -83.2067085),
-          infoWindow: InfoWindow(
-            title: "CH-03 Chánguena",
+          Marker(
+            markerId: MarkerId('09'),
+            position: LatLng(8.91894041, -83.2067085),
+            infoWindow: InfoWindow(
+              title: "CH-03 Chánguena",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.2067085, 8.91894041, 'CH-03 Chánguena'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.2067085, 8.91894041, 'CH-03 Chánguena'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('10'),
-          position: LatLng(8.91168574, -83.163918),
-          infoWindow: InfoWindow(
-            title: "CH-01 Chánguena - Las Nubes",
+          Marker(
+            markerId: MarkerId('10'),
+            position: LatLng(8.91168574, -83.163918),
+            infoWindow: InfoWindow(
+              title: "CH-01 Chánguena - Las Nubes",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [
+                  -83.163918,
+                  8.91168574,
+                  'CH-01 Chánguena - Las Nubes'
+                ];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [
-                -83.163918,
-                8.91168574,
-                'CH-01 Chánguena - Las Nubes'
-              ];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('11'),
-          position: LatLng(8.90642376, -83.1720855),
-          infoWindow: InfoWindow(
-            title: "CH-02 Chánguena - Pilón",
+          Marker(
+            markerId: MarkerId('11'),
+            position: LatLng(8.90642376, -83.1720855),
+            infoWindow: InfoWindow(
+              title: "CH-02 Chánguena - Pilón",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [
+                  -83.1720855,
+                  8.90642376,
+                  'CH-02 Chánguena - Pilón'
+                ];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [
-                -83.1720855,
-                8.90642376,
-                'CH-02 Chánguena - Pilón'
-              ];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('12'),
-          position: LatLng(9.01146405, -83.0230982),
-          infoWindow: InfoWindow(
-            title: "AB-02 Colorado",
+          Marker(
+            markerId: MarkerId('12'),
+            position: LatLng(9.01146405, -83.0230982),
+            infoWindow: InfoWindow(
+              title: "AB-02 Colorado",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.0230982, 9.01146405, 'AB-02 Colorado'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.0230982, 9.01146405, 'AB-02 Colorado'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('13'),
-          position: LatLng(9.54753401, -83.7173239),
-          infoWindow: InfoWindow(
-            title: "JD-01 El Jardín",
+          Marker(
+            markerId: MarkerId('13'),
+            position: LatLng(9.54753401, -83.7173239),
+            infoWindow: InfoWindow(
+              title: "JD-01 El Jardín",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.7173239, 9.54753401, 'JD-01 El Jardín'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.7173239, 9.54753401, 'JD-01 El Jardín'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('14'),
-          position: LatLng(9.50310902, -83.6977546),
-          infoWindow: InfoWindow(
-            title: "JD-02 El Jardín",
+          Marker(
+            markerId: MarkerId('14'),
+            position: LatLng(9.50310902, -83.6977546),
+            infoWindow: InfoWindow(
+              title: "JD-02 El Jardín",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.6977546, 9.50310902, 'JD-02 El Jardín'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.6977546, 9.50310902, 'JD-02 El Jardín'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('15'),
-          position: LatLng(9.53414089, -83.7086084),
-          infoWindow: InfoWindow(
-            title: "JD-03 El Jardín",
+          Marker(
+            markerId: MarkerId('15'),
+            position: LatLng(9.53414089, -83.7086084),
+            infoWindow: InfoWindow(
+              title: "JD-03 El Jardín",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.7086084, 9.53414089, 'JD-03 El Jardín'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.7086084, 9.53414089, 'JD-03 El Jardín'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('16'),
-          position: LatLng(9.24059771, -83.3868519),
-          infoWindow: InfoWindow(
-            title: "RC-01 Guadalajara",
+          Marker(
+            markerId: MarkerId('16'),
+            position: LatLng(9.24059771, -83.3868519),
+            infoWindow: InfoWindow(
+              title: "RC-01 Guadalajara",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation =
+                [-83.3868519, 9.24059771, 'RC-01 Guadalajara'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.3868519, 9.24059771, 'RC-01 Guadalajara'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('17'),
-          position: LatLng(9.09028874, -83.1265134),
-          infoWindow: InfoWindow(
-            title: "LU-01 La Luchita",
+          Marker(
+            markerId: MarkerId('17'),
+            position: LatLng(9.09028874, -83.1265134),
+            infoWindow: InfoWindow(
+              title: "LU-01 La Luchita",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.1265134, 9.09028874, 'LU-01 La Luchita'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.1265134, 9.09028874, 'LU-01 La Luchita'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('18'),
-          position: LatLng(9.48537348, -83.8130617),
-          infoWindow: InfoWindow(
-            title: "LA-01 Los Ángeles",
+          Marker(
+            markerId: MarkerId('18'),
+            position: LatLng(9.48537348, -83.8130617),
+            infoWindow: InfoWindow(
+              title: "LA-01 Los Ángeles",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation =
+                [-83.8130617, 9.48537348, 'LA-01 Los Ángeles'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.8130617, 9.48537348, 'LA-01 Los Ángeles'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('19'),
-          position: LatLng(9.51023701, -83.7973644),
-          infoWindow: InfoWindow(
-            title: "LA-02 Los Ángeles",
+          Marker(
+            markerId: MarkerId('19'),
+            position: LatLng(9.51023701, -83.7973644),
+            infoWindow: InfoWindow(
+              title: "LA-02 Los Ángeles",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation =
+                [-83.7973644, 9.51023701, 'LA-02 Los Ángeles'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.7973644, 9.51023701, 'LA-02 Los Ángeles'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('20'),
-          position: LatLng(9.48754174, -83.8086589),
-          infoWindow: InfoWindow(
-            title: "LA-03 Los Ángeles",
+          Marker(
+            markerId: MarkerId('20'),
+            position: LatLng(9.48754174, -83.8086589),
+            infoWindow: InfoWindow(
+              title: "LA-03 Los Ángeles",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation =
+                [-83.8086589, 9.48754174, 'LA-03 Los Ángeles'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.8086589, 9.48754174, 'LA-03 Los Ángeles'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('21'),
-          position: LatLng(8.92135315, -82.9573403),
-          infoWindow: InfoWindow(
-            title: "PT-01 Pittier",
+          Marker(
+            markerId: MarkerId('21'),
+            position: LatLng(8.92135315, -82.9573403),
+            infoWindow: InfoWindow(
+              title: "PT-01 Pittier",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-82.9573403, 8.92135315, 'PT-01 Pittier'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-82.9573403, 8.92135315, 'PT-01 Pittier'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('22'),
-          position: LatLng(8.91132719, -82.9770522),
-          infoWindow: InfoWindow(
-            title: "PT-02 Pittier",
+          Marker(
+            markerId: MarkerId('22'),
+            position: LatLng(8.91132719, -82.9770522),
+            infoWindow: InfoWindow(
+              title: "PT-02 Pittier",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-82.9770522, 8.91132719, 'PT-02 Pittier'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-82.9770522, 8.91132719, 'PT-02 Pittier'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('23'),
-          position: LatLng(9.46448482, -83.6041212),
-          infoWindow: InfoWindow(
-            title: "SG-01 San Gerardo",
+          Marker(
+            markerId: MarkerId('23'),
+            position: LatLng(9.46448482, -83.6041212),
+            infoWindow: InfoWindow(
+              title: "SG-01 San Gerardo",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation =
+                [-83.6041212, 9.46448482, 'SG-01 San Gerardo'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.6041212, 9.46448482, 'SG-01 San Gerardo'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('24'),
-          position: LatLng(9.4728713, -83.5831321),
-          infoWindow: InfoWindow(
-            title: "SG-02 San Gerardo",
+          Marker(
+            markerId: MarkerId('24'),
+            position: LatLng(9.4728713, -83.5831321),
+            infoWindow: InfoWindow(
+              title: "SG-02 San Gerardo",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.5831321, 9.4728713, 'SG-02 San Gerardo'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.5831321, 9.4728713, 'SG-02 San Gerardo'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('25'),
-          position: LatLng(9.34226752, -83.5106789),
-          infoWindow: InfoWindow(
-            title: "SJ-01 San Jerónimo",
+          Marker(
+            markerId: MarkerId('25'),
+            position: LatLng(9.34226752, -83.5106789),
+            infoWindow: InfoWindow(
+              title: "SJ-01 San Jerónimo",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation =
+                [-83.5106789, 9.34226752, 'SJ-01 San Jerónimo'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.5106789, 9.34226752, 'SJ-01 San Jerónimo'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('26'),
-          position: LatLng(9.3643246, -83.5029965),
-          infoWindow: InfoWindow(
-            title: "SJ-02 San Jerónimo",
+          Marker(
+            markerId: MarkerId('26'),
+            position: LatLng(9.3643246, -83.5029965),
+            infoWindow: InfoWindow(
+              title: "SJ-02 San Jerónimo",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation =
+                [-83.5029965, 9.3643246, 'SJ-02 San Jerónimo'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.5029965, 9.3643246, 'SJ-02 San Jerónimo'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('27'),
-          position: LatLng(9.27666952, -83.3788999),
-          infoWindow: InfoWindow(
-            title: "RC-03 Santa María",
+          Marker(
+            markerId: MarkerId('27'),
+            position: LatLng(9.27666952, -83.3788999),
+            infoWindow: InfoWindow(
+              title: "RC-03 Santa María",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation =
+                [-83.3788999, 9.27666952, 'RC-03 Santa María'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.3788999, 9.27666952, 'RC-03 Santa María'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('28'),
-          position: LatLng(9.25789457, -83.4000502),
-          infoWindow: InfoWindow(
-            title: "RC-02 Santa Rosa",
+          Marker(
+            markerId: MarkerId('28'),
+            position: LatLng(9.25789457, -83.4000502),
+            infoWindow: InfoWindow(
+              title: "RC-02 Santa Rosa",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.4000502, 9.25789457, 'RC-02 Santa Rosa'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.4000502, 9.25789457, 'RC-02 Santa Rosa'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('29'),
-          position: LatLng(9.43121269, -83.845292),
-          infoWindow: InfoWindow(
-            title: "SA-01 Savegre Abajo",
+          Marker(
+            markerId: MarkerId('29'),
+            position: LatLng(9.43121269, -83.845292),
+            infoWindow: InfoWindow(
+              title: "SA-01 Savegre Abajo",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation =
+                [-83.845292, 9.43121269, 'SA-01 Savegre Abajo'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.845292, 9.43121269, 'SA-01 Savegre Abajo'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('30'),
-          position: LatLng(9.43438383, -83.8582307),
-          infoWindow: InfoWindow(
-            title: "SA-02 Savegre Abajo",
+          Marker(
+            markerId: MarkerId('30'),
+            position: LatLng(9.43438383, -83.8582307),
+            infoWindow: InfoWindow(
+              title: "SA-02 Savegre Abajo",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [
+                  -83.8582307,
+                  9.43438383,
+                  'SA-02 Savegre Abajo'
+                ];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [
-                -83.8582307,
-                9.43438383,
-                'SA-02 Savegre Abajo'
-              ];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('31'),
-          position: LatLng(9.12010704, -83.0803525),
-          infoWindow: InfoWindow(
-            title: "TC-01 Tres Colinas",
+          Marker(
+            markerId: MarkerId('31'),
+            position: LatLng(9.12010704, -83.0803525),
+            infoWindow: InfoWindow(
+              title: "TC-01 Tres Colinas",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation =
+                [-83.0803525, 9.12010704, 'TC-01 Tres Colinas'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.0803525, 9.12010704, 'TC-01 Tres Colinas'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('32'),
-          position: LatLng(9.12272236, -83.0775314),
-          infoWindow: InfoWindow(
-            title: "TC-02 Tres Colinas",
+          Marker(
+            markerId: MarkerId('32'),
+            position: LatLng(9.12272236, -83.0775314),
+            infoWindow: InfoWindow(
+              title: "TC-02 Tres Colinas",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation =
+                [-83.0775314, 9.12272236, 'TC-02 Tres Colinas'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.0775314, 9.12272236, 'TC-02 Tres Colinas'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('33'),
-          position: LatLng(9.11702845, -83.0788612),
-          infoWindow: InfoWindow(
-            title: "TC-03 Tres Colinas",
+          Marker(
+            markerId: MarkerId('33'),
+            position: LatLng(9.11702845, -83.0788612),
+            infoWindow: InfoWindow(
+              title: "TC-03 Tres Colinas",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation =
+                [-83.0788612, 9.11702845, 'TC-03 Tres Colinas'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.0788612, 9.11702845, 'TC-03 Tres Colinas'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('34'),
-          position: LatLng(9.22145746, -83.3068622),
-          infoWindow: InfoWindow(
-            title: "UJ-01 Ujarrás",
+          Marker(
+            markerId: MarkerId('34'),
+            position: LatLng(9.22145746, -83.3068622),
+            infoWindow: InfoWindow(
+              title: "UJ-01 Ujarrás",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.3068622, 9.22145746, 'UJ-01 Ujarrás'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.3068622, 9.22145746, 'UJ-01 Ujarrás'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('35'),
-          position: LatLng(9.26376984, -83.34731),
-          infoWindow: InfoWindow(
-            title: "UJ-02 Ujarrás",
+          Marker(
+            markerId: MarkerId('35'),
+            position: LatLng(9.26376984, -83.34731),
+            infoWindow: InfoWindow(
+              title: "UJ-02 Ujarrás",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.34731, 9.26376984, 'UJ-02 Ujarrás'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.34731, 9.26376984, 'UJ-02 Ujarrás'];
-            });
-          },
-        ),
-        Marker(
-          markerId: MarkerId('36'),
-          position: LatLng(9.25679632, -83.2953523),
-          infoWindow: InfoWindow(
-            title: "UJ-03 Ujarrás",
+          Marker(
+            markerId: MarkerId('36'),
+            position: LatLng(9.25679632, -83.2953523),
+            infoWindow: InfoWindow(
+              title: "UJ-03 Ujarrás",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.2953523, 9.25679632, 'UJ-03 Ujarrás'];
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              _pickedLocation = [-83.2953523, 9.25679632, 'UJ-03 Ujarrás'];
-            });
-          },
-        ),
-      ],
-    );
+        ],
+      );
+    } else if (group.group == "ACOSA") {
+      markers.addAll(
+        [
+          Marker(
+            markerId: MarkerId('37'),
+            position: LatLng(8.96393, -83.60091),
+            infoWindow: InfoWindow(
+              title: "La Trocha",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.60091, 8.96393, 'La Trocha'];
+              });
+            },
+          ),
+          Marker(
+            markerId: MarkerId('38'),
+            position: LatLng(8.98459, -83.59841),
+            infoWindow: InfoWindow(
+              title: "Ciudad Cortés",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.59841, 8.98459, 'Ciudad Cortés'];
+              });
+            },
+          ),
+          Marker(
+            markerId: MarkerId('39'),
+            position: LatLng(8.7981, -83.60117),
+            infoWindow: InfoWindow(
+              title: "Isla Violines",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.60117, 8.7981, 'Isla Violines'];
+              });
+            },
+          ),
+          Marker(
+            markerId: MarkerId('40'),
+            position: LatLng(8.88516, -83.47083),
+            infoWindow: InfoWindow(
+              title: "Estero Azul",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.47083, 8.88516, 'Estero Azul'];
+              });
+            },
+          ),
+          Marker(
+            markerId: MarkerId('41'),
+            position: LatLng(8.8444, -83.40087),
+            infoWindow: InfoWindow(
+              title: "La Olla",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.40087, 8.8444, 'La Olla'];
+              });
+            },
+          ),
+          Marker(
+            markerId: MarkerId('42'),
+            position: LatLng(8.80883, -83.33076),
+            infoWindow: InfoWindow(
+              title: "Laguna Sierpe",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.33076, 8.80883, 'Laguna Sierpe'];
+              });
+            },
+          ),
+        ],
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
