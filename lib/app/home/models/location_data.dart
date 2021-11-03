@@ -304,6 +304,86 @@ class LocationData with ChangeNotifier {
     ),
   ];
 
+  static List<Location> _locations_acopac = [
+    Location(
+      id: '43',
+      name: 'ACOPAC',
+      description: 'ACOPAC',
+      decimalLongitude: -84.61171085009283,
+      decimalLatitude: 9.806941148583254,
+    ),
+  ];
+
+  static List<Location> _locations_act = [
+    Location(
+      id: '44',
+      name: 'ACT',
+      description: 'ACT',
+      decimalLongitude: -85.43159510976471,
+      decimalLatitude: 10.097173266511323,
+    ),
+  ];
+
+  static List<Location> _locations_acat = [
+    Location(
+      id: '45',
+      name: 'ACAT',
+      description: 'ACAT',
+      decimalLongitude: -85.0767033473549,
+      decimalLatitude: 10.447173798931836,
+    ),
+  ];
+
+  static List<Location> _locations_acg = [
+    Location(
+      id: '46',
+      name: 'ACG',
+      description: 'ACG',
+      decimalLongitude: -85.52764979312006,
+      decimalLatitude: 10.845064476388764,
+    ),
+  ];
+
+  static List<Location> _locations_acc = [
+    Location(
+      id: '47',
+      name: 'ACC',
+      description: 'ACC',
+      decimalLongitude: -84.05044994824789,
+      decimalLatitude: 9.895786170330801,
+    ),
+  ];
+
+  static List<Location> _locations_acto = [
+    Location(
+      id: '48',
+      name: 'ACTo',
+      description: 'ACTo',
+      decimalLongitude: -83.67621337588776,
+      decimalLatitude: 10.453114160016387,
+    ),
+  ];
+
+  static List<Location> _locations_acahn = [
+    Location(
+      id: '49',
+      name: 'ACAHN',
+      description: 'ACAHN',
+      decimalLongitude: -84.52626490572972,
+      decimalLatitude: 10.661593464999669,
+    ),
+  ];
+
+  static List<Location> _locations_aclac = [
+    Location(
+      id: '50',
+      name: 'ACLAC',
+      description: 'ACLAC',
+      decimalLongitude: -83.17880105587238,
+      decimalLatitude: 9.729058926118755,
+    ),
+  ];
+
 
   static List<Location> _locations = _locations_aclap;
 
@@ -312,6 +392,22 @@ class LocationData with ChangeNotifier {
       _locations = _locations_aclap;
     } else if (list == "ACOSA") {
       _locations = _locations_acosa;
+    } else if (list == "ACOPAC") {
+      _locations = _locations_acopac;
+    } else if (list == "ACT") {
+      _locations = _locations_act;
+    } else if (list == "ACAT") {
+      _locations = _locations_acat;
+    } else if (list == "ACG") {
+      _locations = _locations_acg;
+    } else if (list == "ACC") {
+      _locations = _locations_acc;
+    } else if (list == "ACTo") {
+      _locations = _locations_acto;
+    } else if (list == "ACAHN") {
+      _locations = _locations_acahn;
+    } else if (list == "ACLAC") {
+      _locations = _locations_aclac;
     } else {
       _locations = _locations_aclap;
     }

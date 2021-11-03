@@ -652,7 +652,7 @@ class Taxa with ChangeNotifier {
       taxonRank: 'species',
       urlSpeciesPage: 'https://es.wikipedia.org/wiki/Agamia_agami',
       urlImage:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Krabbenreiher-001.jpg/320px-Krabbenreiher-001.jpg',
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Nyctanassa_violacea_%28yellow-crowned_night_heron%29_%28Sanibel_Island%2C_Florida%2C_USA%29_2.jpg/295px-Nyctanassa_violacea_%28yellow-crowned_night_heron%29_%28Sanibel_Island%2C_Florida%2C_USA%29_2.jpg',
     ),
     Taxon(
       id: '000039',
