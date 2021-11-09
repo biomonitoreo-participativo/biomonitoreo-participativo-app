@@ -1865,6 +1865,54 @@ class _EventLocationPickScreenState extends State<EventLocationPickScreen> {
               });
             },
           ),
+          Marker(
+            markerId: MarkerId('51'),
+            position: LatLng(8.656273, -83.177754),
+            infoWindow: InfoWindow(
+              title: "Sendero La Catarata",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.177754, 8.656273, 'Sendero La Catarata'];
+              });
+            },
+          ),
+          Marker(
+            markerId: MarkerId('52'),
+            position: LatLng(8.74975, -83.28481),
+            infoWindow: InfoWindow(
+              title: "Sendero Río Esquinas",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.28481, 8.74975, 'Sendero Río Esquinas'];
+              });
+            },
+          ),
+          Marker(
+            markerId: MarkerId('53'),
+            position: LatLng(8.700444, -83.205064),
+            infoWindow: InfoWindow(
+              title: "Sendero Ocelote",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.205064, 8.700444, 'Sendero Ocelote'];
+              });
+            },
+          ),
+          Marker(
+            markerId: MarkerId('54'),
+            position: LatLng(8.66919, -83.23213),
+            infoWindow: InfoWindow(
+              title: "Sendero Toñito",
+            ),
+            onTap: () {
+              setState(() {
+                _pickedLocation = [-83.23213, 8.66919, 'Sendero Toñito'];
+              });
+            },
+          ),
         ],
       );
     } else if (group.group == "ACOPAC") {

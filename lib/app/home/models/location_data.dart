@@ -302,6 +302,34 @@ class LocationData with ChangeNotifier {
       decimalLongitude: -83.33076,
       decimalLatitude: 8.80883,
     ),
+    Location(
+      id: '51',
+      name: 'Sendero La Catarata',
+      description: 'Sendero La Catarata',
+      decimalLongitude: -83.177754,
+      decimalLatitude: 8.656273,
+    ),
+    Location(
+      id: '52',
+      name: 'Sendero Río Esquinas',
+      description: 'Sendero Río Esquinas',
+      decimalLongitude: -83.28481,
+      decimalLatitude: 8.74975,
+    ),
+    Location(
+      id: '53',
+      name: 'Sendero Ocelote',
+      description: 'Sendero Ocelote',
+      decimalLongitude: -83.205064,
+      decimalLatitude: 8.700444,
+    ),
+    Location(
+      id: '54',
+      name: 'Sendero Toñito',
+      description: 'Sendero Toñito',
+      decimalLongitude: -83.23213,
+      decimalLatitude: 8.66919,
+    ),
   ];
 
   static List<Location> _locations_acopac = [
