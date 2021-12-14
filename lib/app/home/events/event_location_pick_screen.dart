@@ -1807,13 +1807,13 @@ class _EventLocationPickScreenState extends State<EventLocationPickScreen> {
           ),
           Marker(
             markerId: MarkerId('38'),
-            position: LatLng(8.98459, -83.59841),
+            position: LatLng(8.94993611, -83.5398917),
             infoWindow: InfoWindow(
               title: "Ciudad Cortés",
             ),
             onTap: () {
               setState(() {
-                _pickedLocation = [-83.59841, 8.98459, 'Ciudad Cortés'];
+                _pickedLocation = [-83.5398917, 8.94993611, 'Ciudad Cortés'];
               });
             },
           ),

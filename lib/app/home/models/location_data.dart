@@ -271,8 +271,8 @@ class LocationData with ChangeNotifier {
       id: '38',
       name: 'Ciudad Cortés',
       description: 'Ciudad Cortés',
-      decimalLongitude: -83.59841,
-      decimalLatitude: 8.98459,
+      decimalLongitude: -83.5398917,
+      decimalLatitude: 8.94993611,
     ),
     Location(
       id: '39',
