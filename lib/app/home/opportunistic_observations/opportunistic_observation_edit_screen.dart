@@ -200,7 +200,7 @@ class _OpportunisticObservationEditScreenState
               context: context,
               firstDate: DateTime(2018),
               initialDate: currentValue ?? DateTime.now(),
-              lastDate: DateTime(2022));
+              lastDate: DateTime(2100));
           if (date != null) {
             final time = await showTimePicker(
               context: context,

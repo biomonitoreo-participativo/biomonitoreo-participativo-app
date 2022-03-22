@@ -231,7 +231,7 @@ class _EventEditScreenState extends State<EventEditScreen> {
               context: context,
               firstDate: DateTime(2018),
               initialDate: currentValue ?? DateTime.now(),
-              lastDate: DateTime(2022));
+              lastDate: DateTime(2100));
           if (date != null) {
             final time = await showTimePicker(
               context: context,
@@ -306,7 +306,7 @@ class _EventEditScreenState extends State<EventEditScreen> {
               context: context,
               firstDate: DateTime(2018),
               initialDate: currentValue ?? DateTime.now(),
-              lastDate: DateTime(2022));
+              lastDate: DateTime(2100));
           if (date != null) {
             final time = await showTimePicker(
               context: context,
